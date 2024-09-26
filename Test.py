@@ -4,7 +4,7 @@ import pandas as pd
 
 
 zip_file_path = "C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\archive.zip"
-
+# extract
 
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
     zip_ref.extractall("extracted_data")
