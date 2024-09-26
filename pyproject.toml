@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "projet big data"
+version = "0.1.0"
+description = "Projet Big Data Recipes and Interactions"
+authors = ["zeina <zeina.gebran@net.usj.edu.lb>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.38.0"
+pandas = "^2.2.3"
+numpy = "^2.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
