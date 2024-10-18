@@ -1,0 +1,7 @@
+# modules partie DATA/IA
+matplotlib
+pandas
+numpy
+
+# modules partie Web
+streamlit
