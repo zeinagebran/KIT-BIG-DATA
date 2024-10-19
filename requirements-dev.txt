@@ -12,6 +12,7 @@ pydocstyle
 flake8
 flake8-bugbear
 flake8-comprehensions
+flake8-pytest-style
 # pylama : wrapper = pycodestyle + PyFlake + Mccabe + pydocstyle,pylint,Radon,mypy
 pylama[all]
 
