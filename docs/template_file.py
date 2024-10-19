@@ -17,17 +17,17 @@ __version__ = '0.1'
 ###############################################################################
 # IMPORTS :
 
-# """/* Standard includes. */"""
+# /* Standard includes. */
 import os
 import sys
 
-# """/* Extern modules */"""
+# /* Extern modules */
 # import matplotlib.pyplot as plt
 # import numpy as np
 # import pandas as pd
 # import seaborn as sns
 
-# """/* Intern modules */"""
+# /* Intern modules */
 # import my_package
 
 ###############################################################################
@@ -64,10 +64,8 @@ def asking_help(s: str) -> bool:
     if len(s) <= 2:
         return False
     # end if
-    if s[0] == '-' or s[0] == '/':
-        if s[1:] in ('?', 'help', 'aide'):
-            return True
-        # end if
+    if s[0] in ('-', '/') and s[1:] in ('?', 'help', 'aide'):
+        return True
     # end if
     return False
 # end def asking_help
