@@ -1,5 +1,7 @@
 # optimRecipes : User Interaction Analysis for Recipe Platform
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nicolas-allegre_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nicolas-allegre_KIT-BIG-DATA)
+
 _optimRecipes_ use data from Food.com Recipes and Interactions
 ([lien kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions))
 
