@@ -1,6 +1,7 @@
 import streamlit as st
 from analysis_weekly import show_weekly_analysis
 from analysis_seasonality import show_seasonality_analysis
+from top_50_analysis import *
 
 # Set page configuration
 st.set_page_config(page_title="Enhancing User Interaction",
@@ -11,7 +12,8 @@ st.sidebar.title("Navigation")
 section = st.sidebar.selectbox("Choose a section:", [
     "Home",
     "Weekly Interaction Analysis",
-    "Seasonality Analysis"
+    "Seasonality Analysis",
+    "Top 50 Most Popular Recipes Based on Ratings and Comments"
 ])
 
 # Home Page
@@ -49,6 +51,9 @@ elif section == "Weekly Interaction Analysis":
 # Seasonality Analysis Page
 elif section == "Seasonality Analysis":
     show_seasonality_analysis()
+    
+elif section =="Top 50 Most Popular Recipes Based on Ratings and Comments":
+   show_top_50_analysis()   
 
 # Footer for navigation
 st.markdown("""
