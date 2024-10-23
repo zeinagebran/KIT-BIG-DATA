@@ -1,14 +1,15 @@
-# analysis_weekly.py
 import streamlit as st
-from functions import extract_and_load_data, plot_mean_interactions
+from functions import DataExtractor, WeeklyAnalysis
 
 
 def show_weekly_analysis():
     st.title("Weekly User Interaction Analysis")
-    st.markdown("""
-    In this analysis, we examine user interactions based on the day of the week. This helps us understand which days users are most active so we can adjust our publishing strategy and maximize engagement.
-    """)
+    st.markdown("Analyze user interactions based on the day of the week.")
+
     zip_file_path = "C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\archive.zip"
-    interactions_df = extract_and_load_data(zip_file_path)
-    fig = plot_mean_interactions(interactions_df)
+    data_extractor = DataExtractor(zip_file_path)
+    interactions_df, _ = data_extractor.extract_and_load_data()
+
+    weekly_analysis = WeeklyAnalysis(interactions_df)
+    fig = weekly_analysis.plot_mean_interactions()
     st.pyplot(fig)
