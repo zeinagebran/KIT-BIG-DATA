@@ -51,23 +51,31 @@ class WeeklyAnalysis:
         self.interactions_df = interactions_df
 
     def plot_mean_interactions(self):
+        # Ensure 'date' is a datetime object
         self.interactions_df['date'] = pd.to_datetime(
             self.interactions_df['date'], errors='coerce')
+
+        # Extract year and day of the week
+        self.interactions_df['year'] = self.interactions_df['date'].dt.year
         self.interactions_df['day_of_week'] = self.interactions_df['date'].dt.day_name(
         )
 
-        # Calculate interactions per day of the week
-        interactions_per_day = self.interactions_df.groupby(
-            'day_of_week').size()
+        # Calculate interactions per day of the week for each year
+        interactions_per_day_yearly = self.interactions_df.groupby(
+            ['year', 'day_of_week']).size().unstack(fill_value=0)
+
+        # Calculate the mean interactions per day across all years
+        mean_interactions_per_day = interactions_per_day_yearly.mean()
 
         # Reorder the days of the week for better readability
-        interactions_per_day = interactions_per_day.reindex(
-            ['Monday', 'Tuesday', 'Wednesday', 'Thursday',
-                'Friday', 'Saturday', 'Sunday']
-        )
+        ordered_days = ['Monday', 'Tuesday', 'Wednesday',
+                        'Thursday', 'Friday', 'Saturday', 'Sunday']
+        mean_interactions_per_day = mean_interactions_per_day.reindex(
+            ordered_days, fill_value=0)
 
+        # Plotting
         fig, ax = plt.subplots(figsize=(8, 6))
-        interactions_per_day.plot(
+        mean_interactions_per_day.plot(
             kind='bar', ax=ax, color='skyblue', edgecolor='black')
         ax.set_title(
             'Average User Interactions by Day of the Week', fontsize=16)
@@ -80,42 +88,63 @@ class WeeklyAnalysis:
 
 
 # SeasonalityAnalysis class for seasonal interaction analysis
+
+
 class SeasonalityAnalysis:
     def __init__(self, interactions_df):
         self.interactions_df = interactions_df
 
     def plot_seasonality(self):
+        # Ensure 'date' is a datetime object
         self.interactions_df['date'] = pd.to_datetime(
             self.interactions_df['date'], errors='coerce')
+
+        # Extract year, month, and season
         self.interactions_df['year'] = self.interactions_df['date'].dt.year
         self.interactions_df['month'] = self.interactions_df['date'].dt.month_name(
         )
-        self.interactions_df['season'] = self.interactions_df['date'].dt.month % 12 // 3 + 1
+        self.interactions_df['season'] = (
+            self.interactions_df['date'].dt.month - 1) // 3 + 1
         self.interactions_df['season'] = self.interactions_df['season'].map(
             {1: 'Winter', 2: 'Spring', 3: 'Summer', 4: 'Fall'}
         )
 
+        # Calculate interactions per month and reindex to maintain order
         interactions_per_month = self.interactions_df.groupby('month').size()
         ordered_months = ['January', 'February', 'March', 'April', 'May', 'June',
                           'July', 'August', 'September', 'October', 'November', 'December']
-        interactions_per_month = interactions_per_month.reindex(ordered_months)
+        interactions_per_month = interactions_per_month.reindex(
+            ordered_months, fill_value=0)
 
+        # Calculate average interactions per month
+        average_interactions_per_month = interactions_per_month / \
+            self.interactions_df['year'].nunique()
+
+        # Calculate interactions per season and reindex to maintain order
         interactions_per_season = self.interactions_df.groupby('season').size()
         ordered_seasons = ['Winter', 'Spring', 'Summer', 'Fall']
         interactions_per_season = interactions_per_season.reindex(
-            ordered_seasons)
+            ordered_seasons, fill_value=0)
 
+        # Calculate average interactions per season
+        average_interactions_per_season = interactions_per_season / \
+            self.interactions_df['year'].nunique()
+
+        # Create subplots
         fig, axes = plt.subplots(2, 1, figsize=(10, 10))
-        sns.barplot(x=interactions_per_month.index,
-                    y=interactions_per_month.values, ax=axes[0], palette='Blues')
+
+        # Monthly Plot
+        sns.barplot(x=average_interactions_per_month.index,
+                    y=average_interactions_per_month.values, ax=axes[0], palette='Blues')
         axes[0].set_title('Average User Interactions by Month', fontsize=16)
         axes[0].set_xlabel('Month', fontsize=14)
         axes[0].set_ylabel('Average Number of Interactions', fontsize=14)
         axes[0].tick_params(axis='x', rotation=45)
         axes[0].grid(True, linestyle='--', linewidth=0.7)
 
-        sns.barplot(x=interactions_per_season.index,
-                    y=interactions_per_season.values, ax=axes[1], palette='coolwarm')
+        # Seasonal Plot
+        sns.barplot(x=average_interactions_per_season.index,
+                    y=average_interactions_per_season.values, ax=axes[1], palette='coolwarm')
         axes[1].set_title('Average User Interactions by Season', fontsize=16)
         axes[1].set_xlabel('Season', fontsize=14)
         axes[1].set_ylabel('Average Number of Interactions', fontsize=14)
@@ -125,8 +154,9 @@ class SeasonalityAnalysis:
         plt.tight_layout()
         return fig
 
-
 # TopRecipesAnalysis class to analyze and visualize the most popular recipes
+
+
 class TopRecipesAnalysis:
     def __init__(self, recipes_df, interactions_df):
         self.recipes_df = recipes_df
