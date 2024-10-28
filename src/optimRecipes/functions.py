@@ -137,9 +137,23 @@ class TopRecipesAnalysis:
             top_recipes, ['recipe_id', 'name', 'rating'])
 
         # Plot the results
-        self._plot_top_recipes(grouped_df)
-        self._display_selected_recipe_details(merged_df, grouped_df)
-        self._plot_wordcloud(grouped_df, merged_df)
+        
+        st.title("Top Recipes Analysis")
+        if st.button("Display recipes that received the most positif ratings over the years"):
+            self._plot_top_recipes(grouped_df)
+            
+        if st.button("Display recipes that received the most positif ratings between 2000 and  2010"):
+            self._plot_top_recipes_from_2000_to_2010(grouped_df)
+            
+        if st.button("Display recipes that received the most positif ratings between 2010 and  2018"):
+            self._plot_top_recipes_from_2010_to_2018(grouped_df)
+            
+        if st.button("Display selected recipes details"):
+            self._display_selected_recipe_details(merged_df, grouped_df)
+
+        #self._plot_top_recipes(grouped_df)
+        #self._display_selected_recipe_details(merged_df, grouped_df)
+        #self._plot_wordcloud(grouped_df, merged_df)
 
     def _format_to_datetime(self, df, column_name):
         df[column_name] = pd.to_datetime(df[column_name], errors='coerce')
@@ -170,7 +184,7 @@ class TopRecipesAnalysis:
         return df.groupby(on_attributes).size().reset_index(name='count')
 
     def _plot_top_recipes(self, grouped_df):
-        st.title("Top 50 Most Popular Recipes Based on Ratings and Comments")
+        st.title("Top 50 Most Popular Recipes Based on Ratings and Comments all over the Years")
         sns.set(style="whitegrid")
 
         # Create a unique color palette for each recipe_id
@@ -194,12 +208,17 @@ class TopRecipesAnalysis:
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.legend(title='Rating', loc='upper right')
         st.pyplot(fig)
+        
+    def _plot_top_recipes_from_2000_to_2010(self, grouped_df):
+        pass
+    
+    def _plot_top_recipes_from_2010_to_2018(self, grouped_df):
+        pass
 
     def _display_selected_recipe_details(self, merged_df, grouped_df):
         recipe_id = st.selectbox(
             "View recipe details:", grouped_df['recipe_id'].unique())
         selected_recipe = merged_df[merged_df['recipe_id'] == recipe_id]
-        st.write(selected_recipe.head(10))
 
         # Format 'date' and extract 'year' for rating evolution
         selected_recipe = self._format_to_datetime(selected_recipe, 'date')
@@ -215,8 +234,7 @@ class TopRecipesAnalysis:
         sns.lineplot(x='year', y='count', hue='rating',
                      data=grouped_by_date, palette='coolwarm', ax=ax)
 
-        ax.set_title(f"Evolution of Ratings for Recipe {
-                     recipe_id} by Year and Rating Class", fontsize=18)
+        ax.set_title(f"Evolution of Ratings for Recipe {recipe_id} by Year and Rating Class", fontsize=18)
         ax.set_xlabel('Year', fontsize=14)
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.set_xticks(unique_years)
@@ -225,7 +243,11 @@ class TopRecipesAnalysis:
 
         detailed_df = self._group_by_attribute_count(
             selected_recipe, ['recipe_id', 'date', 'rating'])
-        st.write(detailed_df.head())
+        # Affiche les détails de la recette
+        st.subheader(f"WordCloud for the recipe {recipe_id}")
+
+        # Affiche le Word Cloud des commentaires
+        self._plot_review_wordcloud(selected_recipe, recipe_id)
 
     def _plot_wordcloud(self, grouped_df, merged_df):
         unique_recipes = merged_df.drop_duplicates(subset=['recipe_id'])
@@ -241,3 +263,23 @@ class TopRecipesAnalysis:
         ax_wordcloud.set_title(
             'Word Cloud of Tags for Popular Recipes', fontsize=16)
         st.pyplot(fig_wordcloud)
+        
+        
+    def _plot_review_wordcloud(self, merged_df, recipe_id):
+        # Filtre les commentaires pour la recette sélectionnée
+        selected_reviews = merged_df[merged_df['recipe_id'] == recipe_id]['review'].dropna()
+
+        if not selected_reviews.empty:
+            # Concatène tous les commentaires pour créer le Word Cloud
+            review_text = " ".join(selected_reviews)
+            wordcloud = WordCloud(
+                width=800, height=400, background_color='white', colormap='plasma').generate(review_text)
+
+            # Affiche le Word Cloud
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.imshow(wordcloud, interpolation='bilinear')
+            ax.axis('off')
+            ax.set_title(f'WordCloud for the recipe {recipe_id}', fontsize=16)
+            st.pyplot(fig)
+        else:
+            st.write("Aucun commentaire pour cette recette.")
