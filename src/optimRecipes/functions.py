@@ -17,25 +17,8 @@ class DataExtractor:
     @st.cache_data
     # Use _self to avoid Streamlit's hashing error
     def extract_and_load_data(_self):
-        try:
-            print(f"Loading data from: {_self.zip_file_path}")
-            with zipfile.ZipFile(_self.zip_file_path, 'r') as zip_ref:
-                zip_ref.extractall("extracted_data")
-
-            _self.interactions_df = pd.read_csv(
-                "extracted_data/RAW_interactions.csv")
-            _self.recipes_df = pd.read_csv("extracted_data/RAW_recipes.csv")
-
-            # Convert 'date' column in interactions to datetime
-            _self.interactions_df['date'] = pd.to_datetime(
-                _self.interactions_df['date'], errors='coerce', infer_datetime_format=True
-            )
-            print(f"Number of unparsed dates: {
-                  _self.interactions_df['date'].isna().sum()}")
-            print("Data loaded successfully!")
-        except Exception as e:
-            print(f"Error loading data: {e}")
-            raise
+        _self.interactions_df= pd.read_csv('/Users/habibatasamake/Desktop/MS_IA/BGDIA700 - Kit Big Data/Projet/archive/RAW_interactions.csv')
+        _self.recipes_df = pd.read_csv('/Users/habibatasamake/Desktop/MS_IA/BGDIA700 - Kit Big Data/Projet/archive/RAW_recipes.csv')
         return _self.interactions_df, _self.recipes_df
 
 
