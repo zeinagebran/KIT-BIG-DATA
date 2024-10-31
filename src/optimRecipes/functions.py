@@ -48,18 +48,16 @@ def get_data(zip_file_path):
 
 class WeeklyAnalysis:
     def __init__(self, interactions_df):
+        # Store the dataframe and ensure the 'date' column is in datetime format
         self.interactions_df = interactions_df
-
-    def plot_mean_interactions(self):
-        # Ensure 'date' is a datetime object
         self.interactions_df['date'] = pd.to_datetime(
             self.interactions_df['date'], errors='coerce')
-
-        # Extract year and day of the week
+        # Extract year and day of the week for analysis
         self.interactions_df['year'] = self.interactions_df['date'].dt.year
         self.interactions_df['day_of_week'] = self.interactions_df['date'].dt.day_name(
         )
 
+    def plot_mean_interactions(self):
         # Calculate interactions per day of the week for each year
         interactions_per_day_yearly = self.interactions_df.groupby(
             ['year', 'day_of_week']).size().unstack(fill_value=0)
@@ -86,47 +84,61 @@ class WeeklyAnalysis:
         ax.grid(True, linestyle='--', linewidth=0.7)
         return fig
 
+    def plot_interactions_for_year(self, year):
+        # Filter the data for the selected year
+        yearly_data = self.interactions_df[self.interactions_df['year'] == year]
 
+        # Count interactions per day of the week
+        interactions_per_day = yearly_data['day_of_week'].value_counts().reindex(
+            ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], fill_value=0
+        )
+
+        # Plotting
+        fig, ax = plt.subplots(figsize=(8, 6))
+        interactions_per_day.plot(
+            kind='bar', ax=ax, color='skyblue', edgecolor='black')
+        ax.set_title(f'User Interactions by Day of the Week for {
+                     year}', fontsize=16)
+        ax.set_xlabel('Day of the Week', fontsize=14)
+        ax.set_ylabel('Number of Interactions', fontsize=14)
+        plt.xticks(rotation=45, fontsize=12)
+        plt.yticks(fontsize=12)
+        ax.grid(True, linestyle='--', linewidth=0.7)
+        return fig
 # SeasonalityAnalysis class for seasonal interaction analysis
 
 
 class SeasonalityAnalysis:
     def __init__(self, interactions_df):
         self.interactions_df = interactions_df
-
-    def plot_seasonality(self):
-        # Ensure 'date' is a datetime object
         self.interactions_df['date'] = pd.to_datetime(
             self.interactions_df['date'], errors='coerce')
-
-        # Extract year, month, and season
         self.interactions_df['year'] = self.interactions_df['date'].dt.year
         self.interactions_df['month'] = self.interactions_df['date'].dt.month_name(
         )
-        self.interactions_df['season'] = (
-            self.interactions_df['date'].dt.month - 1) // 3 + 1
-        self.interactions_df['season'] = self.interactions_df['season'].map(
-            {1: 'Winter', 2: 'Spring', 3: 'Summer', 4: 'Fall'}
-        )
 
-        # Calculate interactions per month and reindex to maintain order
+        # Ensure month values are integers, then map to seasons
+        self.interactions_df['season'] = self.interactions_df['date'].dt.month.map({
+            12: 'Winter', 1: 'Winter', 2: 'Winter',
+            3: 'Spring', 4: 'Spring', 5: 'Spring',
+            6: 'Summer', 7: 'Summer', 8: 'Summer',
+            9: 'Fall', 10: 'Fall', 11: 'Fall'
+        }).fillna('Unknown')
+
+    def plot_seasonality(self):
+        # Plot average interactions across all years (existing code)
         interactions_per_month = self.interactions_df.groupby('month').size()
         ordered_months = ['January', 'February', 'March', 'April', 'May', 'June',
                           'July', 'August', 'September', 'October', 'November', 'December']
         interactions_per_month = interactions_per_month.reindex(
             ordered_months, fill_value=0)
-
-        # Calculate average interactions per month
         average_interactions_per_month = interactions_per_month / \
             self.interactions_df['year'].nunique()
 
-        # Calculate interactions per season and reindex to maintain order
         interactions_per_season = self.interactions_df.groupby('season').size()
         ordered_seasons = ['Winter', 'Spring', 'Summer', 'Fall']
         interactions_per_season = interactions_per_season.reindex(
             ordered_seasons, fill_value=0)
-
-        # Calculate average interactions per season
         average_interactions_per_season = interactions_per_season / \
             self.interactions_df['year'].nunique()
 
@@ -154,6 +166,47 @@ class SeasonalityAnalysis:
         plt.tight_layout()
         return fig
 
+    def plot_seasonality_for_year(self, year):
+        # Filter interactions for the selected year
+        yearly_data = self.interactions_df[self.interactions_df['year'] == year]
+
+        # Monthly interactions
+        interactions_per_month = yearly_data['month'].value_counts().reindex(
+            ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                'August', 'September', 'October', 'November', 'December'],
+            fill_value=0
+        )
+
+        # Seasonal interactions
+        interactions_per_season = yearly_data['season'].value_counts().reindex(
+            ['Winter', 'Spring', 'Summer', 'Fall'], fill_value=0
+        )
+
+        # Create subplots
+        fig, axes = plt.subplots(2, 1, figsize=(10, 10))
+
+        # Monthly Plot
+        sns.barplot(x=interactions_per_month.index,
+                    y=interactions_per_month.values, ax=axes[0], palette='Blues')
+        axes[0].set_title(f'User Interactions by Month for {
+                          year}', fontsize=16)
+        axes[0].set_xlabel('Month', fontsize=14)
+        axes[0].set_ylabel('Number of Interactions', fontsize=14)
+        axes[0].tick_params(axis='x', rotation=45)
+        axes[0].grid(True, linestyle='--', linewidth=0.7)
+
+        # Seasonal Plot
+        sns.barplot(x=interactions_per_season.index,
+                    y=interactions_per_season.values, ax=axes[1], palette='coolwarm')
+        axes[1].set_title(f'User Interactions by Season for {
+                          year}', fontsize=16)
+        axes[1].set_xlabel('Season', fontsize=14)
+        axes[1].set_ylabel('Number of Interactions', fontsize=14)
+        axes[1].tick_params(axis='x', rotation=0)
+        axes[1].grid(True, linestyle='--', linewidth=0.7)
+
+        plt.tight_layout()
+        return fig
 # TopRecipesAnalysis class to analyze and visualize the most popular recipes
 
 
