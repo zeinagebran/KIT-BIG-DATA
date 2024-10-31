@@ -143,13 +143,13 @@ class TopRecipesAnalysis:
             self._plot_top_recipes(grouped_df)
             
         if st.button("Display recipes that received the most positif ratings between 2000 and  2010"):
-            self._plot_top_recipes_from_2000_to_2010(grouped_df)
+            self._plot_top_recipes_from_2000_to_2010(filtered_df)
             
         if st.button("Display recipes that received the most positif ratings between 2010 and  2018"):
-            self._plot_top_recipes_from_2010_to_2018(grouped_df)
+            self._plot_top_recipes_from_2010_to_2018(filtered_df)
             
-        if st.button("Display selected recipes details"):
-            self._display_selected_recipe_details(merged_df, grouped_df)
+        #if st.button("Display selected recipes details"):
+        self._display_selected_recipe_details(merged_df, grouped_df)
 
         #self._plot_top_recipes(grouped_df)
         #self._display_selected_recipe_details(merged_df, grouped_df)
@@ -182,19 +182,16 @@ class TopRecipesAnalysis:
 
     def _group_by_attribute_count(self, df, on_attributes):
         return df.groupby(on_attributes).size().reset_index(name='count')
-
-    def _plot_top_recipes(self, grouped_df):
-        st.title("Top 50 Most Popular Recipes Based on Ratings and Comments all over the Years")
-        sns.set(style="whitegrid")
-
+    
+    def display_recipes(self, df):
         # Create a unique color palette for each recipe_id
-        unique_recipes = grouped_df['recipe_id'].unique()
+        unique_recipes = df['recipe_id'].unique()
         palette = sns.color_palette("husl", len(unique_recipes))
 
         # Create barplot with associated colors for each recipe
         fig, ax = plt.subplots(figsize=(20, 15))
         sns.barplot(x='recipe_id', y='count', hue='rating',
-                    data=grouped_df, palette=palette, dodge=True, ax=ax)
+                    data=df, palette=palette, dodge=True, ax=ax)
 
         # Add labels above bars
         for p in ax.patches:
@@ -208,17 +205,68 @@ class TopRecipesAnalysis:
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.legend(title='Rating', loc='upper right')
         st.pyplot(fig)
+
+    def _plot_top_recipes(self, grouped_df):
+        st.title("Top 50 Most Popular Recipes Based on Ratings and Comments over the Years")
+        sns.set(style="whitegrid")
+        self.display_recipes(grouped_df)
+
         
-    def _plot_top_recipes_from_2000_to_2010(self, grouped_df):
-        pass
+        
+    def _plot_top_recipes_from_2000_to_2010(self, df):
+        st.title("Top 50 Most Popular Recipes Based on Ratings and Comments between 2000 et 2010")
+        sns.set(style="whitegrid")
+        #verif pour eviter les erreurs
+        df['date'] = pd.to_datetime(df['date'], errors='coerce')
+        filtered_df = df[(df['date'].dt.year >= 2000) & (df['date'].dt.year <= 2010)]
+        # Get top recipes and their details
+        top_recipes = self._get_top_n_recipes_by_ratings(
+            filtered_df, 'recipe_id', 'rating', n=15)
+        grouped_df = self._group_by_attribute_count(
+            top_recipes, ['recipe_id', 'name', 'rating'])
+        self.display_recipes(grouped_df)
     
-    def _plot_top_recipes_from_2010_to_2018(self, grouped_df):
-        pass
+    def _plot_top_recipes_from_2010_to_2018(self, df):
+        st.title("Top 50 Most Popular Recipes Based on Ratings and Comments between 2010 et 2018")
+        sns.set(style="whitegrid")
+        #verif pour eviter les erreurs
+        df['date'] = pd.to_datetime(df['date'], errors='coerce')
+        filtered_df = df[(df['date'].dt.year >= 2010) & (df['date'].dt.year <= 2018)]
+        # Get top recipes and their details
+        top_recipes = self._get_top_n_recipes_by_ratings(
+            filtered_df, 'recipe_id', 'rating', n=15)
+        grouped_df = self._group_by_attribute_count(
+            top_recipes, ['recipe_id', 'name', 'rating'])
+        self.display_recipes(grouped_df)
 
     def _display_selected_recipe_details(self, merged_df, grouped_df):
-        recipe_id = st.selectbox(
-            "View recipe details:", grouped_df['recipe_id'].unique())
+        recipe_id = st.selectbox("View recipe details:", grouped_df['recipe_id'].unique(), key="recipe_select")
         selected_recipe = merged_df[merged_df['recipe_id'] == recipe_id]
+                
+        # Temps de préparation et nombre d'étapes
+        st.write(f"Temps de préparation : {selected_recipe['minutes'].iloc[0]} minutes")
+        st.write(f"Nombre d'étapes : {selected_recipe['n_steps'].iloc[0]}")
+
+        # Informations nutritionnelles        
+        nutrition_info = selected_recipe['nutrition'].iloc[0]
+        nutrition_info = nutrition_info.strip("[]").split(",")
+        st.write("Nutritional Informations(par portion) :")
+        st.write(f" - Calories : {nutrition_info[0]}")
+        st.write(f" - Sugar : {nutrition_info[1]} PVD")
+        st.write(f" - Sodium : {nutrition_info[2]} PVD")
+        st.write(f" - Protein : {nutrition_info[3]} PVD")
+        st.write(f" - Saturated Fat : {nutrition_info[4]} PVD")
+        st.write(f" - Carbohydrates : {nutrition_info[5]} PVD")
+
+        # Tags et Ingrédients
+        st.write("Tags : ", ", ".join(selected_recipe['tags'].iloc[0].strip("[]").split(",")))
+        st.write("Ingrédients : ", ", ".join(selected_recipe['ingredients'].iloc[0].strip("[]").split(",")))
+
+        # Popularité et note moyenne
+        average_rating = selected_recipe['rating'].mean()
+        total_ratings = selected_recipe['rating'].count()
+        st.write(f"Nombre total de notes : {total_ratings}")
+        st.write(f"Note moyenne : {average_rating:.1f}/5")
 
         # Format 'date' and extract 'year' for rating evolution
         selected_recipe = self._format_to_datetime(selected_recipe, 'date')
