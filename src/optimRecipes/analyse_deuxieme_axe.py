@@ -35,8 +35,7 @@ print(f"\nNumber of duplicate rows: {num_duplicates}")
 # Drop duplicates if necessary
 if num_duplicates > 0:
     interactions_df.drop_duplicates(inplace=True)
-    print(f"Duplicates removed. Number of remaining rows: {
-          len(interactions_df)}")
+    print(f"Duplicates removed. Number of remaining rows: {len(interactions_df)}")
 
 # Step 3: Data Type Conversion
 # Convert 'date' column to datetime format
@@ -158,8 +157,7 @@ duplicate_interactions_after = interactions_df.duplicated(
     subset=['user_id', 'recipe_id', 'date'])
 num_duplicate_interactions_after = duplicate_interactions_after.sum()
 
-print(f"Number of duplicate interactions (by user_id, recipe_id, and date) after cleaning: {
-      num_duplicate_interactions_after}")
+print(f"Number of duplicate interactions (by user_id, recipe_id, and date) after cleaning: {num_duplicate_interactions_after}")
 
 if num_duplicate_interactions_after > 0:
     print("Examples of duplicate interactions after cleaning:")

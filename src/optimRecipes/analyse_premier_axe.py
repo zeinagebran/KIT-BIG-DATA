@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-interactions_df = pd.read_csv("extracted_data/RAW_interactions.csv")
+interactions_df = pd.read_csv("./extracted_data/RAW_interactions.csv")
 
 # Step 1: Data Overview
 # Display the first few rows to understand the structure of the data
@@ -100,8 +100,7 @@ duplicate_interactions = interactions_df.duplicated(
     subset=['user_id', 'recipe_id', 'date'])
 num_duplicate_interactions = duplicate_interactions.sum()
 
-print(f"Number of duplicate interactions (by user_id, recipe_id, and date): {
-      num_duplicate_interactions}")
+print(f"Number of duplicate interactions (by user_id, recipe_id, and date): {num_duplicate_interactions}")
 
 if num_duplicate_interactions > 0:
     print("Examples of duplicate interactions:")

@@ -1,15 +1,17 @@
 import streamlit as st
 from functions import DataExtractor, WeeklyAnalysis
 
+from config import Config
 
-def show_weekly_analysis():
-    st.title("Weekly User Interaction Analysis")
-    st.markdown("Analyze user interactions based on the day of the week.")
+class weekly_analysis_module:
+    def __init__(self, interactions_df, cfg: Config):
+        self.cfg = cfg
+        self.interactions_df = interactions_df
 
-    zip_file_path = "C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\archive.zip"
-    data_extractor = DataExtractor(zip_file_path)
-    interactions_df, _ = data_extractor.extract_and_load_data()
+    def run(self):
+        st.title("Weekly User Interaction Analysis")
+        st.markdown("Analyze user interactions based on the day of the week.")
 
-    weekly_analysis = WeeklyAnalysis(interactions_df)
-    fig = weekly_analysis.plot_mean_interactions()
-    st.pyplot(fig)
+        weekly_analysis = WeeklyAnalysis(self.interactions_df)
+        fig = weekly_analysis.plot_mean_interactions()
+        st.pyplot(fig)

@@ -1,13 +1,18 @@
-import pandas as pd
+import math
+import numpy as np
 import matplotlib.pyplot as plt
+import itertools
+import pandas as pd
 import seaborn as sns
 import zipfile
 import streamlit as st
+from nltk.corpus import stopwords
 from wordcloud import WordCloud
 
+from config import Config
+from constants import *
+
 # DataExtractor class to handle data extraction and loading
-
-
 class DataExtractor:
     def __init__(self, zip_file_path):
         self.zip_file_path = zip_file_path
@@ -30,8 +35,7 @@ class DataExtractor:
             _self.interactions_df['date'] = pd.to_datetime(
                 _self.interactions_df['date'], errors='coerce', infer_datetime_format=True
             )
-            print(f"Number of unparsed dates: {
-                  _self.interactions_df['date'].isna().sum()}")
+            print(f"Number of unparsed dates: {_self.interactions_df['date'].isna().sum()}")
             print("Data loaded successfully!")
         except Exception as e:
             print(f"Error loading data: {e}")
@@ -51,31 +55,23 @@ class WeeklyAnalysis:
         self.interactions_df = interactions_df
 
     def plot_mean_interactions(self):
-        # Ensure 'date' is a datetime object
         self.interactions_df['date'] = pd.to_datetime(
             self.interactions_df['date'], errors='coerce')
-
-        # Extract year and day of the week
-        self.interactions_df['year'] = self.interactions_df['date'].dt.year
         self.interactions_df['day_of_week'] = self.interactions_df['date'].dt.day_name(
         )
 
-        # Calculate interactions per day of the week for each year
-        interactions_per_day_yearly = self.interactions_df.groupby(
-            ['year', 'day_of_week']).size().unstack(fill_value=0)
-
-        # Calculate the mean interactions per day across all years
-        mean_interactions_per_day = interactions_per_day_yearly.mean()
+        # Calculate interactions per day of the week
+        interactions_per_day = self.interactions_df.groupby(
+            'day_of_week').size()
 
         # Reorder the days of the week for better readability
-        ordered_days = ['Monday', 'Tuesday', 'Wednesday',
-                        'Thursday', 'Friday', 'Saturday', 'Sunday']
-        mean_interactions_per_day = mean_interactions_per_day.reindex(
-            ordered_days, fill_value=0)
+        interactions_per_day = interactions_per_day.reindex(
+            ['Monday', 'Tuesday', 'Wednesday', 'Thursday',
+                'Friday', 'Saturday', 'Sunday']
+        )
 
-        # Plotting
         fig, ax = plt.subplots(figsize=(8, 6))
-        mean_interactions_per_day.plot(
+        interactions_per_day.plot(
             kind='bar', ax=ax, color='skyblue', edgecolor='black')
         ax.set_title(
             'Average User Interactions by Day of the Week', fontsize=16)
@@ -88,63 +84,41 @@ class WeeklyAnalysis:
 
 
 # SeasonalityAnalysis class for seasonal interaction analysis
-
-
 class SeasonalityAnalysis:
     def __init__(self, interactions_df):
         self.interactions_df = interactions_df
 
     def plot_seasonality(self):
-        # Ensure 'date' is a datetime object
         self.interactions_df['date'] = pd.to_datetime(
             self.interactions_df['date'], errors='coerce')
-
-        # Extract year, month, and season
         self.interactions_df['year'] = self.interactions_df['date'].dt.year
         self.interactions_df['month'] = self.interactions_df['date'].dt.month_name(
         )
-        self.interactions_df['season'] = (
-            self.interactions_df['date'].dt.month - 1) // 3 + 1
+        self.interactions_df['season'] = self.interactions_df['date'].dt.month % 12 // 3 + 1
         self.interactions_df['season'] = self.interactions_df['season'].map(
             {1: 'Winter', 2: 'Spring', 3: 'Summer', 4: 'Fall'}
         )
 
-        # Calculate interactions per month and reindex to maintain order
         interactions_per_month = self.interactions_df.groupby('month').size()
-        ordered_months = ['January', 'February', 'March', 'April', 'May', 'June',
-                          'July', 'August', 'September', 'October', 'November', 'December']
-        interactions_per_month = interactions_per_month.reindex(
-            ordered_months, fill_value=0)
+        ordered_months = MONTHS_LIST
+        interactions_per_month = interactions_per_month.reindex(ordered_months)
 
-        # Calculate average interactions per month
-        average_interactions_per_month = interactions_per_month / \
-            self.interactions_df['year'].nunique()
-
-        # Calculate interactions per season and reindex to maintain order
         interactions_per_season = self.interactions_df.groupby('season').size()
-        ordered_seasons = ['Winter', 'Spring', 'Summer', 'Fall']
+        ordered_seasons = SEASONS_LIST
         interactions_per_season = interactions_per_season.reindex(
-            ordered_seasons, fill_value=0)
+            ordered_seasons)
 
-        # Calculate average interactions per season
-        average_interactions_per_season = interactions_per_season / \
-            self.interactions_df['year'].nunique()
-
-        # Create subplots
         fig, axes = plt.subplots(2, 1, figsize=(10, 10))
-
-        # Monthly Plot
-        sns.barplot(x=average_interactions_per_month.index,
-                    y=average_interactions_per_month.values, ax=axes[0], palette='Blues')
+        sns.barplot(x=interactions_per_month.index,
+                    y=interactions_per_month.values, ax=axes[0], palette='Blues')
         axes[0].set_title('Average User Interactions by Month', fontsize=16)
         axes[0].set_xlabel('Month', fontsize=14)
         axes[0].set_ylabel('Average Number of Interactions', fontsize=14)
         axes[0].tick_params(axis='x', rotation=45)
         axes[0].grid(True, linestyle='--', linewidth=0.7)
 
-        # Seasonal Plot
-        sns.barplot(x=average_interactions_per_season.index,
-                    y=average_interactions_per_season.values, ax=axes[1], palette='coolwarm')
+        sns.barplot(x=interactions_per_season.index,
+                    y=interactions_per_season.values, ax=axes[1], palette='coolwarm')
         axes[1].set_title('Average User Interactions by Season', fontsize=16)
         axes[1].set_xlabel('Season', fontsize=14)
         axes[1].set_ylabel('Average Number of Interactions', fontsize=14)
@@ -154,9 +128,8 @@ class SeasonalityAnalysis:
         plt.tight_layout()
         return fig
 
+
 # TopRecipesAnalysis class to analyze and visualize the most popular recipes
-
-
 class TopRecipesAnalysis:
     def __init__(self, recipes_df, interactions_df):
         self.recipes_df = recipes_df
@@ -262,8 +235,7 @@ class TopRecipesAnalysis:
         sns.lineplot(x='year', y='count', hue='rating',
                      data=grouped_by_date, palette='coolwarm', ax=ax)
 
-        ax.set_title(f"Evolution of Ratings for Recipe {
-                     recipe_id} by Year and Rating Class", fontsize=18)
+        ax.set_title(f"Evolution of Ratings for Recipe {recipe_id} by Year and Rating Class", fontsize=18)
         ax.set_xlabel('Year', fontsize=14)
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.set_xticks(unique_years)
@@ -288,3 +260,73 @@ class TopRecipesAnalysis:
         ax_wordcloud.set_title(
             'Word Cloud of Tags for Popular Recipes', fontsize=16)
         st.pyplot(fig_wordcloud)
+
+
+class CommonWordsAnalysis:
+
+    def __init__(self, recipes_df, interactions_df, cfg):
+        self.cfg = cfg
+        self.recipes = recipes_df
+        self.interactions = interactions_df
+        self.min_rating = cfg.min_rating
+        self.min_num_ratings = cfg.min_num_ratings
+        self.num_top_recipes = cfg.num_top_recipes
+
+    #def compute_interactions_df(self, recipe, interactions):
+    #    # recipe_histogram
+    #    recipe["submitted"] = recipe["submitted"].apply(lambda x: int(x[0:4]))
+    #    year_list = sorted(recipe["submitted"].unique())
+    #    num_recipes_list = [len(recipe[recipe["submitted"] == year]) for year in year_list]
+#
+    #    # Interactions histogram
+    #    interactions["date"] = interactions["date"].apply(lambda x: int(x[0:4]))
+    #    num_interactions_list = [len(interactions[interactions["date"] == year]) for year in year_list]
+#
+    #    # Combining the histograms
+    #    df = pd.DataFrame({"num_interactions": num_interactions_list,
+    #                       "num_recipes": num_recipes_list},
+    #                      index = year_list)
+    #    return df
+
+    def process_name(self, name: str):
+        name_array = [word for word in name.split(' ') if word != '']
+        return [word for word in name_array if word not in stopwords.words("english")]
+
+    def compute_average_rating(self, recipe_id: int):
+        ratings = self.interactions[self.interactions["recipe_id"] == recipe_id]["rating"].to_numpy()
+        if len(ratings) == 0:
+            return -1, 0
+        else:
+            return np.mean(ratings), len(ratings)
+
+    def format_recipe(self, year: int):
+        self.recipes["submitted"] = self.recipes["submitted"].apply(lambda x: int(x[0:4]))
+        self.recipes = self.recipes[self.recipes["submitted"] == year]
+        ratings = [self.compute_average_rating(recipe_id)[0] for recipe_id in self.recipes["id"].to_numpy()]
+        number_of_ratings = [self.compute_average_rating(recipe_id)[1] for recipe_id in self.recipes["id"].to_numpy()]
+        self.recipes["average_rating"] = ratings
+        self.recipes["number_of_ratings"] = number_of_ratings
+        self.recipes = self.recipes[self.recipes["average_rating"] != -1]
+
+    def compute_top_keywords(self):
+        top_recipe = self.recipes[(self.recipes["average_rating"] > self.min_rating) & (self.recipes["number_of_ratings"] > self.min_num_ratings)]
+        top_recipe["name"] = top_recipe["name"].apply(self.process_name)
+        top_keywords_list = list(itertools.chain.from_iterable(top_recipe["name"].to_numpy()))
+        top_keywords_to_count_dict = {}
+        for keyword in top_keywords_list:
+            if keyword in top_keywords_to_count_dict.keys():
+                top_keywords_to_count_dict[keyword] += 1
+            else:
+                top_keywords_to_count_dict[keyword] = 1
+        sorted_top_keywords_to_count_dict = sorted(top_keywords_to_count_dict.items(), key=lambda x: x[1], reverse=True)
+        N = sum([t[1] for t in sorted_top_keywords_to_count_dict[:self.num_top_recipes]])
+        text_array = [(t[0], t[1] / N) for t in sorted_top_keywords_to_count_dict[:self.num_top_recipes]]
+        cst = 1 / text_array[-1][1]
+        text_array = [(t[0], math.ceil(cst * t[1])) if math.ceil(cst * t[1]) <= 10 else (t[0], 10) for t in text_array]
+        text = " ".join([" ".join([t[0] for _ in range(t[1])]) for t in text_array])
+        wc = WordCloud(max_font_size=50, max_words=20, background_color="white", relative_scaling=1).generate(text)
+        return wc
+
+def prepare_directories(cfg: Config):
+    cfg.logging_dir.mkdir(parents=True, exist_ok=True)
+    cfg.run_cfg_dir.mkdir(parents=True, exist_ok=True)
