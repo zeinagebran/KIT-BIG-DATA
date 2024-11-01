@@ -1,0 +1,34 @@
+#####
+### MODULES PYTHON pour le développement : (01/11/2024)
+#####
+
+### DEV : vérification de code, QA (code qualité)
+##1-Python linter :
+# PEP8 :
+pycodestyle
+# PEP257 :
+pydocstyle
+# flake8 : wrapper = pycodestyle + PyFlake + Mccabe
+flake8
+flake8-bugbear
+flake8-comprehensions
+# pylama : wrapper = pycodestyle + PyFlake + Mccabe + pydocstyle,pylint,Radon,mypy
+pylama[all]
+
+##2- SQL linter 
+sqlfluff
+
+
+### DEV : auto-correction
+# isort : range les includes
+isort
+#manuel = autopep8 -a -i -p2 -r -v *.py	/ [-i=--in-place -> --diff]
+autopep8
+
+### DEV : standard test
+pytest
+pytest-mock
+
+### DEV : doc
+sphinx
+sphinx-rtd-theme
