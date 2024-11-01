@@ -17,7 +17,7 @@ recipes based on user feedback (ratings and comments).
 
 _____
 ## Usage :
-
+Web site : ([optimRecipes](https://ms-ia-bgdia700-kit-big-data.streamlit.app/))
 
 _____
 ### Développeurs
