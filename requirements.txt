@@ -1,7 +1,8 @@
 # modules partie DATA/IA
 matplotlib
-pandas
 numpy
+pandas
+seaborn
 
 # modules partie Web
 streamlit
