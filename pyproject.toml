@@ -45,7 +45,7 @@ classifiers = [ #for pypi
     # Specify the Python versions you support here.
     "Programming Language :: Python :: 3",
 ]
-keywords = ["IA", "data", "webapp']
+keywords = ["IA", "data", "webapp"]
 requires-python = "^3.12"
 # dependencies = [
 #     "requests",',
