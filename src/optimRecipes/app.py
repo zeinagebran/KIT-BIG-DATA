@@ -4,7 +4,8 @@ from analysis_seasonality import show_seasonality_analysis
 from top_50_analysis import show_top_50_analysis
 
 # Set page configuration
-st.set_page_config(page_title="Enhancing User Interaction", page_icon="📊", layout="centered")
+st.set_page_config(page_title="Enhancing User Interaction",
+                   page_icon="📊", layout="centered")
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
@@ -25,10 +26,10 @@ if section == "Home":
     st.markdown("""
     ### Analysis Sections:
     1. **Weekly User Interaction Analysis**: Understand when users are most active.
-    2. **Top 50 Most Popular Recipes**: Explore the recipes that generate the most interest.
-    3. **Characteristics of the Top Recipes**: Analyze features such as preparation time.
-    4. **Most Frequent Words in Recipe Titles**: Identify trends in recipe titles.
-    5. **Seasonality Analysis**: Analyze user interactions by month and season.
+    2. **Seasonality Analysis**: Analyze user interactions by month and season.
+    3. **Top 50 Most Popular Recipes**: Explore the recipes that generate the most interest.
+    4. **Characteristics of the Top Recipes**: Analyze features such as preparation time.
+    5. **Most Frequent Words in Recipe Titles**: Identify trends in recipe titles.
     """)
 
 # Weekly Interaction Analysis Page
