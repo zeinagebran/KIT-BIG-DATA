@@ -9,7 +9,22 @@ from wordcloud import WordCloud
 
 
 class DataExtractor:
+    """
+    A class to handle data extraction and loading for recipe and interaction datasets stored in a zip file.
+
+    Attributes:
+        zip_file_path (str): The file path to the zip file containing the datasets.
+        interactions_df (pd.DataFrame or None): DataFrame to store interactions data after loading.
+        recipes_df (pd.DataFrame or None): DataFrame to store recipes data after loading.
+    """
+
     def __init__(self, zip_file_path):
+        """
+        Initializes the DataExtractor class with the path to the zip file.
+
+        Args:
+            zip_file_path (str): The file path to the zip file containing the datasets.
+        """
         self.zip_file_path = zip_file_path
         self.interactions_df = None
         self.recipes_df = None
@@ -17,25 +32,21 @@ class DataExtractor:
     @st.cache_data
     # Use _self to avoid Streamlit's hashing error
     def extract_and_load_data(_self):
-        try:
-            print(f"Loading data from: {_self.zip_file_path}")
-            with zipfile.ZipFile(_self.zip_file_path, 'r') as zip_ref:
-                zip_ref.extractall("extracted_data")
+        """
+        Extracts and loads recipes and interactions datasets from a zip file.
 
-            _self.interactions_df = pd.read_csv(
-                "extracted_data/RAW_interactions.csv")
-            _self.recipes_df = pd.read_csv("extracted_data/RAW_recipes.csv")
+        This method reads CSV files for interactions and recipes directly from the specified path
+        and caches the results to optimize performance with Streamlit.
 
-            # Convert 'date' column in interactions to datetime
-            _self.interactions_df['date'] = pd.to_datetime(
-                _self.interactions_df['date'], errors='coerce', infer_datetime_format=True
-            )
-            print(f"Number of unparsed dates: {
-                  _self.interactions_df['date'].isna().sum()}")
-            print("Data loaded successfully!")
-        except Exception as e:
-            print(f"Error loading data: {e}")
-            raise
+        Returns:
+            tuple: A tuple containing two DataFrames:
+                - interactions_df (pd.DataFrame): DataFrame containing interactions data.
+                - recipes_df (pd.DataFrame): DataFrame containing recipes data.
+        """
+        _self.interactions_df = pd.read_csv(
+            'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_interactions.csv')
+        _self.recipes_df = pd.read_csv(
+            'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_recipes.csv')
         return _self.interactions_df, _self.recipes_df
 
 
@@ -47,6 +58,13 @@ def get_data(zip_file_path):
 
 
 class WeeklyAnalysis:
+    """
+    A class to analyze and visualize the average number of user interactions by day of the week.
+
+    Attributes:
+        interactions_df (pd.DataFrame): DataFrame containing interactions data.
+    """
+
     def __init__(self, interactions_df):
         # Store the dataframe and ensure the 'date' column is in datetime format
         self.interactions_df = interactions_df
@@ -109,7 +127,20 @@ class WeeklyAnalysis:
 
 
 class SeasonalityAnalysis:
+    """
+    A class to analyze and visualize seasonal trends in user interactions.
+
+    Attributes:
+        interactions_df (pd.DataFrame): DataFrame containing interactions data with a 'date' column.
+    """
+
     def __init__(self, interactions_df):
+        """
+        Initializes the SeasonalityAnalysis class with a DataFrame of interactions data.
+
+        Args:
+            interactions_df (pd.DataFrame): DataFrame containing interactions data, including a 'date' column.
+        """
         self.interactions_df = interactions_df
         self.interactions_df['date'] = pd.to_datetime(
             self.interactions_df['date'], errors='coerce')
@@ -211,11 +242,30 @@ class SeasonalityAnalysis:
 
 
 class TopRecipesAnalysis:
+    """
+    A class to analyze and visualize the most popular recipes based on ratings and interactions data.
+
+    Attributes:
+        recipes_df (pd.DataFrame): DataFrame containing recipe data.
+        interactions_df (pd.DataFrame): DataFrame containing interactions data.
+    """
+
     def __init__(self, recipes_df, interactions_df):
+        """
+        Initializes the TopRecipesAnalysis class with recipes and interactions DataFrames.
+
+        Args:
+            recipes_df (pd.DataFrame): DataFrame containing recipe data.
+            interactions_df (pd.DataFrame): DataFrame containing interactions data.
+        """
         self.recipes_df = recipes_df
         self.interactions_df = interactions_df
 
     def display_popular_recipes_and_visualizations(self):
+        """
+        Displays the most popular recipes based on various criteria and provides options to visualize them.
+        Includes options to filter recipes by year range and display details for a selected recipe.
+        """
         # Format 'submitted' column and rename 'id' to 'recipe_id'
         self.recipes_df = self._format_to_datetime(
             self.recipes_df, 'submitted')
@@ -237,50 +287,140 @@ class TopRecipesAnalysis:
             top_recipes, ['recipe_id', 'name', 'rating'])
 
         # Plot the results
-        self._plot_top_recipes(grouped_df)
+
+        st.title("Top Recipes Analysis")
+        if st.button("Display recipes that received the most positif ratings over the years"):
+            self._plot_top_recipes(grouped_df)
+
+        if st.button("Display recipes that received the most positif ratings between 2000 and  2010"):
+            self._plot_top_recipes_from_2000_to_2010(filtered_df)
+
+        if st.button("Display recipes that received the most positif ratings between 2010 and  2018"):
+            self._plot_top_recipes_from_2010_to_2018(filtered_df)
+
+        # if st.button("Display selected recipes details"):
         self._display_selected_recipe_details(merged_df, grouped_df)
-        self._plot_wordcloud(grouped_df, merged_df)
+
+        # self._plot_top_recipes(grouped_df)
+        # self._display_selected_recipe_details(merged_df, grouped_df)
+        # self._plot_wordcloud(grouped_df, merged_df)
 
     def _format_to_datetime(self, df, column_name):
+        """
+        Converts a specified column in the DataFrame to datetime format.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing the column to be converted.
+            column_name (str): The name of the column to convert.
+
+        Returns:
+            pd.DataFrame: The modified DataFrame with the column in datetime format.
+        """
         df[column_name] = pd.to_datetime(df[column_name], errors='coerce')
         return df
 
     def _rename_column(self, df, old_name, new_name):
+        """
+        Renames a column in the DataFrame.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing the column to rename.
+            old_name (str): The current name of the column.
+            new_name (str): The new name for the column.
+
+        Returns:
+            pd.DataFrame: The modified DataFrame with the renamed column.
+        """
         df.rename(columns={old_name: new_name}, inplace=True)
         return df
 
     def _merge_with(self, df, other_df, on_attribute):
+        """
+        Merges two DataFrames on a specified attribute.
+
+        Args:
+            df (pd.DataFrame): The first DataFrame.
+            other_df (pd.DataFrame): The second DataFrame to merge with.
+            on_attribute (str): The column name on which to merge the DataFrames.
+
+        Returns:
+            pd.DataFrame: The merged DataFrame.
+        """
         return pd.merge(df, other_df, on=on_attribute)
 
     def _format_to_numeric(self, df, column_name):
+        """
+        Converts a specified column in the DataFrame to a numeric format.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing the column to convert.
+            column_name (str): The name of the column to convert.
+
+        Returns:
+            pd.DataFrame: The modified DataFrame with the column in numeric format.
+        """
         df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
         return df
 
     def _filter_positive_ratings(self, df, rating_column, threshold=4):
+        """
+        Filters the DataFrame for rows with ratings greater than or equal to the threshold.
+
+        Args:
+            df (pd.DataFrame): The DataFrame to filter.
+            rating_column (str): The name of the column containing ratings.
+            threshold (int, optional): The rating threshold. Defaults to 4.
+
+        Returns:
+            pd.DataFrame: The filtered DataFrame with ratings above or equal to the threshold.
+        """
         return df[df[rating_column] >= threshold]
 
     def _get_top_n_recipes_by_ratings(self, df, recipe_id_column, rating_column, n=15):
-        top_recipes = df.groupby(recipe_id_column).size(
-        ).reset_index(name='positive_ratings')
+        """
+        Retrieves the top N recipes based on the number of positive ratings.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing recipe ratings.
+            recipe_id_column (str): The column name for recipe IDs.
+            rating_column (str): The column name for ratings.
+            n (int, optional): The number of top recipes to retrieve. Defaults to 15.
+
+        Returns:
+            pd.DataFrame: The DataFrame containing the top N recipes by rating count.
+        """
+        # Filter positive ratings (assuming positive ratings are > 0 or some threshold)
+        positive_df = df[df[rating_column] > 0]
+
+        # Count positive ratings for each recipe
+        top_recipes = positive_df.groupby(
+            recipe_id_column).size().reset_index(name='positive_ratings')
+
+        # Sort recipes by the count of positive ratings in descending order and take the top N
         top_recipes_sorted = top_recipes.sort_values(
             by='positive_ratings', ascending=False).head(n)
+
+        # Return the DataFrame with only the top N recipes
         return df[df[recipe_id_column].isin(top_recipes_sorted[recipe_id_column])]
 
     def _group_by_attribute_count(self, df, on_attributes):
         return df.groupby(on_attributes).size().reset_index(name='count')
 
-    def _plot_top_recipes(self, grouped_df):
-        st.title("Top 50 Most Popular Recipes Based on Ratings and Comments")
-        sns.set(style="whitegrid")
+    def display_recipes(self, df):
+        """
+        Displays a bar plot of recipe ratings using seaborn.
 
+        Args:
+            df (pd.DataFrame): The DataFrame containing recipes and rating counts.
+        """
         # Create a unique color palette for each recipe_id
-        unique_recipes = grouped_df['recipe_id'].unique()
+        unique_recipes = df['recipe_id'].unique()
         palette = sns.color_palette("husl", len(unique_recipes))
 
         # Create barplot with associated colors for each recipe
         fig, ax = plt.subplots(figsize=(20, 15))
         sns.barplot(x='recipe_id', y='count', hue='rating',
-                    data=grouped_df, palette=palette, dodge=True, ax=ax)
+                    data=df, palette=palette, dodge=True, ax=ax)
 
         # Add labels above bars
         for p in ax.patches:
@@ -295,11 +435,99 @@ class TopRecipesAnalysis:
         ax.legend(title='Rating', loc='upper right')
         st.pyplot(fig)
 
+    def _plot_top_recipes(self, grouped_df):
+        """
+        Plots the top recipes based on ratings over the years.
+
+        Args:
+            grouped_df (pd.DataFrame): DataFrame with top recipes and ratings.
+        """
+        st.title(
+            "Top 50 Most Popular Recipes Based on Ratings and Comments over the Years")
+        sns.set(style="whitegrid")
+        self.display_recipes(grouped_df)
+
+    def _plot_top_recipes_from_2000_to_2010(self, df):
+        """
+        Plots top recipes based on ratings between the years 2000 and 2010.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing recipe data.
+        """
+        st.title(
+            "Top 50 Most Popular Recipes Based on Ratings and Comments between 2000 et 2010")
+        sns.set(style="whitegrid")
+        # verif pour eviter les erreurs
+        df['date'] = pd.to_datetime(df['date'], errors='coerce')
+        filtered_df = df[(df['date'].dt.year >= 2000) &
+                         (df['date'].dt.year <= 2010)]
+        # Get top recipes and their details
+        top_recipes = self._get_top_n_recipes_by_ratings(
+            filtered_df, 'recipe_id', 'rating', n=15)
+        grouped_df = self._group_by_attribute_count(
+            top_recipes, ['recipe_id', 'name', 'rating'])
+        self.display_recipes(grouped_df)
+
+    def _plot_top_recipes_from_2010_to_2018(self, df):
+        """
+        Plots top recipes based on ratings between the years 2010 and 2018.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing recipe data.
+        """
+        st.title(
+            "Top 50 Most Popular Recipes Based on Ratings and Comments between 2010 et 2018")
+        sns.set(style="whitegrid")
+        # verif pour eviter les erreurs
+        df['date'] = pd.to_datetime(df['date'], errors='coerce')
+        filtered_df = df[(df['date'].dt.year >= 2010) &
+                         (df['date'].dt.year <= 2018)]
+        # Get top recipes and their details
+        top_recipes = self._get_top_n_recipes_by_ratings(
+            filtered_df, 'recipe_id', 'rating', n=15)
+        grouped_df = self._group_by_attribute_count(
+            top_recipes, ['recipe_id', 'name', 'rating'])
+        self.display_recipes(grouped_df)
+
     def _display_selected_recipe_details(self, merged_df, grouped_df):
+        """
+        Displays detailed information and visualizations for a selected recipe.
+
+        Args:
+            merged_df (pd.DataFrame): DataFrame containing merged recipe and interaction data.
+            grouped_df (pd.DataFrame): DataFrame containing grouped recipe data.
+        """
         recipe_id = st.selectbox(
-            "View recipe details:", grouped_df['recipe_id'].unique())
+            "View recipe details:", grouped_df['recipe_id'].unique(), key="recipe_select")
         selected_recipe = merged_df[merged_df['recipe_id'] == recipe_id]
-        st.write(selected_recipe.head(10))
+
+        # Temps de préparation et nombre d'étapes
+        st.write(f"Temps de préparation : {
+                 selected_recipe['minutes'].iloc[0]} minutes")
+        st.write(f"Nombre d'étapes : {selected_recipe['n_steps'].iloc[0]}")
+
+        # Informations nutritionnelles
+        nutrition_info = selected_recipe['nutrition'].iloc[0]
+        nutrition_info = nutrition_info.strip("[]").split(",")
+        st.write("Nutritional Informations(par portion) :")
+        st.write(f" - Calories : {nutrition_info[0]}")
+        st.write(f" - Sugar : {nutrition_info[1]} PVD")
+        st.write(f" - Sodium : {nutrition_info[2]} PVD")
+        st.write(f" - Protein : {nutrition_info[3]} PVD")
+        st.write(f" - Saturated Fat : {nutrition_info[4]} PVD")
+        st.write(f" - Carbohydrates : {nutrition_info[5]} PVD")
+
+        # Tags et Ingrédients
+        st.write("Tags : ", ", ".join(
+            selected_recipe['tags'].iloc[0].strip("[]").split(",")))
+        st.write("Ingrédients : ", ", ".join(
+            selected_recipe['ingredients'].iloc[0].strip("[]").split(",")))
+
+        # Popularité et note moyenne
+        average_rating = selected_recipe['rating'].mean()
+        total_ratings = selected_recipe['rating'].count()
+        st.write(f"Nombre total de notes : {total_ratings}")
+        st.write(f"Note moyenne : {average_rating:.1f}/5")
 
         # Format 'date' and extract 'year' for rating evolution
         selected_recipe = self._format_to_datetime(selected_recipe, 'date')
@@ -325,9 +553,20 @@ class TopRecipesAnalysis:
 
         detailed_df = self._group_by_attribute_count(
             selected_recipe, ['recipe_id', 'date', 'rating'])
-        st.write(detailed_df.head())
+        # Affiche les détails de la recette
+        st.subheader(f"WordCloud for the recipe {recipe_id}")
+
+        # Affiche le Word Cloud des commentaires
+        self._plot_review_wordcloud(selected_recipe, recipe_id)
 
     def _plot_wordcloud(self, grouped_df, merged_df):
+        """
+        Generates and displays a word cloud of tags for popular recipes.
+
+        Args:
+            grouped_df (pd.DataFrame): DataFrame with recipe groupings.
+            merged_df (pd.DataFrame): DataFrame with recipe data.
+        """
         unique_recipes = merged_df.drop_duplicates(subset=['recipe_id'])
         tags_text = ' '.join(unique_recipes[unique_recipes['recipe_id'].isin(
             grouped_df['recipe_id'])]['ingredients'].explode().dropna().unique())
@@ -341,3 +580,30 @@ class TopRecipesAnalysis:
         ax_wordcloud.set_title(
             'Word Cloud of Tags for Popular Recipes', fontsize=16)
         st.pyplot(fig_wordcloud)
+
+    def _plot_review_wordcloud(self, merged_df, recipe_id):
+        """
+        Generates and displays a word cloud for reviews of a specific recipe.
+
+        Args:
+            merged_df (pd.DataFrame): DataFrame containing merged recipe and interaction data.
+            recipe_id (int): The ID of the recipe to generate a word cloud for.
+        """
+        # Filtre les commentaires pour la recette sélectionnée
+        selected_reviews = merged_df[merged_df['recipe_id']
+                                     == recipe_id]['review'].dropna()
+
+        if not selected_reviews.empty:
+            # Concatène tous les commentaires pour créer le Word Cloud
+            review_text = " ".join(selected_reviews)
+            wordcloud = WordCloud(
+                width=800, height=400, background_color='white', colormap='plasma').generate(review_text)
+
+            # Affiche le Word Cloud
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.imshow(wordcloud, interpolation='bilinear')
+            ax.axis('off')
+            ax.set_title(f'WordCloud for the recipe {recipe_id}', fontsize=16)
+            st.pyplot(fig)
+        else:
+            st.write("Aucun commentaire pour cette recette.")
