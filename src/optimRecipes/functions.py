@@ -44,9 +44,9 @@ class DataExtractor:
                 - recipes_df (pd.DataFrame): DataFrame containing recipes data.
         """
         _self.interactions_df = pd.read_csv(
-            '/Users/habibatasamake/Desktop/MS_IA/BGDIA700 - Kit Big Data/Projet/archive/RAW_interactions.csv')
+            'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_interactions.csv')
         _self.recipes_df = pd.read_csv(
-            '/Users/habibatasamake/Desktop/MS_IA/BGDIA700 - Kit Big Data/Projet/archive/RAW_recipes.csv')
+            'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_recipes.csv')
         return _self.interactions_df, _self.recipes_df
 
 
@@ -376,9 +376,9 @@ class TopRecipesAnalysis:
         """
         return df[df[rating_column] >= threshold]
 
-    def _get_top_n_recipes_by_ratings(self, df, recipe_id_column, n=15):
+    def _get_top_n_recipes_by_ratings(self, df, recipe_id_column, rating_column, n=15):
         """
-        Retrieves the top N recipes based on the number of ratings.
+        Retrieves the top N recipes based on the number of positive ratings.
 
         Args:
             df (pd.DataFrame): The DataFrame containing recipe ratings.
@@ -389,10 +389,18 @@ class TopRecipesAnalysis:
         Returns:
             pd.DataFrame: The DataFrame containing the top N recipes by rating count.
         """
-        top_recipes = df.groupby(recipe_id_column).size(
-        ).reset_index(name='positive_ratings')
+        # Filter positive ratings (assuming positive ratings are > 0 or some threshold)
+        positive_df = df[df[rating_column] > 0]
+
+        # Count positive ratings for each recipe
+        top_recipes = positive_df.groupby(
+            recipe_id_column).size().reset_index(name='positive_ratings')
+
+        # Sort recipes by the count of positive ratings in descending order and take the top N
         top_recipes_sorted = top_recipes.sort_values(
             by='positive_ratings', ascending=False).head(n)
+
+        # Return the DataFrame with only the top N recipes
         return df[df[recipe_id_column].isin(top_recipes_sorted[recipe_id_column])]
 
     def _group_by_attribute_count(self, df, on_attributes):
