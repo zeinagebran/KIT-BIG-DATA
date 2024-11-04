@@ -1,7 +1,8 @@
 import streamlit as st
 from functions import SeasonalityAnalysis
 
-from config import Config
+from optimRecipes.config import Config
+
 
 class seasonality_analysis_module:
     def __init__(self, interactions_df, cfg: Config):
@@ -23,7 +24,8 @@ class seasonality_analysis_module:
             st.pyplot(fig)
         else:
             # Dropdown to select the year
-            years_available = sorted(self.interactions_df['date'].dt.year.unique())
+            years_available = sorted(
+                self.interactions_df['date'].dt.year.unique())
             selected_year = st.selectbox(
                 "Select the Year", options=years_available)
 

@@ -1,8 +1,8 @@
 import sys
 import pyrallis
 from loguru import logger
+from optimRecipes.config import Config
 
-from config import Config
 
 class Logger:
     def __init__(self, cfg: Config):
@@ -14,7 +14,8 @@ class Logger:
         logger.remove()
         format = '<green>{time:YYYY-MM-DD HH:mm:ss}</green> <level>{message}</level>'
         logger.add(sys.stdout, colorize=True, format=format)
-        logger.add(self.cfg.logging_dir / 'log.txt', colorize=False, format=format)
+        logger.add(self.cfg.logging_dir / 'log.txt',
+                   colorize=False, format=format)
 
     def log_config(self):
         with (self.cfg.run_cfg_dir / 'config.yaml').open('w') as f:
@@ -28,5 +29,3 @@ class Logger:
     @staticmethod
     def log_error(msg: str):
         logger.error(msg)
-
-

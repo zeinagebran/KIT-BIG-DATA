@@ -3,8 +3,7 @@ import pyrallis
 from functions import prepare_directories
 
 from app import WebApp
-
-from config import Config
+from optimRecipes.config import Config
 
 
 @pyrallis.wrap()

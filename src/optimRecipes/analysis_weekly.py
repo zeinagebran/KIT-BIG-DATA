@@ -1,7 +1,8 @@
 import streamlit as st
 from functions import DataExtractor, WeeklyAnalysis
 
-from config import Config
+from optimRecipes.config import Config
+
 
 class weekly_analysis_module:
     def __init__(self, interactions_df, cfg: Config):

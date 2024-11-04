@@ -4,7 +4,7 @@ from analysis_seasonality import seasonality_analysis_module
 from top_50_analysis import top_50_analysis_module
 from most_common_words import most_common_words_module
 from logger import Logger
-from config import *
+from optimRecipes.config import *
 import pyrallis
 from functions import DataExtractor
 
