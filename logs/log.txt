@@ -117,3 +117,50 @@ run_cfg_dir: outputs
 zip_file_path: C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES
   PROJET\archive.zip
 
+2024-11-04 08:28:56 
+logging_dir: logs
+max_year: 2019
+min_num_ratings: 0
+min_rating: 4.5
+min_year: 1999
+num_top_recipes: 20
+run_cfg_dir: outputs
+zip_file_path: C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES
+  PROJET\archive.zip
+
+2024-11-04 08:29:00 Extracting data
+2024-11-04 08:29:01 
+logging_dir: logs
+max_year: 2019
+min_num_ratings: 0
+min_rating: 4.5
+min_year: 1999
+num_top_recipes: 20
+run_cfg_dir: outputs
+zip_file_path: C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES
+  PROJET\archive.zip
+
+2024-11-04 08:29:06 Extracting data
+2024-11-04 08:29:07 
+logging_dir: logs
+max_year: 2019
+min_num_ratings: 0
+min_rating: 4.5
+min_year: 1999
+num_top_recipes: 20
+run_cfg_dir: outputs
+zip_file_path: C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES
+  PROJET\archive.zip
+
+2024-11-04 08:29:11 Extracting data
+2024-11-04 08:29:12 
+logging_dir: logs
+max_year: 2019
+min_num_ratings: 0
+min_rating: 4.5
+min_year: 1999
+num_top_recipes: 20
+run_cfg_dir: outputs
+zip_file_path: C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES
+  PROJET\archive.zip
+
