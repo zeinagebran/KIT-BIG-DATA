@@ -70,7 +70,7 @@ class WebApp:
 
         # Weekly Interaction Analysis Page
         elif self.section == "Weekly Interaction Analysis":
-            self.seasonality_analysis_module.run()
+            self.weekly_analysis_module.run()
 
         # Seasonality Analysis Page
         elif self.section == "Seasonality Analysis":

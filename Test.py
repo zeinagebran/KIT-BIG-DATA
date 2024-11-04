@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 
-zip_file_path = "C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\archive.zip"
+zip_file_path = "C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\archive.zip"
 # extract
 
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
