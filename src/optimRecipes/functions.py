@@ -1,9 +1,15 @@
-import pandas as pd
+import math
+import numpy as np
 import matplotlib.pyplot as plt
+import itertools
+import pandas as pd
 import seaborn as sns
 import zipfile
 import streamlit as st
+from nltk.corpus import stopwords
 from wordcloud import WordCloud
+
+from config import Config
 
 # DataExtractor class to handle data extraction and loading
 
@@ -43,10 +49,30 @@ class DataExtractor:
                 - interactions_df (pd.DataFrame): DataFrame containing interactions data.
                 - recipes_df (pd.DataFrame): DataFrame containing recipes data.
         """
-        _self.interactions_df = pd.read_csv(
-            'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_interactions.csv')
-        _self.recipes_df = pd.read_csv(
-            'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_recipes.csv')
+        #_self.interactions_df = pd.read_csv(
+        #    'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_interactions.csv')
+        #_self.recipes_df = pd.read_csv(
+        #    'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_recipes.csv')
+
+        try:
+            print(f"Loading data from: {_self.zip_file_path}")
+            with zipfile.ZipFile(_self.zip_file_path, 'r') as zip_ref:
+                zip_ref.extractall("extracted_data")
+
+            _self.interactions_df = pd.read_csv(
+                "extracted_data/RAW_interactions.csv")
+            _self.recipes_df = pd.read_csv("extracted_data/RAW_recipes.csv")
+
+            # Convert 'date' column in interactions to datetime
+            _self.interactions_df['date'] = pd.to_datetime(
+                _self.interactions_df['date'], errors='coerce', infer_datetime_format=True
+            )
+            print(f"Number of unparsed dates: {_self.interactions_df['date'].isna().sum()}")
+            print("Data loaded successfully!")
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            raise
+
         return _self.interactions_df, _self.recipes_df
 
 
@@ -115,8 +141,7 @@ class WeeklyAnalysis:
         fig, ax = plt.subplots(figsize=(8, 6))
         interactions_per_day.plot(
             kind='bar', ax=ax, color='skyblue', edgecolor='black')
-        ax.set_title(f'User Interactions by Day of the Week for {
-                     year}', fontsize=16)
+        ax.set_title(f'User Interactions by Day of the Week for {year}', fontsize=16)
         ax.set_xlabel('Day of the Week', fontsize=14)
         ax.set_ylabel('Number of Interactions', fontsize=14)
         plt.xticks(rotation=45, fontsize=12)
@@ -219,8 +244,7 @@ class SeasonalityAnalysis:
         # Monthly Plot
         sns.barplot(x=interactions_per_month.index,
                     y=interactions_per_month.values, ax=axes[0], palette='Blues')
-        axes[0].set_title(f'User Interactions by Month for {
-                          year}', fontsize=16)
+        axes[0].set_title(f'User Interactions by Month for {year}', fontsize=16)
         axes[0].set_xlabel('Month', fontsize=14)
         axes[0].set_ylabel('Number of Interactions', fontsize=14)
         axes[0].tick_params(axis='x', rotation=45)
@@ -229,8 +253,7 @@ class SeasonalityAnalysis:
         # Seasonal Plot
         sns.barplot(x=interactions_per_season.index,
                     y=interactions_per_season.values, ax=axes[1], palette='coolwarm')
-        axes[1].set_title(f'User Interactions by Season for {
-                          year}', fontsize=16)
+        axes[1].set_title(f'User Interactions by Season for {year}', fontsize=16)
         axes[1].set_xlabel('Season', fontsize=14)
         axes[1].set_ylabel('Number of Interactions', fontsize=14)
         axes[1].tick_params(axis='x', rotation=0)
@@ -502,8 +525,7 @@ class TopRecipesAnalysis:
         selected_recipe = merged_df[merged_df['recipe_id'] == recipe_id]
 
         # Temps de préparation et nombre d'étapes
-        st.write(f"Temps de préparation : {
-                 selected_recipe['minutes'].iloc[0]} minutes")
+        st.write(f"Temps de préparation : {selected_recipe['minutes'].iloc[0]} minutes")
         st.write(f"Nombre d'étapes : {selected_recipe['n_steps'].iloc[0]}")
 
         # Informations nutritionnelles
@@ -543,8 +565,7 @@ class TopRecipesAnalysis:
         sns.lineplot(x='year', y='count', hue='rating',
                      data=grouped_by_date, palette='coolwarm', ax=ax)
 
-        ax.set_title(f"Evolution of Ratings for Recipe {
-                     recipe_id} by Year and Rating Class", fontsize=18)
+        ax.set_title(f"Evolution of Ratings for Recipe {recipe_id} by Year and Rating Class", fontsize=18)
         ax.set_xlabel('Year', fontsize=14)
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.set_xticks(unique_years)
@@ -607,3 +628,73 @@ class TopRecipesAnalysis:
             st.pyplot(fig)
         else:
             st.write("Aucun commentaire pour cette recette.")
+
+
+class CommonWordsAnalysis:
+
+    def __init__(self, recipes_df, interactions_df, cfg):
+        self.cfg = cfg
+        self.recipes = recipes_df
+        self.interactions = interactions_df
+        self.min_rating = cfg.min_rating
+        self.min_num_ratings = cfg.min_num_ratings
+        self.num_top_recipes = cfg.num_top_recipes
+
+    #def compute_interactions_df(self, recipe, interactions):
+    #    # recipe_histogram
+    #    recipe["submitted"] = recipe["submitted"].apply(lambda x: int(x[0:4]))
+    #    year_list = sorted(recipe["submitted"].unique())
+    #    num_recipes_list = [len(recipe[recipe["submitted"] == year]) for year in year_list]
+#
+    #    # Interactions histogram
+    #    interactions["date"] = interactions["date"].apply(lambda x: int(x[0:4]))
+    #    num_interactions_list = [len(interactions[interactions["date"] == year]) for year in year_list]
+#
+    #    # Combining the histograms
+    #    df = pd.DataFrame({"num_interactions": num_interactions_list,
+    #                       "num_recipes": num_recipes_list},
+    #                      index = year_list)
+    #    return df
+
+    def process_name(self, name: str):
+        name_array = [word for word in name.split(' ') if word != '']
+        return [word for word in name_array if word not in stopwords.words("english")]
+
+    def compute_average_rating(self, recipe_id: int):
+        ratings = self.interactions[self.interactions["recipe_id"] == recipe_id]["rating"].to_numpy()
+        if len(ratings) == 0:
+            return -1, 0
+        else:
+            return np.mean(ratings), len(ratings)
+
+    def format_recipe(self, year: int):
+        self.recipes["submitted"] = self.recipes["submitted"].apply(lambda x: int(x[0:4]))
+        self.recipes = self.recipes[self.recipes["submitted"] == year]
+        ratings = [self.compute_average_rating(recipe_id)[0] for recipe_id in self.recipes["id"].to_numpy()]
+        number_of_ratings = [self.compute_average_rating(recipe_id)[1] for recipe_id in self.recipes["id"].to_numpy()]
+        self.recipes["average_rating"] = ratings
+        self.recipes["number_of_ratings"] = number_of_ratings
+        self.recipes = self.recipes[self.recipes["average_rating"] != -1]
+
+    def compute_top_keywords(self):
+        top_recipe = self.recipes[(self.recipes["average_rating"] > self.min_rating) & (self.recipes["number_of_ratings"] > self.min_num_ratings)]
+        top_recipe["name"] = top_recipe["name"].apply(self.process_name)
+        top_keywords_list = list(itertools.chain.from_iterable(top_recipe["name"].to_numpy()))
+        top_keywords_to_count_dict = {}
+        for keyword in top_keywords_list:
+            if keyword in top_keywords_to_count_dict.keys():
+                top_keywords_to_count_dict[keyword] += 1
+            else:
+                top_keywords_to_count_dict[keyword] = 1
+        sorted_top_keywords_to_count_dict = sorted(top_keywords_to_count_dict.items(), key=lambda x: x[1], reverse=True)
+        N = sum([t[1] for t in sorted_top_keywords_to_count_dict[:self.num_top_recipes]])
+        text_array = [(t[0], t[1] / N) for t in sorted_top_keywords_to_count_dict[:self.num_top_recipes]]
+        cst = 1 / text_array[-1][1]
+        text_array = [(t[0], math.ceil(cst * t[1])) if math.ceil(cst * t[1]) <= 10 else (t[0], 10) for t in text_array]
+        text = " ".join([" ".join([t[0] for _ in range(t[1])]) for t in text_array])
+        wc = WordCloud(max_font_size=50, max_words=20, background_color="white", relative_scaling=1).generate(text)
+        return wc
+
+def prepare_directories(cfg: Config):
+    cfg.logging_dir.mkdir(parents=True, exist_ok=True)
+    cfg.run_cfg_dir.mkdir(parents=True, exist_ok=True)
