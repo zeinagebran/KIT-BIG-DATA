@@ -8,22 +8,27 @@ from config import *
 import pyrallis
 from functions import DataExtractor
 
+
 class WebApp:
     def __init__(self, cfg: Config):
-        #setup home page
+        # setup home page
         self.setup_home_page()
 
-        #Load data and initialize logger
+        # Load data and initialize logger
         self.cfg = cfg
         self.zip_file_path = cfg.zip_file_path
         self.interactions_df, self.recipes_df = self.load_data()
         self.logger = Logger(cfg=cfg)
 
-        #Initialize modules
-        self.seasonality_analysis_module = seasonality_analysis_module(self.interactions_df, cfg)
-        self.top_50_analysis_module = top_50_analysis_module(self.recipes_df, self.interactions_df, cfg)
-        self.weekly_analysis_module = weekly_analysis_module(self.interactions_df, cfg)
-        self.most_common_words_module = most_common_words_module(self.recipes_df, self.interactions_df, cfg)
+        # Initialize modules
+        self.seasonality_analysis_module = seasonality_analysis_module(
+            self.interactions_df, cfg)
+        self.top_50_analysis_module = top_50_analysis_module(
+            self.recipes_df, self.interactions_df, cfg)
+        self.weekly_analysis_module = weekly_analysis_module(
+            self.interactions_df, cfg)
+        self.most_common_words_module = most_common_words_module(
+            self.recipes_df, self.interactions_df, cfg)
 
     def load_data(self):
         Logger.log_info("Extracting data")
@@ -34,7 +39,8 @@ class WebApp:
 
     def setup_home_page(self):
         # Set page configuration
-        st.set_page_config(page_title="Enhancing User Interaction", page_icon="📊", layout="centered")
+        st.set_page_config(page_title="Enhancing User Interaction",
+                           page_icon="📊", layout="centered")
         # Sidebar for navigation
         st.sidebar.title("Navigation")
         self.section = st.sidebar.selectbox("Choose a section:", [
@@ -80,7 +86,3 @@ class WebApp:
 
         # Footer
         st.markdown("---\nUse the sidebar to navigate through the analysis.")
-
-
-
-
