@@ -185,7 +185,7 @@ class SeasonalityAnalysis:
         }).fillna('Unknown')
 
     def plot_seasonality(self):
-        # Plot average interactions across all years (existing code)
+        # Monthly interactions averaged across all years
         interactions_per_month = self.interactions_df.groupby('month').size()
         ordered_months = ['January', 'February', 'March', 'April', 'May', 'June',
                           'July', 'August', 'September', 'October', 'November', 'December']
@@ -194,6 +194,7 @@ class SeasonalityAnalysis:
         average_interactions_per_month = interactions_per_month / \
             self.interactions_df['year'].nunique()
 
+        # Seasonal interactions
         interactions_per_season = self.interactions_df.groupby('season').size()
         ordered_seasons = ['Winter', 'Spring', 'Summer', 'Fall']
         interactions_per_season = interactions_per_season.reindex(
@@ -201,12 +202,17 @@ class SeasonalityAnalysis:
         average_interactions_per_season = interactions_per_season / \
             self.interactions_df['year'].nunique()
 
+        # Define a unique color palette for each month
+        month_colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#FFC300', '#33FFF9',
+                        '#8E44AD', '#3498DB', '#2ECC71', '#E67E22', '#E74C3C', '#95A5A6']
+
         # Create subplots
         fig, axes = plt.subplots(2, 1, figsize=(10, 10))
 
-        # Monthly Plot
+        # Monthly Plot with unique colors for each month
         sns.barplot(x=average_interactions_per_month.index,
-                    y=average_interactions_per_month.values, ax=axes[0], palette='Blues')
+                    y=average_interactions_per_month.values,
+                    ax=axes[0], palette=month_colors)
         axes[0].set_title('Average User Interactions by Month', fontsize=16)
         axes[0].set_xlabel('Month', fontsize=14)
         axes[0].set_ylabel('Average Number of Interactions', fontsize=14)
@@ -215,7 +221,8 @@ class SeasonalityAnalysis:
 
         # Seasonal Plot
         sns.barplot(x=average_interactions_per_season.index,
-                    y=average_interactions_per_season.values, ax=axes[1], palette='coolwarm')
+                    y=average_interactions_per_season.values,
+                    ax=axes[1], palette='coolwarm')
         axes[1].set_title('Average User Interactions by Season', fontsize=16)
         axes[1].set_xlabel('Season', fontsize=14)
         axes[1].set_ylabel('Average Number of Interactions', fontsize=14)
@@ -232,7 +239,7 @@ class SeasonalityAnalysis:
         # Monthly interactions
         interactions_per_month = yearly_data['month'].value_counts().reindex(
             ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-                'August', 'September', 'October', 'November', 'December'],
+             'August', 'September', 'October', 'November', 'December'],
             fill_value=0
         )
 
@@ -241,12 +248,16 @@ class SeasonalityAnalysis:
             ['Winter', 'Spring', 'Summer', 'Fall'], fill_value=0
         )
 
+        # Define a unique color palette for each month
+        month_colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#FFC300', '#33FFF9',
+                        '#8E44AD', '#3498DB', '#2ECC71', '#E67E22', '#E74C3C', '#95A5A6']
+
         # Create subplots
         fig, axes = plt.subplots(2, 1, figsize=(10, 10))
 
-        # Monthly Plot
+        # Monthly Plot with unique colors for each month
         sns.barplot(x=interactions_per_month.index,
-                    y=interactions_per_month.values, ax=axes[0], palette='Blues')
+                    y=interactions_per_month.values, ax=axes[0], palette=month_colors)
         axes[0].set_title(f'User Interactions by Month for {
                           year}', fontsize=16)
         axes[0].set_xlabel('Month', fontsize=14)
