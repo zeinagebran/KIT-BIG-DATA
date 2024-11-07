@@ -93,7 +93,7 @@ autopep8 = "*"
 sphinx = "*"
 sphinx-rtd-theme = "*"
 
-# [tool.pytest.ini_options]
-# pythonpath = [
-#   "src"
-# ]
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
