@@ -5,6 +5,9 @@ import pyrallis
 import sys
 from pathlib import Path
 
+import nltk
+nltk.download('stopwords')
+
 
 @pyrallis.wrap()
 def main(cfg: Config):
