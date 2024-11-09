@@ -10,13 +10,16 @@ class top_50_analysis_module:
         self.interactions_df = interactions_df
 
     def run(self):
-        st.title("Top 50 Most Popular Recipes")
+        st.title("🍲 Top 15 Most Popular Recipes")
         st.markdown(
-            "Identify the recipes that users love the most based on ratings and comments."
+            """
+            ## 🌟 Discover the User Favorites!
+            Here, we showcase the recipes that have captured users' hearts. This analysis is based on **ratings** and **comments**, allowing you to explore:
+            - 🍴 Recipes with the highest popularity over the years
+            - 🎉 Top recipes for specific time periods
+            """
         )
 
-        top_recipes_analysis = TopRecipesAnalysis(
-            self.recipes_df, self.interactions_df)
-        # Modify the method to only return the top recipes and wordcloud figures
+        # Initialize the analysis
+        top_recipes_analysis = TopRecipesAnalysis(self.recipes_df, self.interactions_df)
         top_recipes_analysis.display_popular_recipes_and_visualizations()
-        # Remove fig and fig_wordcloud unpacking since they're not returned anymore

@@ -4,16 +4,17 @@ from analysis_seasonality import seasonality_analysis_module
 from top_50_analysis import top_50_analysis_module
 from most_common_words import most_common_words_module
 from logger import Logger
-from optimRecipes.config import *
-import pyrallis
+from optimRecipes.config import Config
 from functions import DataExtractor
+import pyrallis
+
+# Set page configuration
+st.set_page_config(page_title="Enhancing User Interaction",
+                   page_icon="📊", layout="centered")
 
 
 class WebApp:
     def __init__(self, cfg: Config):
-        # setup home page
-        self.setup_home_page()
-
         # Load data and initialize logger
         self.cfg = cfg
         self.zip_file_path = cfg.zip_file_path
@@ -37,52 +38,93 @@ class WebApp:
         interactions_df, recipes_df = data_extractor.extract_and_load_data()
         return interactions_df, recipes_df
 
-    def setup_home_page(self):
-        # Set page configuration
-        st.set_page_config(page_title="Enhancing User Interaction",
-                           page_icon="📊", layout="centered")
-        # Sidebar for navigation
-        st.sidebar.title("Navigation")
-        self.section = st.sidebar.selectbox("Choose a section:", [
-            "Home",
-            "Weekly Interaction Analysis",
-            "Seasonality Analysis",
-            "Top 50 Most Popular Recipes Based on Ratings and Comments",
-            "Most common words"
-        ])
+    def setup_navigation(self):
+        # Sidebar for navigation with a dropdown selector for instant response
+        st.sidebar.title("📍 Navigation")
+        section = st.sidebar.selectbox(
+            "Choose a section:",
+            [
+                "Home 🏠",
+                "Weekly Interaction 📅",
+                "Seasonality Analysis 🍂",
+                "Top 15 Recipes ⭐",
+                "Top Words 🔤"
+            ],
+
+        )
+        return section
 
     def run(self):
+        # Run navigation setup
+        section = self.setup_navigation()
+
         # Home Page
-        if self.section == "Home":
-            st.title("How to Improve User Interaction in Our Company")
+        if section == "Home 🏠":
+            st.title("Welcome to the Recipe Insights Hub! 🍲✨")
+
             st.markdown("""
-            Welcome to our **home page** dedicated to improving **user interactions**.
-            Here are the analysis sections covered:
-            """)
-            st.markdown("""
-            ### Analysis Sections:
-            1. **Weekly User Interaction Analysis**: Understand when users are most active.
-            2. **Top 50 Most Popular Recipes**: Explore the recipes that generate the most interest.
-            3. **Characteristics of the Top Recipes**: Analyze features such as preparation time.
-            4. **Most Frequent Words in Recipe Titles**: Identify trends in recipe titles.
-            5. **Seasonality Analysis**: Analyze user interactions by month and season.
+            ## 👋 Hello, Data Enthusiast!
+
+            We're here to help you **unlock the secrets** of user interactions in the world of recipes! Dive into our interactive analytics sections to see what makes a recipe popular, discover user behavior trends, and much more.
+
+            ### 🌟 What's Cooking in This Dashboard?
+
+            Here's a quick rundown of the tasty insights you'll find:
+
+            1. **Weekly Interaction 📅**
+            - **When are users most active?** Discover peak times and days when our community is buzzing with activity!
+
+            2. **Top 15 Recipes ⭐**
+            - **What's trending?** Uncover the most popular recipes based on ratings and comments.
+
+            3. **Recipe Insights 🔍**
+            - Get a deep dive into the **characteristics of top recipes**. Learn what makes these recipes stand out – from prep time to ingredients.
+
+            4. **Top Words 🔤**
+            - **Keyword Trends!** Identify the words that make recipes stand out, year by year. Who knew titles could be so revealing?
+
+            5. **Seasonality 🍂**
+            - **Year-round Flavor**: See how recipe interactions vary by month and season. What's popular in summer? What's cozy in winter?
+
+            ---
+
+            ### 🧭 How to Navigate?
+
+            - Use the **sidebar on the left** to jump to any section you'd like.
+            - **Explore** each analysis to gain insights and have fun along the way!
+
+            Let's get cooking with some data! 🍳📊
             """)
 
         # Weekly Interaction Analysis Page
-        elif self.section == "Weekly Interaction Analysis":
+        elif section == "Weekly Interaction 📅":
             self.weekly_analysis_module.run()
 
         # Seasonality Analysis Page
-        elif self.section == "Seasonality Analysis":
+        elif section == "Seasonality Analysis 🍂":
             self.seasonality_analysis_module.run()
 
         # Top Recipes Analysis Page
-        elif self.section == "Top 50 Most Popular Recipes Based on Ratings and Comments":
+        elif section == "Top 15 Recipes ⭐":
             self.top_50_analysis_module.run()
 
         # Show most frequent words appearing in recipe titles
-        elif self.section == "Most common words":
+        elif section == "Top Words 🔤":
             self.most_common_words_module.run()
 
         # Footer
         st.markdown("---\nUse the sidebar to navigate through the analysis.")
+
+
+# Entry-point with pyrallis wrapper
+if __name__ == '__main__':
+    import sys
+    from optimRecipes.config import Config
+
+    # pyrallis automatically wraps main() with the configuration
+    @pyrallis.wrap()
+    def main(cfg: Config):
+        app = WebApp(cfg)
+        app.run()
+
+    main()

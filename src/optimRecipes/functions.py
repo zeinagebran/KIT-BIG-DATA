@@ -100,8 +100,7 @@ class WeeklyAnalysis:
             self.interactions_df['date'], errors='coerce')
         # Extract year and day of the week for analysis
         self.interactions_df['year'] = self.interactions_df['date'].dt.year
-        self.interactions_df['day_of_week'] = self.interactions_df['date'].dt.day_name(
-        )
+        self.interactions_df['day_of_week'] = self.interactions_df['date'].dt.day_name()
 
     def plot_mean_interactions(self):
         # Calculate interactions per day of the week for each year
@@ -117,12 +116,18 @@ class WeeklyAnalysis:
         mean_interactions_per_day = mean_interactions_per_day.reindex(
             ordered_days, fill_value=0)
 
-        # Plotting
+        # Define the color palette
+        colors = ['#FF5733', '#33FF57', '#3357FF',
+                  '#FF33A8', '#FFC300', '#33FFF9', '#8E44AD']
+
+        # Plotting with the custom color palette
         fig, ax = plt.subplots(figsize=(8, 6))
-        mean_interactions_per_day.plot(
-            kind='bar', ax=ax, color='skyblue', edgecolor='black')
-        ax.set_title(
-            'Average User Interactions by Day of the Week', fontsize=16)
+        sns.barplot(x=mean_interactions_per_day.index,
+                    y=mean_interactions_per_day.values,
+                    ax=ax, palette=colors)
+
+        # Add titles and labels with enhanced styling
+        ax.set_title('Average User Interactions by Day of the Week', fontsize=16)
         ax.set_xlabel('Day of the Week', fontsize=14)
         ax.set_ylabel('Average Number of Interactions', fontsize=14)
         plt.xticks(rotation=45, fontsize=12)
@@ -139,19 +144,24 @@ class WeeklyAnalysis:
             ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], fill_value=0
         )
 
-        # Plotting
+        # Define the color palette
+        colors = ['#FF5733', '#33FF57', '#3357FF',
+                  '#FF33A8', '#FFC300', '#33FFF9', '#8E44AD']
+
+        # Plotting with the same color palette
         fig, ax = plt.subplots(figsize=(8, 6))
-        interactions_per_day.plot(
-            kind='bar', ax=ax, color='skyblue', edgecolor='black')
-        ax.set_title(f'User Interactions by Day of the Week for {
-                     year}', fontsize=16)
+        sns.barplot(x=interactions_per_day.index,
+                    y=interactions_per_day.values,
+                    ax=ax, palette=colors)
+
+        # Add titles and labels with enhanced styling
+        ax.set_title(f'User Interactions by Day of the Week for {year}', fontsize=16)
         ax.set_xlabel('Day of the Week', fontsize=14)
         ax.set_ylabel('Number of Interactions', fontsize=14)
         plt.xticks(rotation=45, fontsize=12)
         plt.yticks(fontsize=12)
         ax.grid(True, linestyle='--', linewidth=0.7)
         return fig
-# SeasonalityAnalysis class for seasonal interaction analysis
 
 
 class SeasonalityAnalysis:
@@ -327,14 +337,17 @@ class TopRecipesAnalysis:
 
         # Plot the results
 
-        st.title("Top Recipes Analysis")
-        if st.button("Display recipes that received the most positif ratings over the years"):
+        st.title("🍲 Top Recipes Analysis Dashboard")
+
+        st.subheader(
+            "Explore popular recipes, filter by year range, and view detailed stats!")
+        if st.button("🔝 Display recipes with the most positive ratings over the years"):
             self._plot_top_recipes(grouped_df)
 
-        if st.button("Display recipes that received the most positif ratings between 2000 and  2010"):
+        if st.button("🗓️ Display recipes with positive ratings (2000-2010)"):
             self._plot_top_recipes_from_2000_to_2010(filtered_df)
 
-        if st.button("Display recipes that received the most positif ratings between 2010 and  2018"):
+        if st.button("🗓️ Display recipes with positive ratings (2010-2018)"):
             self._plot_top_recipes_from_2010_to_2018(filtered_df)
 
         # if st.button("Display selected recipes details"):
@@ -468,7 +481,7 @@ class TopRecipesAnalysis:
                         ha='center', va='baseline', fontsize=12, color='black', xytext=(0, 5),
                         textcoords='offset points')
 
-        ax.set_title('Number of Ratings per Recipe', fontsize=18)
+        ax.set_title('🍽️ Number of Ratings per Recipe', fontsize=18)
         ax.set_xlabel('Recipe ID', fontsize=14)
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.legend(title='Rating', loc='upper right')
@@ -481,8 +494,7 @@ class TopRecipesAnalysis:
         Args:
             grouped_df (pd.DataFrame): DataFrame with top recipes and ratings.
         """
-        st.title(
-            "Top 50 Most Popular Recipes Based on Ratings and Comments over the Years")
+        st.title("🌟 Top 15 Most Popular Recipes by Ratings and Comments")
         sns.set(style="whitegrid")
         self.display_recipes(grouped_df)
 
@@ -493,8 +505,7 @@ class TopRecipesAnalysis:
         Args:
             df (pd.DataFrame): The DataFrame containing recipe data.
         """
-        st.title(
-            "Top 50 Most Popular Recipes Based on Ratings and Comments between 2000 et 2010")
+        st.title("📆 Top Recipes from 2000 to 2010 by Ratings")
         sns.set(style="whitegrid")
         # verif pour eviter les erreurs
         df['date'] = pd.to_datetime(df['date'], errors='coerce')
@@ -514,8 +525,7 @@ class TopRecipesAnalysis:
         Args:
             df (pd.DataFrame): The DataFrame containing recipe data.
         """
-        st.title(
-            "Top 50 Most Popular Recipes Based on Ratings and Comments between 2010 et 2018")
+        st.title("📆 Top Recipes from 2010 to 2018 by Ratings")
         sns.set(style="whitegrid")
         # verif pour eviter les erreurs
         df['date'] = pd.to_datetime(df['date'], errors='coerce')
@@ -536,37 +546,36 @@ class TopRecipesAnalysis:
             merged_df (pd.DataFrame): DataFrame containing merged recipe and interaction data.
             grouped_df (pd.DataFrame): DataFrame containing grouped recipe data.
         """
-        recipe_id = st.selectbox(
-            "View recipe details:", grouped_df['recipe_id'].unique(), key="recipe_select")
+        recipe_id = st.selectbox("🔍 Select a recipe for details:",
+                                 grouped_df['recipe_id'].unique(), key="recipe_select")
         selected_recipe = merged_df[merged_df['recipe_id'] == recipe_id]
 
         # Temps de préparation et nombre d'étapes
-        st.write(f"Temps de préparation : {
-                 selected_recipe['minutes'].iloc[0]} minutes")
-        st.write(f"Nombre d'étapes : {selected_recipe['n_steps'].iloc[0]}")
-
+        st.write(
+            f"**⏱️ Preparation Time:** {selected_recipe['minutes'].iloc[0]} minutes")
+        st.write(f"**🔢 Number of Steps:** {selected_recipe['n_steps'].iloc[0]}")
         # Informations nutritionnelles
-        nutrition_info = selected_recipe['nutrition'].iloc[0]
-        nutrition_info = nutrition_info.strip("[]").split(",")
-        st.write("Nutritional Informations(par portion) :")
-        st.write(f" - Calories : {nutrition_info[0]}")
-        st.write(f" - Sugar : {nutrition_info[1]} PVD")
-        st.write(f" - Sodium : {nutrition_info[2]} PVD")
-        st.write(f" - Protein : {nutrition_info[3]} PVD")
-        st.write(f" - Saturated Fat : {nutrition_info[4]} PVD")
-        st.write(f" - Carbohydrates : {nutrition_info[5]} PVD")
+        nutrition_info = selected_recipe['nutrition'].iloc[0].strip("[]").split(",")
+        st.write("### 🥗 Nutritional Information (per portion):")
+        st.write(f" - **Calories:** {nutrition_info[0]}")
+        st.write(f" - **Sugar:** {nutrition_info[1]} PVD")
+        st.write(f" - **Sodium:** {nutrition_info[2]} PVD")
+        st.write(f" - **Protein:** {nutrition_info[3]} PVD")
+        st.write(f" - **Saturated Fat:** {nutrition_info[4]} PVD")
+        st.write(f" - **Carbohydrates:** {nutrition_info[5]} PVD")
 
         # Tags et Ingrédients
-        st.write("Tags : ", ", ".join(
-            selected_recipe['tags'].iloc[0].strip("[]").split(",")))
-        st.write("Ingrédients : ", ", ".join(
-            selected_recipe['ingredients'].iloc[0].strip("[]").split(",")))
+        st.write("### 🏷️ Tags:")
+        st.write(", ".join(selected_recipe['tags'].iloc[0].strip("[]").split(",")))
+        st.write("### 🥄 Ingredients:")
+        st.write(
+            ", ".join(selected_recipe['ingredients'].iloc[0].strip("[]").split(",")))
 
         # Popularité et note moyenne
-        average_rating = selected_recipe['rating'].mean()
         total_ratings = selected_recipe['rating'].count()
-        st.write(f"Nombre total de notes : {total_ratings}")
-        st.write(f"Note moyenne : {average_rating:.1f}/5")
+        average_rating = selected_recipe['rating'].mean()
+        st.write(f"**🌟 Total Ratings:** {total_ratings}")
+        st.write(f"**⭐ Average Rating:** {average_rating:.1f}/5")
 
         # Format 'date' and extract 'year' for rating evolution
         selected_recipe = self._format_to_datetime(selected_recipe, 'date')
@@ -578,6 +587,7 @@ class TopRecipesAnalysis:
         unique_years = sorted(grouped_by_date['year'].unique())
 
         # Plot the rating evolution over time
+        st.write("### 📈 Ratings Evolution Over Years")
         fig, ax = plt.subplots(figsize=(20, 15))
         sns.lineplot(x='year', y='count', hue='rating',
                      data=grouped_by_date, palette='coolwarm', ax=ax)
@@ -593,59 +603,6 @@ class TopRecipesAnalysis:
         detailed_df = self._group_by_attribute_count(
             selected_recipe, ['recipe_id', 'date', 'rating'])
         # Affiche les détails de la recette
-        st.subheader(f"WordCloud for the recipe {recipe_id}")
-
-        # Affiche le Word Cloud des commentaires
-        self._plot_review_wordcloud(selected_recipe, recipe_id)
-
-    def _plot_wordcloud(self, grouped_df, merged_df):
-        """
-        Generates and displays a word cloud of tags for popular recipes.
-
-        Args:
-            grouped_df (pd.DataFrame): DataFrame with recipe groupings.
-            merged_df (pd.DataFrame): DataFrame with recipe data.
-        """
-        unique_recipes = merged_df.drop_duplicates(subset=['recipe_id'])
-        tags_text = ' '.join(unique_recipes[unique_recipes['recipe_id'].isin(
-            grouped_df['recipe_id'])]['ingredients'].explode().dropna().unique())
-
-        # Generate word cloud
-        wordcloud = WordCloud(
-            width=800, height=400, background_color='white', colormap='plasma').generate(tags_text)
-        fig_wordcloud, ax_wordcloud = plt.subplots(figsize=(20, 15))
-        ax_wordcloud.imshow(wordcloud, interpolation='bilinear')
-        ax_wordcloud.axis('off')
-        ax_wordcloud.set_title(
-            'Word Cloud of Tags for Popular Recipes', fontsize=16)
-        st.pyplot(fig_wordcloud)
-
-    def _plot_review_wordcloud(self, merged_df, recipe_id):
-        """
-        Generates and displays a word cloud for reviews of a specific recipe.
-
-        Args:
-            merged_df (pd.DataFrame): DataFrame containing merged recipe and interaction data.
-            recipe_id (int): The ID of the recipe to generate a word cloud for.
-        """
-        # Filtre les commentaires pour la recette sélectionnée
-        selected_reviews = merged_df[merged_df['recipe_id']
-                                     == recipe_id]['review'].dropna()
-
-        if not selected_reviews.empty:
-            # Concatène tous les commentaires pour créer le Word Cloud
-            review_text = " ".join(selected_reviews)
-            wordcloud = WordCloud(
-                width=800, height=400, background_color='white', colormap='plasma').generate(review_text)
-
-            # Affiche le Word Cloud
-            fig, ax = plt.subplots(figsize=(10, 6))
-            ax.imshow(wordcloud, interpolation='bilinear')
-            ax.axis('off')
-            ax.set_title(f'WordCloud for the recipe {recipe_id}', fontsize=16)
-            st.pyplot(fig)
-        else:
-            st.write("Aucun commentaire pour cette recette.")
 
 
 class CommonWordsAnalysis:

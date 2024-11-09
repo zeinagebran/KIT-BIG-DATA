@@ -73,6 +73,6 @@ To use the project with Streamlit, run the application with the following comman
 
 .. code-block:: bash
 
-    streamlit run app.py
+    streamlit run main.py
 
 This will open a user interface in your browser to interact with the recipe data and generated visualizations.
