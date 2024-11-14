@@ -27,6 +27,7 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install coverage pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          python -m nltk.downloader stopwords
       - name: Run coverage
         run: |
           coverage run -m pytest
