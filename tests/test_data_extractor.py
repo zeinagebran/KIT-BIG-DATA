@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 from optimRecipes.functions import DataExtractor
 # Set correct file path
-ZIP_FILE_PATH = "C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\archive.zip"
+ZIP_FILE_PATH = "test.zip"
 
 
 @pytest.fixture
