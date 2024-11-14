@@ -33,3 +33,30 @@ def test_weekly_plot_interactions_for_year(sample_interactions):
     assert isinstance(
         fig, plt.Figure), "plot_interactions_for_year should return a matplotlib Figure."
     plt.close(fig)
+
+
+def test_plot_mean_interactions_no_data():
+    weekly_analysis = WeeklyAnalysis(pd.DataFrame(columns=['date', 'user_id']))
+    fig = weekly_analysis.plot_mean_interactions()
+    assert isinstance(
+        fig, plt.Figure), "plot_mean_interactions should return a matplotlib Figure even with no data."
+    plt.close(fig)
+
+
+def test_plot_interactions_for_year_no_data():
+    weekly_analysis = WeeklyAnalysis(pd.DataFrame(columns=['date', 'user_id']))
+    fig = weekly_analysis.plot_interactions_for_year(2024)
+    assert isinstance(
+        fig, plt.Figure), "plot_interactions_for_year should return a matplotlib Figure even with no data."
+    plt.close(fig)
+
+
+def test_weekly_analysis_single_date(sample_interactions):
+    # Test with a single date in interactions data
+    sample_interactions_single_date = pd.DataFrame(
+        {'date': ['2024-01-01'], 'user_id': [1]})
+    weekly_analysis = WeeklyAnalysis(sample_interactions_single_date)
+    fig = weekly_analysis.plot_mean_interactions()
+    assert isinstance(
+        fig, plt.Figure), "Expected a matplotlib Figure with a single date data"
+    plt.close(fig)
