@@ -69,10 +69,13 @@ Options and Parameters
 Using with Streamlit
 --------------------
 
+First modify config file to specify ZIP file path.
+
 To use the project with Streamlit, run the application with the following command in the terminal:
 
 .. code-block:: bash
 
-    streamlit run main.py
+    set PYTHONPATH=src
+    streamlit run src/optimRecipes/main.py
 
 This will open a user interface in your browser to interact with the recipe data and generated visualizations.
