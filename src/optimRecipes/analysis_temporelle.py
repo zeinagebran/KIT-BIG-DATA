@@ -174,6 +174,5 @@ class temporality_analysis_module:
             """
         )
 
-        # nb_by_year, nb_by_month = analysis_temporelle(data)
         # fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
         # st.pyplot(fig)
