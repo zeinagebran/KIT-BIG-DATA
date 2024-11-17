@@ -5,7 +5,7 @@ Analysis number of recipes or reviews by year/mouth
 """
 __authors__ = 'Nicolas Allègre'
 __date__ = '19/10/2024'
-__version__ = '0.1'
+__version__ = '0.2'
 
 ###############################################################################
 # IMPORTS :
@@ -15,6 +15,7 @@ import datetime
 
 # /* Extern modules */
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 # /* Intern modules */
 
@@ -42,12 +43,11 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
     """
     nb_by_year: dict[str, dict[int, int]] = {}
     nb_by_month: dict[str, dict[str, int]] = {}
-    for filename in DATA_FILES:
-        nb_by_year[filename] = {}
-        nb_by_month[filename] = {}
 
     j_date_col = {DATA_FILES[0]: 2, DATA_FILES[1]: 4}
     for filename in DATA_FILES:
+        nb_by_year[filename] = {}
+        nb_by_month[filename] = {}
         j = j_date_col[filename]
         for i, row in enumerate(data[filename]):
             if i == 0:  # Pas sur les header
@@ -83,36 +83,51 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
 def plot_matplotlib_version(nb_by_year, nb_by_month) -> None:
     """Version with matplotlib to print."""
 
+    plt_color = {DATA_FILES[0]: 'g', DATA_FILES[1]: 'b'}
+    plt_label = {DATA_FILES[0]: 'NB review', DATA_FILES[1]: 'NB recipe'}
+    fig_type = ['year', 'mouth']
+    courbes = {'year':nb_by_year, 'mouth':nb_by_month}
+
     plt.close('all')
     fig = plt.figure()
     fig.suptitle('Nb recette et review')
-    plt_color = {DATA_FILES[0]: 'g', DATA_FILES[1]: 'b'}
-    # Par an :
-    ax1 = fig.add_subplot(2, 1, 1)
-    for filename in DATA_FILES:
-        print(list(nb_by_year[filename].keys()))
-        ax1.plot(list(nb_by_year[filename].keys()),
-                 list(nb_by_year[filename].values()), '-',
-                 color=plt_color[filename], label=f'{filename}')
-    ax1.set_xlabel('Année')
-    ax1.set_ylabel('NB')
-    ax1.set_title('Par année')
-    ax1.set_xticks(list(nb_by_year[filename].keys()))
-    for label in ax1.get_xticklabels():
-        label.set_rotation(40)
-        label.set_horizontalalignment('right')
-    ax1.legend()
+    for i, graph in enumerate(fig_type):
+        ax = fig.add_subplot(2, 1, i + 1)
+        ax.set_title(f'Granularité : par {graph}')
+        ax.set_xlabel('Temps')
 
-    # Par an :
-    ax2 = fig.add_subplot(2, 1, 2)
-    for filename in DATA_FILES:
-        ax2.plot(list(nb_by_month[filename].keys()),
-                 list(nb_by_month[filename].values()), '-',
-                 color=plt_color[filename], label=f'{filename}')
-    ax2.set_xlabel('Mois')
-    ax2.set_ylabel('NB')
-    ax2.set_title('Par mois')
+        filename = DATA_FILES[0]
+        x = list(courbes[graph][filename].keys())
+        y = list(courbes[graph][filename].values())
+        color = plt_color[filename]
+        ax.set_ylabel(plt_label[filename], color=color)
+        line_rev, = ax.plot(x, y, '-', color=color, label=f'{plt_label[filename]}')
+        ax.tick_params(axis='y', labelcolor=color)
+        
+        filename = DATA_FILES[1]
+        x = list(courbes[graph][filename].keys())
+        y = list(courbes[graph][filename].values())
+        color = plt_color[filename]
+        ax2 = ax.twinx()  # instantiate a second Axes that shares the same x-axis
+        ax2.set_ylabel(plt_label[filename], color=color)
+        line_rec, = ax2.plot(x, y, '-', color=color, label=f'{plt_label[filename]}')
+        ax2.tick_params(axis='y', labelcolor=color)
 
-    # fig.legend()
+        ax.set_xticks(x)
+        for label in ax.get_xticklabels():
+            label.set_rotation(60)
+            label.set_horizontalalignment('right')
+        
+        if graph == fig_type[1]:
+            id_label = ax2.get_xticks()
+            text_label = ax2.get_xticklabels()
+            new_id_label = [x.get_position()[0] for x in text_label if x.get_text().split('-')[1] == '01']
+            new_id_label.append(id_label[-1])
+            ax2.xaxis.set_major_locator(ticker.FixedLocator(new_id_label))
+        
+        ax.yaxis.set_major_locator(ticker.MaxNLocator(4))
+        ax2.yaxis.set_major_locator(ticker.MaxNLocator(4))
+
+    fig.legend(handles=[line_rev, line_rec])
     fig.tight_layout()
     plt.show()
