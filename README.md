@@ -19,6 +19,12 @@ _____
 ## Usage :
 
 
+
+_____
+## Documentation :
+
+[dossier build](./build/html/index.html)
+
 _____
 ### Développeurs
 
