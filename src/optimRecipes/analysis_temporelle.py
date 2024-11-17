@@ -169,3 +169,9 @@ class temporality_analysis_module:
             - Evolution throught time for interaction in recipes
             """
         )
+
+        # TODO transforme to list or manipulate DataFrame
+        data = {DATA_FILES[0]: self.interactions_df, DATA_FILES[1]: self.recipes_df}
+        nb_by_year, nb_by_month = analysis_temporelle(data)
+        fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
+        st.pyplot(fig)
