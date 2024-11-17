@@ -98,7 +98,7 @@ class dataLoader:
         data: list[any] = []
         headers: list[str] = []
         filename: str = os.path.basename(file_path)
-        tmp = dataLooader.loadcsv_tolist(file_path)
+        tmp = dataLoader.loadcsv_tolist(file_path)
         if tmp != []:
             headers = tmp[0]
 
@@ -110,7 +110,7 @@ class dataLoader:
             new_row = []
             for j, col in enumerate(row):
                 cvt_type = optimRecipes_DATATYPE[filename].get(headers[j])
-                new_row.append(dataLooader.convert(col, cvt_type))
+                new_row.append(dataLoader.convert(col, cvt_type))
 
             data.append(new_row)
 
@@ -153,7 +153,7 @@ class dataLoader:
             return datetime.date.fromisoformat(col)
         if 'list=' in cvt_type:
             h = cvt_type.split('=')
-            return [dataLooader.convert(x, h[1]) for x in col[1:-1].split(',')]
+            return [dataLoader.convert(x, h[1]) for x in col[1:-1].split(',')]
 
         return col
     
@@ -181,11 +181,11 @@ if __name__ == 'main':
     # import src.optimRecipes.dataLoader as d
     # importlib.reload(d)
     file_path = '../../data/recipe/interactions_validation.csv'
-    a = dataLooader.loadcsv_tolist(file_path)
+    a = dataLoader.loadcsv_tolist(file_path)
     print(type(a))
     file_path = '../../data/recipe/RAW_recipes.csv'
     filename = os.path.basename(file_path)
-    a = dataLooader.projectcsv_load_tolist(file_path)
+    a = dataLoader.projectcsv_load_tolist(file_path)
     
     # path = dll_google_zip('https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
     path = 'extracted_data/recipe'
