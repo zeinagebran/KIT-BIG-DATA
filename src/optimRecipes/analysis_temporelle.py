@@ -1,4 +1,4 @@
-"""Analysis of interaction throug time (nb recipes / nb reviews).
+"""Analysis of interaction throught time (nb recipes / nb reviews).
 
 Analysis number of recipes or reviews by year/mouth
 
@@ -14,8 +14,10 @@ __version__ = '0.2'
 import datetime
 
 # /* Extern modules */
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import streamlit as st
 
 # /* Intern modules */
 
@@ -80,13 +82,20 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
     return nb_by_year, nb_by_month
 
 
-def plot_matplotlib_version(nb_by_year, nb_by_month) -> None:
-    """Version with matplotlib to print."""
+def plot_matplotlib_version(nb_by_year, nb_by_month, show=True) -> any:
+    """Version with matplotlib to print.
 
+    Create visualisation for evolution recipes and interactions throug time.
+
+    :param nb_by_year: count by year of recipes and interactions
+    :param nb_by_mouth: count by mouth of each year of recipes and interactions
+    :param show: for show graphical or not (Default True)
+    :return matplotlib.figure.Figure: return matplotlib figure
+    """
     plt_color = {DATA_FILES[0]: 'g', DATA_FILES[1]: 'b'}
     plt_label = {DATA_FILES[0]: 'NB review', DATA_FILES[1]: 'NB recipe'}
     fig_type = ['year', 'mouth']
-    courbes = {'year':nb_by_year, 'mouth':nb_by_month}
+    courbes = {'year': nb_by_year, 'mouth': nb_by_month}
 
     plt.close('all')
     fig = plt.figure()
@@ -103,7 +112,7 @@ def plot_matplotlib_version(nb_by_year, nb_by_month) -> None:
         ax.set_ylabel(plt_label[filename], color=color)
         line_rev, = ax.plot(x, y, '-', color=color, label=f'{plt_label[filename]}')
         ax.tick_params(axis='y', labelcolor=color)
-        
+
         filename = DATA_FILES[1]
         x = list(courbes[graph][filename].keys())
         y = list(courbes[graph][filename].values())
@@ -117,17 +126,54 @@ def plot_matplotlib_version(nb_by_year, nb_by_month) -> None:
         for label in ax.get_xticklabels():
             label.set_rotation(60)
             label.set_horizontalalignment('right')
-        
+
         if graph == fig_type[1]:
             id_label = ax2.get_xticks()
             text_label = ax2.get_xticklabels()
             new_id_label = [x.get_position()[0] for x in text_label if x.get_text().split('-')[1] == '01']
             new_id_label.append(id_label[-1])
             ax2.xaxis.set_major_locator(ticker.FixedLocator(new_id_label))
-        
+
         ax.yaxis.set_major_locator(ticker.MaxNLocator(4))
         ax2.yaxis.set_major_locator(ticker.MaxNLocator(4))
 
     fig.legend(handles=[line_rev, line_rec])
     fig.tight_layout()
-    plt.show()
+    if show is True:
+        plt.show()
+
+    return fig
+
+
+class temporality_analysis_module:
+    """Class to wrap this module functions to interact with webapp.
+
+    This class is used by webapp streamlit for the analysis of interaction
+    throught time (nb recipes / nb reviews) and construct the page and graphs.
+    """
+
+    def __init__(self, recipes_df, interactions_df):
+        """Initialise the class with data.
+
+        :param pandas.DataFrame recipes_df: data for the recipes
+        :param pandas.DataFrame interactions_df: data for the recipes
+        """
+        self.recipes_df = recipes_df
+        self.interactions_df = interactions_df
+
+    def run(self):
+        """Build analysis, and print result on a web streamlit page."""
+        st.title("🍲 Top 15 Most Popular Recipes")
+        st.markdown(
+            """
+            ## 🌟 Discover temporality of recipes and actions over time!
+            Here, we showcase the evolution over time of our original data from website Food.com :
+            - Evolution throught time for recipe creation
+            - Evolution throught time for interaction in recipes
+            """
+        )
+
+        # data = {DATA_FILES[0]: self.interactions_df, DATA_FILES[1]: self.recipes_df}
+        # nb_by_year, nb_by_month = analysis_temporelle(data)
+        # fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
+        # st.pyplot(fig)

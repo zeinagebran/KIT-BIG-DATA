@@ -1,8 +1,3 @@
-.. KIT-BIG-DATA documentation master file, created by
-   sphinx-quickstart on Thu Oct 31 17:55:07 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 KIT-BIG-DATA Documentation
 ==========================
 
@@ -35,6 +30,12 @@ KIT-BIG-DATA Modules
    :show-inheritance:
    :no-index:
 
+.. automodule:: analysis_temporelle
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :no-index:
+
 .. automodule:: analysis_weekly
    :members:
    :undoc-members:
@@ -46,12 +47,27 @@ KIT-BIG-DATA Modules
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: functions
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: test_top_recipes
+.. automodule:: logger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: most_common_words
    :members:
    :undoc-members:
    :show-inheritance:
