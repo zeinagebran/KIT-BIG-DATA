@@ -29,6 +29,7 @@ autopep8
 ### DEV : standard test
 pytest
 pytest-mock
+coverage
 
 ### DEV : doc
 sphinx

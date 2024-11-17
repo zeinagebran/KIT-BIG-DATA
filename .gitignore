@@ -1,6 +1,7 @@
 # Project :
 extracted_data/
 data/
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
