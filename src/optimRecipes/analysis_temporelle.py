@@ -173,6 +173,3 @@ class temporality_analysis_module:
             - Evolution throught time for interaction in recipes
             """
         )
-
-        # fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
-        # st.pyplot(fig)
