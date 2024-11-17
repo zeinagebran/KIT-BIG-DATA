@@ -158,7 +158,7 @@ class DataLoader:
             return datetime.date.fromisoformat(col)
         if 'list=' in cvt_type:
             h = cvt_type.split('=')
-            return [dataLooader.convert(x, h[1]) for x in col.strip('[]').split(',')]
+            return [dataLoader.convert(x, h[1]) for x in col.strip('[]').split(',')]
 
         return col
 
