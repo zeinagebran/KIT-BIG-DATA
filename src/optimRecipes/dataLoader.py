@@ -58,7 +58,7 @@ optimRecipes_DATATYPE = {
 ###############################################################################
 # CLASS :
 @dataclass
-class dataLoader:
+class DataLoader:
     """Manage data from extern."""
     data: any = None
 
@@ -98,7 +98,7 @@ class dataLoader:
         data: list[any] = []
         headers: list[str] = []
         filename: str = os.path.basename(file_path)
-        tmp = dataLoader.loadcsv_tolist(file_path)
+        tmp = DataLoader.loadcsv_tolist(file_path)
         if tmp != []:
             headers = tmp[0]
 
@@ -110,7 +110,7 @@ class dataLoader:
             new_row = []
             for j, col in enumerate(row):
                 cvt_type = optimRecipes_DATATYPE[filename].get(headers[j])
-                new_row.append(dataLoader.convert(col, cvt_type))
+                new_row.append(DataLoader.convert(col, cvt_type))
 
             data.append(new_row)
 
@@ -130,7 +130,7 @@ class dataLoader:
             if data.get(header) is None:
                 continue
 
-            data[header] = pd.to_datetime(data[header], errors='coerce', infer_datetime_format=True)
+            data[header] = pd.to_datetime(data[header], errors='coerce')
         
         return data
         
@@ -153,7 +153,7 @@ class dataLoader:
             return datetime.date.fromisoformat(col)
         if 'list=' in cvt_type:
             h = cvt_type.split('=')
-            return [dataLoader.convert(x, h[1]) for x in col[1:-1].split(',')]
+            return [DataLoader.convert(x, h[1]) for x in col[1:-1].split(',')]
 
         return col
     
@@ -165,29 +165,32 @@ class dataLoader:
         :param str folder: path where to extract CSV file
         :return str: path where CSV file are extracted
         """
-        r = requests.get('https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
+        r = requests.get(url)
         if r.status_code != 200:
             print(f"Error to download file : {r.status_code}")
-        z = zipfile.ZipFile(io.BytesIO(r.content))
-        z.extractall(folder, ['recipe/RAW_interactions.csv', 'recipe/RAW_recipes.csv'])
+        zip_ref = zipfile.ZipFile(io.BytesIO(r.content))
+        list_needed_file = ['recipe/RAW_interactions.csv', 'recipe/RAW_recipes.csv']
+        if len(set(list_needed_file) - set(zip_ref.namelist())) == 0:
+            zip_ref.extractall(folder, list_needed_file)
         
-        del z
+        del zip_ref
         del r  # to quickly remove from memory the zip file
         return os.path.join(folder, 'recipe')
         
 
-
-if __name__ == 'main':
-    # import src.optimRecipes.dataLoader as d
-    # importlib.reload(d)
-    file_path = '../../data/recipe/interactions_validation.csv'
-    a = dataLoader.loadcsv_tolist(file_path)
+if __name__ == '__main__':
+    file_path = '../data/recipe/interactions_validation.csv'
+    a = DataLoader.loadcsv_tolist(file_path)
     print(type(a))
-    file_path = '../../data/recipe/RAW_recipes.csv'
+    file_path = '../data/recipe/RAW_recipes.csv'
     filename = os.path.basename(file_path)
-    a = dataLoader.projectcsv_load_tolist(file_path)
+    a = DataLoader.projectcsv_load_tolist(file_path)
     
-    # path = dll_google_zip('https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
     path = 'extracted_data/recipe'
-    recipes_df = dataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[1]))
-    interactions_df = dataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[0]))
+    if not os.path.exists(path):
+        print('Download :')
+        path = dll_google_zip('https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
+
+    recipes_df = DataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[1]))
+    interactions_df = DataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[0]))
+    print(interactions_df)
