@@ -600,10 +600,6 @@ class TopRecipesAnalysis:
         ax.set_xticklabels(unique_years, rotation=45)
         st.pyplot(fig)
 
-        detailed_df = self._group_by_attribute_count(
-            selected_recipe, ['recipe_id', 'date', 'rating'])
-        # Affiche les détails de la recette
-
 
 class CommonWordsAnalysis:
 

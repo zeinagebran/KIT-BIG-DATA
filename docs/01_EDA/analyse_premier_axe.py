@@ -25,14 +25,14 @@ print(interactions_df.isnull().sum())
 
 # Handle missing values in the 'date' column if they exist
 # For demonstration, let's drop rows with missing 'date' values
-interactions_df.dropna(subset=['date'], inplace=True)
+interactions_df.dropna(subset=['date'])
 print("\nMissing values in 'date' column after dropping rows with missing dates:")
 print(interactions_df['date'].isnull().sum())
 
 # Check for duplicate rows
 print(f"\nNumber of duplicate rows: {interactions_df.duplicated().sum()}")
 # Drop duplicates if necessary
-interactions_df.drop_duplicates(inplace=True)
+interactions_df.drop_duplicates()
 
 # Step 3: Data Type Conversion
 # Convert 'date' column to datetime
@@ -100,7 +100,8 @@ duplicate_interactions = interactions_df.duplicated(
     subset=['user_id', 'recipe_id', 'date'])
 num_duplicate_interactions = duplicate_interactions.sum()
 
-print(f"Number of duplicate interactions (by user_id, recipe_id, and date): {num_duplicate_interactions}")
+print(f"Number of duplicate interactions (by user_id, recipe_id, and date): {
+      num_duplicate_interactions}")
 
 if num_duplicate_interactions > 0:
     print("Examples of duplicate interactions:")

@@ -24,7 +24,7 @@ print("\nMissing Values in each column:")
 print(interactions_df.isnull().sum())
 
 # Handle missing values in the 'date' column by dropping rows with missing dates
-interactions_df.dropna(subset=['date'], inplace=True)
+interactions_df.dropna(subset=['date'])
 print("\nMissing values in 'date' column after dropping rows with missing dates:")
 print(interactions_df['date'].isnull().sum())
 
@@ -34,7 +34,7 @@ print(f"\nNumber of duplicate rows: {num_duplicates}")
 
 # Drop duplicates if necessary
 if num_duplicates > 0:
-    interactions_df.drop_duplicates(inplace=True)
+    interactions_df.drop_duplicates()
     print(f"Duplicates removed. Number of remaining rows: {len(interactions_df)}")
 
 # Step 3: Data Type Conversion
@@ -157,7 +157,8 @@ duplicate_interactions_after = interactions_df.duplicated(
     subset=['user_id', 'recipe_id', 'date'])
 num_duplicate_interactions_after = duplicate_interactions_after.sum()
 
-print(f"Number of duplicate interactions (by user_id, recipe_id, and date) after cleaning: {num_duplicate_interactions_after}")
+print(f"Number of duplicate interactions (by user_id, recipe_id, and date) after cleaning: {
+      num_duplicate_interactions_after}")
 
 if num_duplicate_interactions_after > 0:
     print("Examples of duplicate interactions after cleaning:")
