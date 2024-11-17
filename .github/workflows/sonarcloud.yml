@@ -1,3 +1,5 @@
+# This workflow will run coverage tests then ask SonarCloud to do quality scan and take coverage result.
+
 name: SonarCloud analysis
 
 on:
@@ -24,19 +26,18 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip setuptools wheel
-          pip install coverage pytest pytest-mock
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          python -m nltk.downloader stopwords
+            python -m pip install --upgrade pip setuptools wheel
+            python -m pip install -r requirements.txt -r requirements-dev.txt
+            python -m nltk.downloader stopwords
       - name: Run coverage
         run: |
           coverage run -m pytest
           coverage xml
-      - name: SonarCloud Scan
+      - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Nécessaire pour obtenir des informations sur les PRs, le cas échéant
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Nécessaire pour obtenir des informations sur les PRs, le cas échéant
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Token partagé avec SonarCloud pour pouvoir lancer le scan à distance
         with:
           args:
             -Dsonar.projectKey=${{ vars.SONAR_PROJECTKEY }}
