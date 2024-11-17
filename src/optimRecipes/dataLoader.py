@@ -28,29 +28,36 @@ import requests
 
 ###############################################################################
 # CONSTANTES :
+
 DATA_FILES = ['RAW_interactions.csv', 'RAW_recipes.csv']
 CHARSET = 'UTF-8'
+# Constants for data types
+LIST_STR = 'list=str'
+LIST_FLOAT_7 = 'list=float=7'
+INT = 'int'
+DATE = 'date'
+STR = 'str'
 optimRecipes_DATATYPE = {
     'RAW_interactions.csv': {
         'user_id': 'int64',
-        'recipe_id': 'int',
-        'date': 'date',
-        'rating': 'int',
-        'review': 'str'
+        'recipe_id': INT,
+        'date': DATE,
+        'rating': INT,
+        'review': STR
     },
     'RAW_recipes.csv': {
-        'name': 'str',
-        'id': 'int',
-        'minutes': 'int',
+        'name': STR,
+        'id': INT,
+        'minutes': INT,
         'contributor_id': 'int64',
-        'submitted': 'date',
-        'tags': 'list=str',
-        'nutrition': 'list=float=7',
-        'n_steps': 'int',
-        'steps': 'list=str',
-        'description': 'str',
-        'ingredients': 'list=str',
-        'n_ingredients': 'int',
+        'submitted': DATE,
+        'tags': LIST_STR,
+        'nutrition': LIST_FLOAT_7,
+        'n_steps': INT,
+        'steps': LIST_STR,
+        'description': STR,
+        'ingredients': LIST_STR,
+        'n_ingredients': INT,
     },
 }
 
@@ -118,7 +125,7 @@ class DataLoader:
 
     @staticmethod
     def loadcsv_todataframe(file_path: str, delimiter: str = ',',
-                       encoding: str = CHARSET) -> any:
+                            encoding: str = CHARSET) -> any:
         """Load csv file into a list (static method).
 
         :param str file_path: path to data file
@@ -131,9 +138,8 @@ class DataLoader:
                 continue
 
             data[header] = pd.to_datetime(data[header], errors='coerce')
-        
+
         return data
-        
 
     @staticmethod
     def convert(col: str, cvt_type: str | None) -> any:
@@ -143,24 +149,25 @@ class DataLoader:
         :param str cvt_type: type to convert (if None then no conversion)
         :return: the col data converted in type of cvt_type
         """
-        if cvt_type is None or 'str' == cvt_type:
+        if cvt_type is None or cvt_type == STR:
             return col
-        if 'int' in cvt_type:
+        if INT in cvt_type:
             return int(col)
-        if 'float' == cvt_type:
+        if cvt_type == 'float':
             return float(col)
-        if 'date' in cvt_type:
+        if cvt_type == DATE:
             return datetime.date.fromisoformat(col)
-        if 'list=' in cvt_type:
-            h = cvt_type.split('=')
-            return [DataLoader.convert(x, h[1]) for x in col[1:-1].split(',')]
+        if LIST_STR in cvt_type:
+            return col.strip("[]").split(",")
+        if LIST_FLOAT_7 in cvt_type:
+            return [float(x) for x in col.strip("[]").split(",")]
 
         return col
-    
+
     @staticmethod
-    def dll_google_zip(url: str, folder: str='extracted_data') -> str:
+    def dll_google_zip(url: str, folder: str = 'extracted_data') -> str:
         """Download zip file and extract only needed data.
-        
+
         :param str url: URL where zipfile are
         :param str folder: path where to extract CSV file
         :return str: path where CSV file are extracted
@@ -172,11 +179,11 @@ class DataLoader:
         list_needed_file = ['recipe/RAW_interactions.csv', 'recipe/RAW_recipes.csv']
         if len(set(list_needed_file) - set(zip_ref.namelist())) == 0:
             zip_ref.extractall(folder, list_needed_file)
-        
+
         del zip_ref
         del r  # to quickly remove from memory the zip file
         return os.path.join(folder, 'recipe')
-        
+
 
 if __name__ == '__main__':
     file_path = '../data/recipe/interactions_validation.csv'
@@ -185,11 +192,12 @@ if __name__ == '__main__':
     file_path = '../data/recipe/RAW_recipes.csv'
     filename = os.path.basename(file_path)
     a = DataLoader.projectcsv_load_tolist(file_path)
-    
+
     path = 'extracted_data/recipe'
     if not os.path.exists(path):
         print('Download :')
-        path = DataLoader.dll_google_zip('https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
+        path = DataLoader.dll_google_zip(
+            'https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
 
     recipes_df = DataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[1]))
     interactions_df = DataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[0]))

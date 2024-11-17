@@ -130,7 +130,8 @@ def plot_matplotlib_version(nb_by_year, nb_by_month, show=True) -> any:
         if graph == fig_type[1]:
             id_label = ax2.get_xticks()
             text_label = ax2.get_xticklabels()
-            new_id_label = [x.get_position()[0] for x in text_label if x.get_text().split('-')[1] == '01']
+            new_id_label = [x.get_position()[0]
+                            for x in text_label if x.get_text().split('-')[1] == '01']
             new_id_label.append(id_label[-1])
             ax2.xaxis.set_major_locator(ticker.FixedLocator(new_id_label))
 
@@ -173,7 +174,6 @@ class temporality_analysis_module:
             """
         )
 
-        # data = {DATA_FILES[0]: self.interactions_df, DATA_FILES[1]: self.recipes_df}
         # nb_by_year, nb_by_month = analysis_temporelle(data)
         # fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
         # st.pyplot(fig)
