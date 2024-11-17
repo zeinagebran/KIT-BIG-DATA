@@ -189,7 +189,7 @@ if __name__ == '__main__':
     path = 'extracted_data/recipe'
     if not os.path.exists(path):
         print('Download :')
-        path = dll_google_zip('https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
+        path = DataLoader.dll_google_zip('https://drive.usercontent.google.com/download?id=1a2JonFLnOCvtML2ZQWFCtpniWwmmCUuo&export=download&confirm=t')
 
     recipes_df = DataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[1]))
     interactions_df = DataLoader.loadcsv_todataframe(os.path.join(path, DATA_FILES[0]))
