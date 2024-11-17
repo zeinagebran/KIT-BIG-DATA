@@ -14,16 +14,6 @@ Welcome to the KIT-BIG-DATA project documentation. This documentation covers the
 KIT-BIG-DATA Modules
 ====================
 
-.. automodule:: analyse_deuxieme_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: analyse_premier_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 .. automodule:: analysis_seasonality
    :members:
    :undoc-members:
@@ -41,6 +31,11 @@ KIT-BIG-DATA Modules
    :undoc-members:
    :show-inheritance:
    :no-index:
+
+.. automodule:: analysis_top_15
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 .. automodule:: app
    :members:
@@ -72,7 +67,7 @@ KIT-BIG-DATA Modules
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: top_50_analysis
+.. automodule:: dataLoader
    :members:
    :undoc-members:
    :show-inheritance:

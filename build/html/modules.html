@@ -46,8 +46,14 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using KIT-BIG-DATA</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">KIT-BIG-DATA Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#analysis_seasonality.show_seasonality_analysis"><code class="docutils literal notranslate"><span class="pre">show_seasonality_analysis()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#analysis_weekly.show_weekly_analysis"><code class="docutils literal notranslate"><span class="pre">show_weekly_analysis()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis_seasonality.seasonality_analysis_module"><code class="docutils literal notranslate"><span class="pre">seasonality_analysis_module</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#analysis_seasonality.seasonality_analysis_module.run"><code class="docutils literal notranslate"><span class="pre">seasonality_analysis_module.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis_weekly.weekly_analysis_module"><code class="docutils literal notranslate"><span class="pre">weekly_analysis_module</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#analysis_weekly.weekly_analysis_module.run"><code class="docutils literal notranslate"><span class="pre">weekly_analysis_module.run()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -78,6 +84,32 @@
              
   <section id="kit-big-data-modules">
 <h1>KIT-BIG-DATA Modules<a class="headerlink" href="#kit-big-data-modules" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">CommonWordsAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipes_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">compute_average_rating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipe_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">compute_top_keywords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">format_recipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">process_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">DataExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zip_file_path</span></span></em><span class="sig-paren">)</span></dt>
@@ -160,23 +192,12 @@ and caches the results to optimize performance with Streamlit.</p>
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">plot_seasonality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
-<dd><p>Plots the average user interactions by month and season.</p>
-<p>This method processes the interactions DataFrame to extract information about the year, month,
-and season from the ‘date’ column, groups the data by month and season, and visualizes the
-average number of interactions for each.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>A matplotlib figure object displaying two bar plots, one for average</dt><dd><p>interactions per month and another for average interactions per season.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>matplotlib.figure.Figure</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_seasonality_for_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -245,19 +266,13 @@ Includes options to filter recipes by year range and display details for a selec
 
 <dl class="py method">
 <dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_interactions_for_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">plot_mean_interactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
-<dd><p>Plots the average number of user interactions for each day of the week.</p>
-<p>This method processes the interactions DataFrame to extract day-of-week information,
-groups the data by each day, and visualizes the average number of interactions in a bar plot.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A matplotlib figure object displaying a bar plot of average interactions per day.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>matplotlib.figure.Figure</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -266,15 +281,53 @@ groups the data by each day, and visualizes the average number of interactions i
 <span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zip_file_path</span></span></em><span class="sig-paren">)</span></dt>
 <dd></dd></dl>
 
-<dl class="py function" id="module-analysis_seasonality">
-<dt class="sig sig-object py" id="analysis_seasonality.show_seasonality_analysis">
-<span class="sig-prename descclassname"><span class="pre">analysis_seasonality.</span></span><span class="sig-name descname"><span class="pre">show_seasonality_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis_seasonality.show_seasonality_analysis" title="Link to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">prepare_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span></dt>
 <dd></dd></dl>
 
-<dl class="py function" id="module-analysis_weekly">
-<dt class="sig sig-object py" id="analysis_weekly.show_weekly_analysis">
-<span class="sig-prename descclassname"><span class="pre">analysis_weekly.</span></span><span class="sig-name descname"><span class="pre">show_weekly_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis_weekly.show_weekly_analysis" title="Link to this definition"></a></dt>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">WebApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">setup_navigation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-analysis_seasonality">
+<dt class="sig sig-object py" id="analysis_seasonality.seasonality_analysis_module">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_seasonality.</span></span><span class="sig-name descname"><span class="pre">seasonality_analysis_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_seasonality.seasonality_analysis_module" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis_seasonality.seasonality_analysis_module.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis_seasonality.seasonality_analysis_module.run" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-analysis_weekly">
+<dt class="sig sig-object py" id="analysis_weekly.weekly_analysis_module">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_weekly.</span></span><span class="sig-name descname"><span class="pre">weekly_analysis_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_weekly.weekly_analysis_module" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis_weekly.weekly_analysis_module.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis_weekly.weekly_analysis_module.run" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </section>
 

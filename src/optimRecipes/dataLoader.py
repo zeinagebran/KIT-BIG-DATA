@@ -33,7 +33,6 @@ DATA_FILES = ['RAW_interactions.csv', 'RAW_recipes.csv']
 CHARSET = 'UTF-8'
 # Constants for data types
 LIST_STR = 'list=str'
-LIST_FLOAT_7 = 'list=float=7'
 INT = 'int'
 DATE = 'date'
 STR = 'str'
@@ -52,7 +51,7 @@ optimRecipes_DATATYPE = {
         'contributor_id': 'int64',
         'submitted': DATE,
         'tags': LIST_STR,
-        'nutrition': LIST_FLOAT_7,
+        'nutrition': 'list=float=7',
         'n_steps': INT,
         'steps': LIST_STR,
         'description': STR,
@@ -155,12 +154,11 @@ class DataLoader:
             return int(col)
         if cvt_type == 'float':
             return float(col)
-        if cvt_type == DATE:
+        if DATE in cvt_type:
             return datetime.date.fromisoformat(col)
-        if LIST_STR in cvt_type:
-            return col.strip("[]").split(",")
-        if LIST_FLOAT_7 in cvt_type:
-            return [float(x) for x in col.strip("[]").split(",")]
+        if 'list=' in cvt_type:
+            h = cvt_type.split('=')
+            return [dataLooader.convert(x, h[1]) for x in col.strip('[]').split(',')]
 
         return col
 

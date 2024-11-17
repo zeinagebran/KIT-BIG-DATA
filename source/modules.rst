@@ -23,13 +23,3 @@ KIT-BIG-DATA Modules
    :members:
    :undoc-members:
    :show-inheritance:
-
-.. automodule:: analyse_premier_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: analyse_deuxieme_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:

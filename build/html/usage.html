@@ -132,8 +132,10 @@
 </section>
 <section id="using-with-streamlit">
 <h2>Using with Streamlit<a class="headerlink" href="#using-with-streamlit" title="Link to this heading"></a></h2>
+<p>First modify config file to specify ZIP file path.</p>
 <p>To use the project with Streamlit, run the application with the following command in the terminal:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>streamlit<span class="w"> </span>run<span class="w"> </span>app.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span>src
+streamlit<span class="w"> </span>run<span class="w"> </span>src/optimRecipes/main.py
 </pre></div>
 </div>
 <p>This will open a user interface in your browser to interact with the recipe data and generated visualizations.</p>

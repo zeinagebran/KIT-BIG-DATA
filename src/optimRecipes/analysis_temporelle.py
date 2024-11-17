@@ -33,15 +33,11 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
     """Analyse the data and calculate sum of interaction by year and mouth.
 
     :param dict(str, list[str]) data: data loaded for each file
-        data[filename][row]
-    :return (nb_by_year, nb_by_year), dict(str, dict(str, int)): return
-        number of interaction by year and by mouth for all data.
-        nb_by_year: dict[str, dict[int, int]]
-            nb_by_year['filename'] = object for the file
-            nb_by_year['filename'][year]: [int] = Count for the year
-        nb_by_month: dict[str, dict[int, int]]
-            nb_by_month['filename'] = object for the file
-            nb_by_month['filename']['aaaa-mm']: [int] = Count for the mouth of a year
+        (data[filename][row])
+    :return (nb_by_year, nb_by_month): number of interaction by year/mouth in
+        a dict[str, dict[int, int]] : 
+        nb_by_year: nb_by_year['filename'][year]: [int] = Count for the year
+        nb_by_month: b_by_month['filename']['aaaa-mm']: [int] = Count for the mouth of a year
     """
     nb_by_year: dict[str, dict[int, int]] = {}
     nb_by_month: dict[str, dict[str, int]] = {}
@@ -164,7 +160,7 @@ class temporality_analysis_module:
 
     def run(self):
         """Build analysis, and print result on a web streamlit page."""
-        st.title("🍲 Top 15 Most Popular Recipes")
+        st.title("Evolution of recipes and actions over time")
         st.markdown(
             """
             ## 🌟 Discover temporality of recipes and actions over time!

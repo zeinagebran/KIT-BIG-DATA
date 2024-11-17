@@ -1,8 +1,3 @@
-.. KIT-BIG-DATA documentation master file, created by
-   sphinx-quickstart on Thu Oct 31 17:55:07 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 KIT-BIG-DATA Documentation
 ==========================
 
@@ -19,17 +14,13 @@ Welcome to the KIT-BIG-DATA project documentation. This documentation covers the
 KIT-BIG-DATA Modules
 ====================
 
-.. automodule:: analyse_deuxieme_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: analyse_premier_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 .. automodule:: analysis_seasonality
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :no-index:
+
+.. automodule:: analysis_temporelle
    :members:
    :undoc-members:
    :show-inheritance:
@@ -41,7 +32,17 @@ KIT-BIG-DATA Modules
    :show-inheritance:
    :no-index:
 
+.. automodule:: analysis_top_15
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: app
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: config
    :members:
    :undoc-members:
    :show-inheritance:
@@ -51,12 +52,22 @@ KIT-BIG-DATA Modules
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: test_top_recipes
+.. automodule:: logger
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: top_50_analysis
+.. automodule:: main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: most_common_words
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: dataLoader
    :members:
    :undoc-members:
    :show-inheritance:
