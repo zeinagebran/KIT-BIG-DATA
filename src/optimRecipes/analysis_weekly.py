@@ -2,11 +2,10 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from functions import DataExtractor, WeeklyAnalysis
-from optimRecipes.config import Config
 
 
 class weekly_analysis_module:
-    def __init__(self, interactions_df, cfg: Config):
+    def __init__(self, interactions_df, cfg):
         self.cfg = cfg
         self.interactions_df = interactions_df
 

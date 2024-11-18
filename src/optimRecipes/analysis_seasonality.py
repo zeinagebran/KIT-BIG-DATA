@@ -1,10 +1,9 @@
 import streamlit as st
 from functions import SeasonalityAnalysis
-from optimRecipes.config import Config
 
 
 class seasonality_analysis_module:
-    def __init__(self, interactions_df, cfg: Config):
+    def __init__(self, interactions_df, cfg):
         self.cfg = cfg
         self.interactions_df = interactions_df
 

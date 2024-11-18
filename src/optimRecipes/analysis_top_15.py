@@ -1,10 +1,9 @@
 import streamlit as st
 from functions import get_data, TopRecipesAnalysis
-from optimRecipes.config import Config
 
 
 class top_50_analysis_module:
-    def __init__(self, recipes_df, interactions_df, cfg: Config):
+    def __init__(self, recipes_df, interactions_df, cfg):
         self.cfg = cfg
         self.recipes_df = recipes_df
         self.interactions_df = interactions_df

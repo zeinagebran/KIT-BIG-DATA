@@ -1,15 +1,11 @@
 import streamlit as st
-import pyrallis
-import matplotlib.pyplot as plt
 
-from functions import CommonWordsAnalysis
-from optimRecipes.config import Config
-
+from functions import CommonWordsAnalysis, TopRecipesAnalysis, DataExtractor
 from logger import Logger
 
 
 class most_common_words_module:
-    def __init__(self, recipes_df, interactions_df, cfg: Config):
+    def __init__(self, recipes_df, interactions_df, cfg):
         """
         Initializes the MostCommonWordsModule with the given DataFrames and configuration.
 
@@ -21,11 +17,6 @@ class most_common_words_module:
         self.cfg = cfg
         self.recipes_df = recipes_df
         self.interactions_df = interactions_df
-
-        # Setup parameters from configuration
-        self.min_rating = cfg.min_rating
-        self.min_num_ratings = cfg.min_num_ratings
-        self.num_top_recipes = cfg.num_top_recipes
         self.min_year = cfg.min_year
         self.max_year = cfg.max_year
 
@@ -43,22 +34,19 @@ class most_common_words_module:
 
         # Year selection for analysis
         st.markdown("### 📅 Select the Year")
-        year = st.selectbox("Choose a year to analyze:", [str(
-            i) for i in range(self.min_year, self.max_year)])
-        year = int(year)
+        section = st.selectbox("Choose a section:",
+                               ["All"] + [str(i) for i in list(range(self.min_year, self.max_year))])
+        if section != "All":
+            year = int(section)
+            self.recipes_df["submitted"] = self.recipes_df["submitted"].apply(lambda x: int(x[0:4]))
+            self.recipes_df = self.recipes_df[self.recipes_df["submitted"] == year]
+
+        self.top_recipes = TopRecipesAnalysis(self.recipes_df, self.interactions_df)
 
         # Button to display the word cloud
         if st.button('🔍 Display Word Cloud'):
-            with st.spinner(f"Analyzing the most common words in popular recipes for {year}..."):
-                # Perform common words analysis
-                cw_analysis = CommonWordsAnalysis(
-                    self.recipes_df, self.interactions_df, self.cfg)
-                cw_analysis.format_recipe(year)
-                word_cloud = cw_analysis.compute_top_keywords()
-
-                # Display word cloud
-                fig, ax = plt.subplots(figsize=(10, 6))
-                ax.imshow(word_cloud, interpolation='bilinear')
-                ax.axis("off")
-                st.pyplot(fig)
-                st.success("Word cloud generated successfully! 🌟")
+            with st.spinner(f"Computing the most common words"):
+                top_recipes_df = self.top_recipes.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
+                cw_analysis = CommonWordsAnalysis(top_recipes_df, self.cfg)
+                text = cw_analysis.compute_top_keywords()
+                cw_analysis.display_wordcloud(text)

@@ -1,4 +1,6 @@
 import math
+import os
+
 import numpy as np
 import matplotlib.pyplot as plt
 import itertools
@@ -8,8 +10,7 @@ import zipfile
 import streamlit as st
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
-
-from optimRecipes.config import Config
+from config import Config
 
 
 # DataExtractor class to handle data extraction and loading
@@ -310,11 +311,18 @@ class TopRecipesAnalysis:
         self.recipes_df = recipes_df
         self.interactions_df = interactions_df
 
-    def display_popular_recipes_and_visualizations(self):
+    def display_popular_recipes_and_visualizations(self, return_top_recipes = False, mcw_flag = False):
         """
         Displays the most popular recipes based on various criteria and provides options to visualize them.
         Includes options to filter recipes by year range and display details for a selected recipe.
         """
+
+        #If using the module for most_common_words, we set n = 50
+        if mcw_flag == True:
+            n = 50
+        else:
+            n = 15
+
         # Format 'submitted' column and rename 'id' to 'recipe_id'
         self.recipes_df = self._format_to_datetime(
             self.recipes_df, 'submitted')
@@ -331,31 +339,33 @@ class TopRecipesAnalysis:
 
         # Get top recipes and their details
         top_recipes = self._get_top_n_recipes_by_ratings(
-            filtered_df, 'recipe_id', 'rating', n=15)
+            filtered_df, 'recipe_id', 'rating', n=n)
         grouped_df = self._group_by_attribute_count(
             top_recipes, ['recipe_id', 'name', 'rating'])
 
-        # Plot the results
+        if return_top_recipes:
+            return grouped_df
+        else:
+            # Plot the results
+            st.title("🍲 Top Recipes Analysis Dashboard")
 
-        st.title("🍲 Top Recipes Analysis Dashboard")
+            st.subheader(
+                "Explore popular recipes, filter by year range, and view detailed stats!")
+            if st.button("🔝 Display recipes with the most positive ratings over the years"):
+                self._plot_top_recipes(grouped_df)
 
-        st.subheader(
-            "Explore popular recipes, filter by year range, and view detailed stats!")
-        if st.button("🔝 Display recipes with the most positive ratings over the years"):
-            self._plot_top_recipes(grouped_df)
+            if st.button("🗓️ Display recipes with positive ratings (2000-2010)"):
+                self._plot_top_recipes_from_2000_to_2010(filtered_df)
 
-        if st.button("🗓️ Display recipes with positive ratings (2000-2010)"):
-            self._plot_top_recipes_from_2000_to_2010(filtered_df)
+            if st.button("🗓️ Display recipes with positive ratings (2010-2018)"):
+                self._plot_top_recipes_from_2010_to_2018(filtered_df)
 
-        if st.button("🗓️ Display recipes with positive ratings (2010-2018)"):
-            self._plot_top_recipes_from_2010_to_2018(filtered_df)
+            # if st.button("Display selected recipes details"):
+            self._display_selected_recipe_details(merged_df, grouped_df)
 
-        # if st.button("Display selected recipes details"):
-        self._display_selected_recipe_details(merged_df, grouped_df)
-
-        # self._plot_top_recipes(grouped_df)
-        # self._display_selected_recipe_details(merged_df, grouped_df)
-        # self._plot_wordcloud(grouped_df, merged_df)
+            # self._plot_top_recipes(grouped_df)
+            # self._display_selected_recipe_details(merged_df, grouped_df)
+            # self._plot_wordcloud(grouped_df, merged_df)
 
     def _format_to_datetime(self, df, column_name):
         """
@@ -611,22 +621,6 @@ class CommonWordsAnalysis:
         self.min_num_ratings = cfg.min_num_ratings
         self.num_top_recipes = cfg.num_top_recipes
 
-    # def compute_interactions_df(self, recipe, interactions):
-    #    # recipe_histogram
-    #    recipe["submitted"] = recipe["submitted"].apply(lambda x: int(x[0:4]))
-    #    year_list = sorted(recipe["submitted"].unique())
-    #    num_recipes_list = [len(recipe[recipe["submitted"] == year]) for year in year_list]
-#
-    #    # Interactions histogram
-    #    interactions["date"] = interactions["date"].apply(lambda x: int(x[0:4]))
-    #    num_interactions_list = [len(interactions[interactions["date"] == year]) for year in year_list]
-#
-    #    # Combining the histograms
-    #    df = pd.DataFrame({"num_interactions": num_interactions_list,
-    #                       "num_recipes": num_recipes_list},
-    #                      index = year_list)
-    #    return df
-
     def process_name(self, name: str):
         name_array = [word for word in name.split(' ') if word != '']
         return [word for word in name_array if word not in stopwords.words("english")]
@@ -651,34 +645,47 @@ class CommonWordsAnalysis:
         self.recipes["number_of_ratings"] = number_of_ratings
         self.recipes = self.recipes[self.recipes["average_rating"] != -1]
 
+class CommonWordsAnalysis:
+
+    def __init__(self, top_recipes, cfg):
+        self.cfg = cfg
+        self.top_recipes = top_recipes
+
+    def process_name(self, name: str):
+        name_array = [word for word in name.split(' ') if word != '']
+        return [word for word in name_array if word not in stopwords.words("english")]
+
     def compute_top_keywords(self):
-        top_recipe = self.recipes[(self.recipes["average_rating"] > self.min_rating) & (
-            self.recipes["number_of_ratings"] > self.min_num_ratings)]
-        top_recipe["name"] = top_recipe["name"].apply(self.process_name)
-        top_keywords_list = list(
-            itertools.chain.from_iterable(top_recipe["name"].to_numpy()))
+        self.top_recipes["name"] = self.top_recipes["name"].apply(self.process_name)
+        top_keywords_list = list(itertools.chain.from_iterable(self.top_recipes["name"].to_numpy()))
         top_keywords_to_count_dict = {}
         for keyword in top_keywords_list:
             if keyword in top_keywords_to_count_dict.keys():
                 top_keywords_to_count_dict[keyword] += 1
             else:
                 top_keywords_to_count_dict[keyword] = 1
-        sorted_top_keywords_to_count_dict = sorted(
-            top_keywords_to_count_dict.items(), key=lambda x: x[1], reverse=True)
-        N = sum(
-            [t[1] for t in sorted_top_keywords_to_count_dict[:self.num_top_recipes]])
-        text_array = [(t[0], t[1] / N)
-                      for t in sorted_top_keywords_to_count_dict[:self.num_top_recipes]]
-        cst = 1 / text_array[-1][1]
-        text_array = [(t[0], math.ceil(cst * t[1])) if math.ceil(cst *
-                                                                 t[1]) <= 10 else (t[0], 10) for t in text_array]
-        text = " ".join([" ".join([t[0] for _ in range(t[1])])
-                        for t in text_array])
-        wc = WordCloud(max_font_size=50, max_words=20,
-                       background_color="white", relative_scaling=1).generate(text)
+        sorted_top_keywords_to_count_dict = sorted(top_keywords_to_count_dict.items(), key=lambda x: x[1],
+                                                   reverse=True)
+        cst = 4 / max([t[1] for t in sorted_top_keywords_to_count_dict])
+        text_array = [(t[0], math.ceil(cst * t[1])) if math.ceil(cst * t[1]) <= 5 else (t[0], 4) for t in
+                      sorted_top_keywords_to_count_dict]
+        text = " ".join([" ".join([t[0] for _ in range(t[1])]) for t in text_array])
+        return text
+
+    def display_wordcloud(self, text):
+        wc = WordCloud(max_font_size=50, max_words=20, background_color="white", relative_scaling=1).generate(text)
+        fig, ax = plt.subplots(1)
+        ax = plt.imshow(wc, interpolation='bilinear')
+        plt.axis("off")
+        st.pyplot(fig)
+        st.success("Word cloud generated successfully! 🌟")
         return wc
 
-
 def prepare_directories(cfg: Config):
-    cfg.logging_dir.mkdir(parents=True, exist_ok=True)
-    cfg.run_cfg_dir.mkdir(parents=True, exist_ok=True)
+    """
+    Prepare directories for outputs and logs.
+    """
+    directories = [cfg.logging_dir, cfg.run_cfg_dir]
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
+
