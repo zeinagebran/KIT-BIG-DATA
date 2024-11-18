@@ -12,22 +12,22 @@ st.set_page_config(page_title="Enhancing User Interaction",
 
 
 class WebApp:
-    def __init__(self, cfg):
+    def __init__(self, log_module, cfg):
         # Load data and initialize logger
         self.cfg = cfg
-        self.log_module = Logger(cfg=cfg)
+        self.log_module = log_module
         self.zip_file_path = cfg.zip_file_path
         self.interactions_df, self.recipes_df = self.load_data()
 
         # Initialize modules
         self.seasonality_analysis_module = seasonality_analysis_module(
-            self.interactions_df, cfg)
+            self.interactions_df, log_module, cfg)
         self.top_50_analysis_module = top_50_analysis_module(
-            self.recipes_df, self.interactions_df, cfg)
+            self.recipes_df, self.interactions_df, log_module, cfg)
         self.weekly_analysis_module = weekly_analysis_module(
-            self.interactions_df, cfg)
+            self.interactions_df, log_module, cfg)
         self.most_common_words_module = most_common_words_module(
-            self.recipes_df, self.interactions_df, cfg)
+            self.recipes_df, self.interactions_df, log_module, cfg)
 
     def load_data(self):
         self.log_module.log_info("Extracting data")

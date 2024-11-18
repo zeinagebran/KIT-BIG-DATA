@@ -5,7 +5,7 @@ from logger import Logger
 
 
 class most_common_words_module:
-    def __init__(self, recipes_df, interactions_df, cfg):
+    def __init__(self, recipes_df, interactions_df, log_module, cfg):
         """
         Initializes the MostCommonWordsModule with the given DataFrames and configuration.
 
@@ -19,11 +19,13 @@ class most_common_words_module:
         self.interactions_df = interactions_df
         self.min_year = cfg.min_year
         self.max_year = cfg.max_year
+        self.log_module = log_module
 
     def run(self):
         """
         Runs the module to display the most common words in popular recipes by year.
         """
+        self.log_module.log_info("Starting most_common_words_module")
         # Page title and introduction
         st.title("📜 Most Common Words in Popular Recipes")
         st.markdown("""

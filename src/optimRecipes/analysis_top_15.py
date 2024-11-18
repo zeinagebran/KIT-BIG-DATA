@@ -3,10 +3,11 @@ from functions import get_data, TopRecipesAnalysis
 
 
 class top_50_analysis_module:
-    def __init__(self, recipes_df, interactions_df, cfg):
+    def __init__(self, recipes_df, interactions_df, log_module, cfg):
         self.cfg = cfg
         self.recipes_df = recipes_df
         self.interactions_df = interactions_df
+        self.log_module = log_module
 
     def run(self):
         st.title("🍲 Top 15 Most Popular Recipes")
@@ -19,6 +20,7 @@ class top_50_analysis_module:
             """
         )
 
+        self.log_module.log_info("Starting top_50_analysis_module")
         # Initialize the analysis
         top_recipes_analysis = TopRecipesAnalysis(self.recipes_df, self.interactions_df)
         top_recipes_analysis.display_popular_recipes_and_visualizations()

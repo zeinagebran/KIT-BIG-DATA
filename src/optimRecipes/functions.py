@@ -610,52 +610,31 @@ class TopRecipesAnalysis:
         ax.set_xticklabels(unique_years, rotation=45)
         st.pyplot(fig)
 
-
 class CommonWordsAnalysis:
+    """
+    A class to analyze and visualize the most popular keywords used in recipe titles.
 
-    def __init__(self, recipes_df, interactions_df, cfg):
-        self.cfg = cfg
-        self.recipes = recipes_df
-        self.interactions = interactions_df
-        self.min_rating = cfg.min_rating
-        self.min_num_ratings = cfg.min_num_ratings
-        self.num_top_recipes = cfg.num_top_recipes
-
-    def process_name(self, name: str):
-        name_array = [word for word in name.split(' ') if word != '']
-        return [word for word in name_array if word not in stopwords.words("english")]
-
-    def compute_average_rating(self, recipe_id: int):
-        ratings = self.interactions[self.interactions["recipe_id"]
-                                    == recipe_id]["rating"].to_numpy()
-        if len(ratings) == 0:
-            return -1, 0
-        else:
-            return np.mean(ratings), len(ratings)
-
-    def format_recipe(self, year: int):
-        self.recipes["submitted"] = self.recipes["submitted"].apply(
-            lambda x: int(x[0:4]))
-        self.recipes = self.recipes[self.recipes["submitted"] == year]
-        ratings = [self.compute_average_rating(
-            recipe_id)[0] for recipe_id in self.recipes["id"].to_numpy()]
-        number_of_ratings = [self.compute_average_rating(
-            recipe_id)[1] for recipe_id in self.recipes["id"].to_numpy()]
-        self.recipes["average_rating"] = ratings
-        self.recipes["number_of_ratings"] = number_of_ratings
-        self.recipes = self.recipes[self.recipes["average_rating"] != -1]
-
-class CommonWordsAnalysis:
-
+    Attributes:
+        top_recipes (pd.DataFrame): top recipes computed by the TopRecipesAnalysis class.
+    """
     def __init__(self, top_recipes, cfg):
         self.cfg = cfg
         self.top_recipes = top_recipes
 
     def process_name(self, name: str):
+        """
+        Formats recipe titles into list of keywords.
+
+        Args:
+            name (str): name of recipe.
+        """
         name_array = [word for word in name.split(' ') if word != '']
         return [word for word in name_array if word not in stopwords.words("english")]
 
     def compute_top_keywords(self):
+        """
+        Computes most common keywords used in recipe title.
+        """
         self.top_recipes["name"] = self.top_recipes["name"].apply(self.process_name)
         top_keywords_list = list(itertools.chain.from_iterable(self.top_recipes["name"].to_numpy()))
         top_keywords_to_count_dict = {}
@@ -673,6 +652,12 @@ class CommonWordsAnalysis:
         return text
 
     def display_wordcloud(self, text):
+        """
+        Displays wordcloud of most common keywords.
+
+        Args:
+            text (list): list containing most frequent keywords.
+        """
         wc = WordCloud(max_font_size=50, max_words=20, background_color="white", relative_scaling=1).generate(text)
         fig, ax = plt.subplots(1)
         ax = plt.imshow(wc, interpolation='bilinear')

@@ -5,9 +5,10 @@ from functions import DataExtractor, WeeklyAnalysis
 
 
 class weekly_analysis_module:
-    def __init__(self, interactions_df, cfg):
+    def __init__(self, interactions_df, log_module, cfg):
         self.cfg = cfg
         self.interactions_df = interactions_df
+        self.log_module = log_module
 
     def run(self):
         st.title("📅 Weekly User Interaction Insights")
@@ -26,6 +27,7 @@ class weekly_analysis_module:
         ---
         """)
 
+        self.log_module.log_info("Starting weekly_analysis_module")
         # Initialize WeeklyAnalysis
         weekly_analysis = WeeklyAnalysis(self.interactions_df)
 

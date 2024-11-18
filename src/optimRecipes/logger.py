@@ -7,22 +7,22 @@ class Logger:
         config_dict = vars(self.cfg)
         self.formatted_config = "\n".join([f"{key}: {value}" for key, value in config_dict.items()])
 
-        logger = logging.getLogger('logger')
-        logger.setLevel(logging.DEBUG)
-        # create file handler which logs even debug messages
-        fh = logging.FileHandler(self.cfg.logging_dir + '/app.log')
-        fh.setLevel(logging.DEBUG)
-        # create console handler with a higher log level
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
-        # create formatter and add it to the handlers
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-        ch.setFormatter(formatter)
-        fh.setFormatter(formatter)
-        # add the handlers to logger
-        logger.addHandler(ch)
-        logger.addHandler(fh)
-        self.logger = logger
+        self.logger = logging.getLogger('logger')
+        if not len(self.logger.handlers):
+            self.logger.setLevel(logging.DEBUG)
+            # create file handler which logs even debug messages
+            fh = logging.FileHandler(self.cfg.logging_dir + '/app.log')
+            fh.setLevel(logging.DEBUG)
+            # create console handler with a higher log level
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
+            # create formatter and add it to the handlers
+            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+            ch.setFormatter(formatter)
+            fh.setFormatter(formatter)
+            # add the handlers to logger
+            self.logger.addHandler(ch)
+            self.logger.addHandler(fh)
 
         self.logger.info("-----------------------NEW RUN STARTED-----------------------")
         self.logger.info(f"Configuration \n{self.formatted_config}")
