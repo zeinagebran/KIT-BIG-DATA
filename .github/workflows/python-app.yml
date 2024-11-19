@@ -2,7 +2,10 @@
 
 name: Python application
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - 'gh-pages'  # Not for Github documentation branche
 
 permissions:
   contents: read
