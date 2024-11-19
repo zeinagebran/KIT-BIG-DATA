@@ -616,8 +616,7 @@ class CommonWordsAnalysis:
     Attributes:
         top_recipes (pd.DataFrame): top recipes computed by the TopRecipesAnalysis class.
     """
-    def __init__(self, top_recipes, cfg):
-        self.cfg = cfg
+    def __init__(self, top_recipes):
         self.top_recipes = top_recipes
 
     def process_name(self, name: str):

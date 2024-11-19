@@ -27,24 +27,18 @@ def sample_interactions():
     return pd.DataFrame(data)
 
 
-@pytest.fixture
-def config():
-    class Config:
-    return Config()
-
-
-def test_process_name(config, sample_recipes, sample_interactions):
+def test_process_name(sample_recipes, sample_interactions):
     top_recipes_analysis = TopRecipesAnalysis(sample_recipes, sample_interactions)
     top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
-    analysis = CommonWordsAnalysis(top_recipes, config)
+    analysis = CommonWordsAnalysis(top_recipes)
     processed_name = analysis.process_name('Recipe with sugar')
     assert 'with' not in processed_name, "Common stopwords should be removed."
 
 
-def test_compute_top_keywords(config, sample_recipes, sample_interactions):
+def test_compute_top_keywords(sample_recipes, sample_interactions):
     top_recipes_analysis = TopRecipesAnalysis(sample_recipes, sample_interactions)
     top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
-    analysis = CommonWordsAnalysis(top_recipes, config)
+    analysis = CommonWordsAnalysis(top_recipes)
     text = analysis.compute_top_keywords()
     wordcloud = analysis.display_wordcloud(text)
 
