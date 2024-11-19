@@ -49,6 +49,6 @@ class most_common_words_module:
         if st.button('🔍 Display Word Cloud'):
             with st.spinner(f"Computing the most common words"):
                 top_recipes_df = self.top_recipes.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
-                cw_analysis = CommonWordsAnalysis(top_recipes_df, self.cfg)
+                cw_analysis = CommonWordsAnalysis(top_recipes_df)
                 text = cw_analysis.compute_top_keywords()
                 cw_analysis.display_wordcloud(text)
