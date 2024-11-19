@@ -24,6 +24,12 @@ extensions = [
     'sphinx.ext.napoleon',  # Supporte le style NumPy et Google des docstrings
 ]
 
+# Configuration pour autodoc
+autodoc_default_options = {
+    'members': True,  # Inclure les membres publics
+    'private-members': True,  # Inclure les membres privés (_nom)
+}
+
 templates_path = ['_templates']
 exclude_patterns = []
 

@@ -16,6 +16,7 @@ KIT-BIG-DATA Modules
 
 .. automodule:: analysis_seasonality
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
    :no-index:
@@ -28,46 +29,55 @@ KIT-BIG-DATA Modules
 
 .. automodule:: analysis_weekly
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
    :no-index:
 
 .. automodule:: analysis_top_15
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: app
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: config
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: functions
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: logger
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: main
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: most_common_words
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: dataLoader
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:

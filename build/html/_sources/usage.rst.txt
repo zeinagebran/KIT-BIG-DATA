@@ -18,7 +18,7 @@ Here’s how to import the main project modules into your Python code:
 .. code-block:: python
 
     from optimRecipes.functions import DataExtractor, WeeklyAnalysis, SeasonalityAnalysis
-    from optimRecipes.top_50_analysis import TopRecipesAnalysis
+    from optimRecipes.analysis_top_15 import TopRecipesAnalysis
 
 **2. Loading Data**
 

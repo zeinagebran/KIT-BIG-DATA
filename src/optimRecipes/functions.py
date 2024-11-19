@@ -68,8 +68,7 @@ class DataExtractor:
             _self.interactions_df['date'] = pd.to_datetime(
                 _self.interactions_df['date'], errors='coerce', infer_datetime_format=True
             )
-            print(f"Number of unparsed dates: {
-                  _self.interactions_df['date'].isna().sum()}")
+            print(f"Number of unparsed dates: { _self.interactions_df['date'].isna().sum()}")
             print("Data loaded successfully!")
         except Exception as e:
             print(f"Error loading data: {e}")
@@ -268,8 +267,7 @@ class SeasonalityAnalysis:
         # Monthly Plot with unique colors for each month
         sns.barplot(x=interactions_per_month.index,
                     y=interactions_per_month.values, ax=axes[0], palette=month_colors)
-        axes[0].set_title(f'User Interactions by Month for {
-                          year}', fontsize=16)
+        axes[0].set_title(f'User Interactions by Month for {year}', fontsize=16)
         axes[0].set_xlabel('Month', fontsize=14)
         axes[0].set_ylabel('Number of Interactions', fontsize=14)
         axes[0].tick_params(axis='x', rotation=45)
@@ -278,8 +276,7 @@ class SeasonalityAnalysis:
         # Seasonal Plot
         sns.barplot(x=interactions_per_season.index,
                     y=interactions_per_season.values, ax=axes[1], palette='coolwarm')
-        axes[1].set_title(f'User Interactions by Season for {
-                          year}', fontsize=16)
+        axes[1].set_title(f'User Interactions by Season for {year}', fontsize=16)
         axes[1].set_xlabel('Season', fontsize=14)
         axes[1].set_ylabel('Number of Interactions', fontsize=14)
         axes[1].tick_params(axis='x', rotation=0)
@@ -601,8 +598,7 @@ class TopRecipesAnalysis:
         sns.lineplot(x='year', y='count', hue='rating',
                      data=grouped_by_date, palette='coolwarm', ax=ax)
 
-        ax.set_title(f"Evolution of Ratings for Recipe {
-                     recipe_id} by Year and Rating Class", fontsize=18)
+        ax.set_title(f"Evolution of Ratings for Recipe {recipe_id} by Year and Rating Class", fontsize=18)
         ax.set_xlabel('Year', fontsize=14)
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.set_xticks(unique_years)

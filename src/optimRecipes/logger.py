@@ -1,3 +1,4 @@
+
 import logging
 import yaml
 
@@ -46,4 +47,5 @@ class Logger:
 
     def log_critical(self, msg: str):
         self.logger.critical(msg)
+
 
