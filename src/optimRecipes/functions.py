@@ -665,7 +665,7 @@ class CommonWordsAnalysis:
         st.success("Word cloud generated successfully! 🌟")
         return wc
 
-def prepare_directories(cfg: Config):
+def prepare_directories(cfg):
     """
     Prepare directories for outputs and logs.
     """
