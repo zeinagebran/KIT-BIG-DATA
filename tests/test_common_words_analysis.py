@@ -63,13 +63,3 @@ def test_common_words_with_empty_recipe_names(sample_interactions):
         wordcloud, WordCloud), "Expected a WordCloud with empty recipe names"
 
 
-#def test_common_words_analysis_edge_case_ratings(config, sample_recipes, sample_interactions):
-#    # Test for recipes with ratings at the boundary of min_rating
-#    analysis = CommonWordsAnalysis(sample_recipes, sample_interactions, config)
-#    analysis.format_recipe(2024)
-#    wordcloud = analysis.compute_top_keywords()
-#    assert isinstance(
-#        wordcloud, WordCloud), "Expected a WordCloud object even with boundary rating recipes"
-#
-#
-
