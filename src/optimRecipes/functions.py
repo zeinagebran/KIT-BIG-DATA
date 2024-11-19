@@ -10,7 +10,6 @@ import zipfile
 import streamlit as st
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
-from config import Config
 
 
 # DataExtractor class to handle data extraction and loading
