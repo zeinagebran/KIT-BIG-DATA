@@ -1,14 +1,16 @@
 import streamlit as st
 from functions import SeasonalityAnalysis
-from optimRecipes.config import Config
 
 
 class seasonality_analysis_module:
-    def __init__(self, interactions_df, cfg: Config):
+    def __init__(self, interactions_df, log_module, cfg):
         self.cfg = cfg
         self.interactions_df = interactions_df
+        self.log_module = log_module
 
     def run(self):
+        self.log_module.log_info("Starting seasonality_analysis_module")
+
         st.title("🌦️ Seasonality Analysis of User Interactions")
         st.markdown("""
         ## 📅 Discover Monthly and Seasonal Trends!

@@ -5,8 +5,6 @@ pandas
 numpy
 nltk
 wordcloud
-pyrallis # => à ne pas utiliser
-loguru # Attention plus maintenu, à éviter, préférer la lib standard
 
 # modules partie Web
 streamlit

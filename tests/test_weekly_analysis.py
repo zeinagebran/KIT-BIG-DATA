@@ -1,7 +1,7 @@
 import pytest
 import matplotlib.pyplot as plt
 import pandas as pd
-from optimRecipes.functions import WeeklyAnalysis
+from src.optimRecipes.functions import WeeklyAnalysis
 
 
 @pytest.fixture

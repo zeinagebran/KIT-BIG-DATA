@@ -1,7 +1,7 @@
 import pytest
 import matplotlib.pyplot as plt
 import pandas as pd
-from optimRecipes.functions import SeasonalityAnalysis
+from src.optimRecipes.functions import SeasonalityAnalysis
 
 
 @pytest.fixture

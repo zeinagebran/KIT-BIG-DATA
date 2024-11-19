@@ -2,13 +2,13 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from functions import DataExtractor, WeeklyAnalysis
-from optimRecipes.config import Config
 
 
 class weekly_analysis_module:
-    def __init__(self, interactions_df, cfg: Config):
+    def __init__(self, interactions_df, log_module, cfg):
         self.cfg = cfg
         self.interactions_df = interactions_df
+        self.log_module = log_module
 
     def run(self):
         st.title("📅 Weekly User Interaction Insights")
@@ -27,6 +27,7 @@ class weekly_analysis_module:
         ---
         """)
 
+        self.log_module.log_info("Starting weekly_analysis_module")
         # Initialize WeeklyAnalysis
         weekly_analysis = WeeklyAnalysis(self.interactions_df)
 
