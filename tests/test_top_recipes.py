@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
-from optimRecipes.functions import TopRecipesAnalysis  # Importe ta classe
-from optimRecipes.config import Config
+from src.optimRecipes.functions import TopRecipesAnalysis  # Importe ta classe
+from src.optimRecipes.config import Config
 
 # Créer des DataFrames factices pour les tests
 
