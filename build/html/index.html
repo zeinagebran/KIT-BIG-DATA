@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KIT-BIG-DATA Documentation &mdash; KIT-BIG-DATA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            KIT-BIG-DATA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Using KIT-BIG-DATA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">KIT-BIG-DATA Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">KIT-BIG-DATA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">KIT-BIG-DATA Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kit-big-data-documentation">
+<h1>KIT-BIG-DATA Documentation<a class="headerlink" href="#kit-big-data-documentation" title="Link to this heading"></a></h1>
+<p>Welcome to the KIT-BIG-DATA project documentation. This documentation covers the modules, classes, and functions included in the project.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Using KIT-BIG-DATA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#usage-examples">Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#options-and-parameters">Options and Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#using-with-streamlit">Using with Streamlit</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">KIT-BIG-DATA Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#analysis_seasonality.seasonality_analysis_module"><code class="docutils literal notranslate"><span class="pre">seasonality_analysis_module</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#analysis_weekly.weekly_analysis_module"><code class="docutils literal notranslate"><span class="pre">weekly_analysis_module</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="kit-big-data-modules">
+<h1>KIT-BIG-DATA Modules<a class="headerlink" href="#kit-big-data-modules" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_seasonality.</span></span><span class="sig-name descname"><span class="pre">seasonality_analysis_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_weekly.</span></span><span class="sig-name descname"><span class="pre">weekly_analysis_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-app">
+<dt class="sig sig-object py" id="app.WebApp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">WebApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.WebApp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.WebApp.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.WebApp.load_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.WebApp.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.WebApp.run" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.WebApp.setup_navigation">
+<span class="sig-name descname"><span class="pre">setup_navigation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.WebApp.setup_navigation" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-functions">
+<dt class="sig sig-object py" id="functions.CommonWordsAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">CommonWordsAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipes_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.CommonWordsAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.CommonWordsAnalysis.compute_average_rating">
+<span class="sig-name descname"><span class="pre">compute_average_rating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipe_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.CommonWordsAnalysis.compute_average_rating" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.CommonWordsAnalysis.compute_top_keywords">
+<span class="sig-name descname"><span class="pre">compute_top_keywords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.CommonWordsAnalysis.compute_top_keywords" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.CommonWordsAnalysis.format_recipe">
+<span class="sig-name descname"><span class="pre">format_recipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.CommonWordsAnalysis.format_recipe" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.CommonWordsAnalysis.process_name">
+<span class="sig-name descname"><span class="pre">process_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.CommonWordsAnalysis.process_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.DataExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">DataExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zip_file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.DataExtractor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to handle data extraction and loading for recipe and interaction datasets stored in a zip file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.DataExtractor.zip_file_path">
+<span class="sig-name descname"><span class="pre">zip_file_path</span></span><a class="headerlink" href="#functions.DataExtractor.zip_file_path" title="Link to this definition"></a></dt>
+<dd><p>The file path to the zip file containing the datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.DataExtractor.interactions_df">
+<span class="sig-name descname"><span class="pre">interactions_df</span></span><a class="headerlink" href="#functions.DataExtractor.interactions_df" title="Link to this definition"></a></dt>
+<dd><p>DataFrame to store interactions data after loading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.DataExtractor.recipes_df">
+<span class="sig-name descname"><span class="pre">recipes_df</span></span><a class="headerlink" href="#functions.DataExtractor.recipes_df" title="Link to this definition"></a></dt>
+<dd><p>DataFrame to store recipes data after loading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.DataExtractor.extract_and_load_data">
+<span class="sig-name descname"><span class="pre">extract_and_load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.DataExtractor.extract_and_load_data" title="Link to this definition"></a></dt>
+<dd><p>Extracts and loads recipes and interactions datasets from a zip file.</p>
+<p>This method reads CSV files for interactions and recipes directly from the specified path
+and caches the results to optimize performance with Streamlit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A tuple containing two DataFrames:</dt><dd><ul class="simple">
+<li><p>interactions_df (pd.DataFrame): DataFrame containing interactions data.</p></li>
+<li><p>recipes_df (pd.DataFrame): DataFrame containing recipes data.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.SeasonalityAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">SeasonalityAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.SeasonalityAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to analyze and visualize seasonal trends in user interactions.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.SeasonalityAnalysis.interactions_df">
+<span class="sig-name descname"><span class="pre">interactions_df</span></span><a class="headerlink" href="#functions.SeasonalityAnalysis.interactions_df" title="Link to this definition"></a></dt>
+<dd><p>DataFrame containing interactions data with a ‘date’ column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.SeasonalityAnalysis.plot_seasonality">
+<span class="sig-name descname"><span class="pre">plot_seasonality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.SeasonalityAnalysis.plot_seasonality" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.SeasonalityAnalysis.plot_seasonality_for_year">
+<span class="sig-name descname"><span class="pre">plot_seasonality_for_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.SeasonalityAnalysis.plot_seasonality_for_year" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.TopRecipesAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">TopRecipesAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipes_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.TopRecipesAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to analyze and visualize the most popular recipes based on ratings and interactions data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.TopRecipesAnalysis.recipes_df">
+<span class="sig-name descname"><span class="pre">recipes_df</span></span><a class="headerlink" href="#functions.TopRecipesAnalysis.recipes_df" title="Link to this definition"></a></dt>
+<dd><p>DataFrame containing recipe data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.TopRecipesAnalysis.interactions_df">
+<span class="sig-name descname"><span class="pre">interactions_df</span></span><a class="headerlink" href="#functions.TopRecipesAnalysis.interactions_df" title="Link to this definition"></a></dt>
+<dd><p>DataFrame containing interactions data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.TopRecipesAnalysis.display_popular_recipes_and_visualizations">
+<span class="sig-name descname"><span class="pre">display_popular_recipes_and_visualizations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.TopRecipesAnalysis.display_popular_recipes_and_visualizations" title="Link to this definition"></a></dt>
+<dd><p>Displays the most popular recipes based on various criteria and provides options to visualize them.
+Includes options to filter recipes by year range and display details for a selected recipe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.TopRecipesAnalysis.display_recipes">
+<span class="sig-name descname"><span class="pre">display_recipes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.TopRecipesAnalysis.display_recipes" title="Link to this definition"></a></dt>
+<dd><p>Displays a bar plot of recipe ratings using seaborn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – The DataFrame containing recipes and rating counts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.WeeklyAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">WeeklyAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.WeeklyAnalysis" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to analyze and visualize the average number of user interactions by day of the week.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.WeeklyAnalysis.interactions_df">
+<span class="sig-name descname"><span class="pre">interactions_df</span></span><a class="headerlink" href="#functions.WeeklyAnalysis.interactions_df" title="Link to this definition"></a></dt>
+<dd><p>DataFrame containing interactions data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.WeeklyAnalysis.plot_interactions_for_year">
+<span class="sig-name descname"><span class="pre">plot_interactions_for_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.WeeklyAnalysis.plot_interactions_for_year" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.WeeklyAnalysis.plot_mean_interactions">
+<span class="sig-name descname"><span class="pre">plot_mean_interactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.WeeklyAnalysis.plot_mean_interactions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.get_data">
+<span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zip_file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.get_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.prepare_directories">
+<span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">prepare_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.prepare_directories" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function" id="module-test_top_recipes">
+<dt class="sig sig-object py" id="test_top_recipes.analysis_instance">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">analysis_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.analysis_instance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.sample_data">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">sample_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.sample_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.test_filter_positive_ratings">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">test_filter_positive_ratings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.test_filter_positive_ratings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.test_format_to_datetime">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">test_format_to_datetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.test_format_to_datetime" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.test_format_to_numeric">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">test_format_to_numeric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.test_format_to_numeric" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.test_get_top_n_recipes_by_ratings">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">test_get_top_n_recipes_by_ratings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.test_get_top_n_recipes_by_ratings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.test_group_by_attribute_count">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">test_group_by_attribute_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.test_group_by_attribute_count" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.test_merge_with">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">test_merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.test_merge_with" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test_top_recipes.test_rename_column">
+<span class="sig-prename descclassname"><span class="pre">test_top_recipes.</span></span><span class="sig-name descname"><span class="pre">test_rename_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_top_recipes.test_rename_column" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class" id="module-top_50_analysis">
+<dt class="sig sig-object py" id="top_50_analysis.top_50_analysis_module">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">top_50_analysis.</span></span><span class="sig-name descname"><span class="pre">top_50_analysis_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipes_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactions_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#top_50_analysis.top_50_analysis_module" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="top_50_analysis.top_50_analysis_module.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#top_50_analysis.top_50_analysis_module.run" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Groupe projet big data.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
