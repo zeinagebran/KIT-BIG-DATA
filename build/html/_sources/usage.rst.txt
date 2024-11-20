@@ -18,7 +18,7 @@ Here’s how to import the main project modules into your Python code:
 .. code-block:: python
 
     from optimRecipes.functions import DataExtractor, WeeklyAnalysis, SeasonalityAnalysis
-    from optimRecipes.top_50_analysis import TopRecipesAnalysis
+    from optimRecipes.analysis_top_15 import TopRecipesAnalysis
 
 **2. Loading Data**
 
@@ -69,10 +69,13 @@ Options and Parameters
 Using with Streamlit
 --------------------
 
+First modify config file to specify ZIP file path.
+
 To use the project with Streamlit, run the application with the following command in the terminal:
 
 .. code-block:: bash
 
-    streamlit run main.py
+    set PYTHONPATH=src
+    streamlit run src/optimRecipes/main.py
 
 This will open a user interface in your browser to interact with the recipe data and generated visualizations.

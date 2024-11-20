@@ -14,18 +14,9 @@ Welcome to the KIT-BIG-DATA project documentation. This documentation covers the
 KIT-BIG-DATA Modules
 ====================
 
-.. automodule:: analyse_deuxieme_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: analyse_premier_axe
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 .. automodule:: analysis_seasonality
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
    :no-index:
@@ -38,41 +29,55 @@ KIT-BIG-DATA Modules
 
 .. automodule:: analysis_weekly
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
    :no-index:
 
+.. automodule:: analysis_top_15
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: app
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: config
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: functions
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: logger
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: main
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
 .. automodule:: most_common_words
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: top_50_analysis
+.. automodule:: dataLoader
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:

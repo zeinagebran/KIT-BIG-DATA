@@ -91,7 +91,7 @@
 <p><strong>1. Importing Modules</strong></p>
 <p>Here’s how to import the main project modules into your Python code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optimRecipes.functions</span> <span class="kn">import</span> <span class="n">DataExtractor</span><span class="p">,</span> <span class="n">WeeklyAnalysis</span><span class="p">,</span> <span class="n">SeasonalityAnalysis</span>
-<span class="kn">from</span> <span class="nn">optimRecipes.top_50_analysis</span> <span class="kn">import</span> <span class="n">TopRecipesAnalysis</span>
+<span class="kn">from</span> <span class="nn">optimRecipes.analysis_top_15</span> <span class="kn">import</span> <span class="n">TopRecipesAnalysis</span>
 </pre></div>
 </div>
 <p><strong>2. Loading Data</strong></p>
@@ -132,8 +132,10 @@
 </section>
 <section id="using-with-streamlit">
 <h2>Using with Streamlit<a class="headerlink" href="#using-with-streamlit" title="Link to this heading"></a></h2>
+<p>First modify config file to specify ZIP file path.</p>
 <p>To use the project with Streamlit, run the application with the following command in the terminal:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>streamlit<span class="w"> </span>run<span class="w"> </span>app.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span>src
+streamlit<span class="w"> </span>run<span class="w"> </span>src/optimRecipes/main.py
 </pre></div>
 </div>
 <p>This will open a user interface in your browser to interact with the recipe data and generated visualizations.</p>
