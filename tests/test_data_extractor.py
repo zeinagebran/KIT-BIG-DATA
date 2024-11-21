@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.optimRecipes.functions import DataExtractor
+from optimRecipes.functions import DataExtractor
 # Set correct file path
 ZIP_FILE_PATH = "tests/test.zip"
 

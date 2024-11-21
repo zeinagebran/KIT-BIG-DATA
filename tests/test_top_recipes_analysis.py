@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.optimRecipes.functions import TopRecipesAnalysis
+from optimRecipes.functions import TopRecipesAnalysis
 import matplotlib.pyplot as plt
 
 from wordcloud import WordCloud
