@@ -100,3 +100,6 @@ sphinx-rtd-theme = "*"
 pythonpath = [
   "src"
 ]
+
+[tool.coverage.run]
+relative_files = true
