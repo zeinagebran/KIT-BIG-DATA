@@ -2,7 +2,7 @@ import streamlit as st
 from analysis_weekly import weekly_analysis_module
 from analysis_seasonality import seasonality_analysis_module
 from analysis_top_15 import top_50_analysis_module
-from most_common_words import most_common_words_module
+from analysis_most_common_words import most_common_words_module
 from logger import Logger
 from functions import DataExtractor
 

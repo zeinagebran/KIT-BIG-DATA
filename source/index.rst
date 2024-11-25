@@ -40,6 +40,12 @@ KIT-BIG-DATA Modules
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: analysis_most_common_words
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: app
    :members:
    :private-members:
@@ -65,12 +71,6 @@ KIT-BIG-DATA Modules
    :show-inheritance:
 
 .. automodule:: main
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: most_common_words
    :members:
    :private-members:
    :undoc-members:
