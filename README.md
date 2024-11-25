@@ -23,7 +23,7 @@ _____
 _____
 ## Documentation :
 
-[dossier build](./build/html/index.html)
+https://zeinagebran.github.io/KIT-BIG-DATA/index.html
 
 _____
 ### Développeurs
