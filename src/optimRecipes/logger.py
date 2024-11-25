@@ -1,31 +1,51 @@
-import sys
-import pyrallis
-from loguru import logger
-from optimRecipes.config import Config
 
+import logging
+import yaml
 
 class Logger:
-    def __init__(self, cfg: Config):
+    def __init__(self, cfg):
         self.cfg = cfg
-        self.configure_loguru()
-        self.log_config()
+        config_dict = vars(self.cfg)
+        self.formatted_config = "\n".join([f"{key}: {value}" for key, value in config_dict.items()])
 
-    def configure_loguru(self):
-        logger.remove()
-        format = '<green>{time:YYYY-MM-DD HH:mm:ss}</green> <level>{message}</level>'
-        logger.add(sys.stdout, colorize=True, format=format)
-        logger.add(self.cfg.logging_dir / 'log.txt',
-                   colorize=False, format=format)
+        self.logger = logging.getLogger('logger')
+        if not len(self.logger.handlers):
+            self.logger.setLevel(logging.DEBUG)
+            # create file handler which logs even debug messages
+            fh = logging.FileHandler(self.cfg.logging_dir + '/app.log')
+            fh.setLevel(logging.DEBUG)
+            # create console handler with a higher log level
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
+            # create formatter and add it to the handlers
+            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+            ch.setFormatter(formatter)
+            fh.setFormatter(formatter)
+            # add the handlers to logger
+            self.logger.addHandler(ch)
+            self.logger.addHandler(fh)
 
-    def log_config(self):
-        with (self.cfg.run_cfg_dir / 'config.yaml').open('w') as f:
-            pyrallis.dump(self.cfg, f)
-        self.log_info('\n' + pyrallis.dump(self.cfg))
+        self.logger.info("-----------------------NEW RUN STARTED-----------------------")
+        self.logger.info(f"Configuration \n{self.formatted_config}")
+        self.save_config_to_yaml()
 
-    @staticmethod
-    def log_info(msg: str):
-        logger.info(msg)
+    def save_config_to_yaml(self):
+        # Convert the class attributes to a dictionary
+        config_dict = self.cfg.__dict__
+        # Save to a YAML file
+        with open(self.cfg.run_cfg_dir + "/config.yml", "w") as file:
+            yaml.dump(config_dict, file, default_flow_style=False)
 
-    @staticmethod
-    def log_error(msg: str):
-        logger.error(msg)
+    def log_debug(self, msg: str):
+        self.logger.debug(msg)
+
+    def log_info(self, msg: str):
+        self.logger.info(msg)
+
+    def log_warning(self, msg: str):
+        self.logger.warning(msg)
+
+    def log_critical(self, msg: str):
+        self.logger.critical(msg)
+
+

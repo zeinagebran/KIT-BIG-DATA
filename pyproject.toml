@@ -73,8 +73,6 @@ numpy = "*"
 seaborn = "*"
 nltk = "*"
 wordcloud = "*"
-pyrallis = "*"
-loguru = "*"
 
 [tool.poetry.group.dev]
 optional = true

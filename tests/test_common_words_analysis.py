@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from optimRecipes.functions import CommonWordsAnalysis
+from src.optimRecipes.functions import CommonWordsAnalysis, TopRecipesAnalysis
 from wordcloud import WordCloud
 import itertools
 
@@ -27,56 +27,26 @@ def sample_interactions():
     return pd.DataFrame(data)
 
 
-@pytest.fixture
-def config():
-    class Config:
-        min_rating = 3
-        min_num_ratings = 1
-        num_top_recipes = 5
-    return Config()
-
-
-def test_process_name(config, sample_recipes, sample_interactions):
-    analysis = CommonWordsAnalysis(sample_recipes, sample_interactions, config)
+def test_process_name(sample_recipes, sample_interactions):
+    top_recipes_analysis = TopRecipesAnalysis(sample_recipes, sample_interactions)
+    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
+    analysis = CommonWordsAnalysis(top_recipes)
     processed_name = analysis.process_name('Recipe with sugar')
     assert 'with' not in processed_name, "Common stopwords should be removed."
 
 
-def test_compute_average_rating(config, sample_recipes, sample_interactions):
-    analysis = CommonWordsAnalysis(sample_recipes, sample_interactions, config)
-    avg_rating, count = analysis.compute_average_rating(1)
-    assert avg_rating == 5, "Average rating for recipe 1 should be 5."
-    assert count == 2, "Recipe 1 should have 2 ratings."
+def test_compute_top_keywords(sample_recipes, sample_interactions):
+    top_recipes_analysis = TopRecipesAnalysis(sample_recipes, sample_interactions)
+    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
+    analysis = CommonWordsAnalysis(top_recipes)
+    text = analysis.compute_top_keywords()
+    wordcloud = analysis.display_wordcloud(text)
 
-
-def test_format_recipe(config, sample_recipes, sample_interactions):
-    analysis = CommonWordsAnalysis(sample_recipes, sample_interactions, config)
-    analysis.format_recipe(2024)
-    assert 'average_rating' in analysis.recipes.columns, "Average rating column should be added."
-    assert 'number_of_ratings' in analysis.recipes.columns, "Number of ratings column should be added."
-    assert analysis.recipes[analysis.recipes['average_rating']
-                            == -1].empty, "Recipes without ratings should be removed."
-
-
-def test_compute_top_keywords(config, sample_recipes, sample_interactions):
-    analysis = CommonWordsAnalysis(sample_recipes, sample_interactions, config)
-    # Ensure `average_rating` and `number_of_ratings` columns are added
-    analysis.format_recipe(2024)
-    wordcloud = analysis.compute_top_keywords()
     assert isinstance(
         wordcloud, WordCloud), "compute_top_keywords should return a WordCloud object."
 
 
-def test_common_words_analysis_edge_case_ratings(config, sample_recipes, sample_interactions):
-    # Test for recipes with ratings at the boundary of min_rating
-    analysis = CommonWordsAnalysis(sample_recipes, sample_interactions, config)
-    analysis.format_recipe(2024)
-    wordcloud = analysis.compute_top_keywords()
-    assert isinstance(
-        wordcloud, WordCloud), "Expected a WordCloud object even with boundary rating recipes"
-
-
-def test_common_words_with_empty_recipe_names(config, sample_interactions):
+def test_common_words_with_empty_recipe_names(sample_interactions):
     # Recipe name list with empty strings
     recipes_with_empty_names = pd.DataFrame({
         'id': [1, 2, 3],
@@ -84,9 +54,12 @@ def test_common_words_with_empty_recipe_names(config, sample_interactions):
         'submitted': ['2024-01-01', '2024-01-15', '2024-02-15'],
         'ingredients': ['', 'eggs, milk', '']
     })
-    analysis = CommonWordsAnalysis(
-        recipes_with_empty_names, sample_interactions, config)
-    analysis.format_recipe(2024)
-    wordcloud = analysis.compute_top_keywords()
+    top_recipes_analysis = TopRecipesAnalysis(recipes_with_empty_names, sample_interactions)
+    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
+    analysis = CommonWordsAnalysis(top_recipes)
+    text = analysis.compute_top_keywords()
+    wordcloud = analysis.display_wordcloud(text)
     assert isinstance(
         wordcloud, WordCloud), "Expected a WordCloud with empty recipe names"
+
+
