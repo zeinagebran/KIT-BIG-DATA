@@ -15,12 +15,6 @@ The analysis is focused on identifying key trends such as which days, months,
 and seasons have the highest user activity, as well as exploring popular
 recipes based on user feedback (ratings and comments).
 
-_____
-## Usage :
-
-
-
-_____
 ## Documentation :
 
 https://zeinagebran.github.io/KIT-BIG-DATA/index.html
