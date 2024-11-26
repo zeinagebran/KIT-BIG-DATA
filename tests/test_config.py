@@ -1,7 +1,6 @@
 import os
 import pytest
 from pathlib import Path
-# Assuming the Config class is part of optimRecipes.functions
 from optimRecipes.config import Config
 
 
