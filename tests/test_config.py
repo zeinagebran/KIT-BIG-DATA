@@ -93,3 +93,36 @@ def test_prepare_directories():
 
     assert os.path.exists(cfg.logging_dir), "Logging directory should exist."
     assert os.path.exists(cfg.run_cfg_dir), "Run configuration directory should exist."
+
+
+def test_default_config_values():
+    """
+    Verify that the Config class initializes with the correct default values.
+    """
+    config = Config()
+
+    assert config.logging_dir == "logs", "Default logging_dir should be 'logs'."
+    assert config.run_cfg_dir == "outputs", "Default run_cfg_dir should be 'outputs'."
+    assert config.min_rating == 4.5, "Default min_rating should be 4.5."
+    assert config.min_num_ratings == 0, "Default min_num_ratings should be 0."
+    assert config.num_top_recipes == 20, "Default num_top_recipes should be 20."
+    assert config.min_year == 1999, "Default min_year should be 1999."
+    assert config.max_year == 2019, "Default max_year should be 2019."
+
+
+def test_config_attribute_types():
+    """
+    Verify that all attributes in the Config class have the correct types.
+    """
+    config = Config()
+
+    assert isinstance(config.zip_file_path, str), "zip_file_path should be a string."
+    assert isinstance(config.logging_dir, str), "logging_dir should be a string."
+    assert isinstance(config.run_cfg_dir, str), "run_cfg_dir should be a string."
+    assert isinstance(config.min_rating, float), "min_rating should be a float."
+    assert isinstance(config.min_num_ratings,
+                      int), "min_num_ratings should be an integer."
+    assert isinstance(config.num_top_recipes,
+                      int), "num_top_recipes should be an integer."
+    assert isinstance(config.min_year, int), "min_year should be an integer."
+    assert isinstance(config.max_year, int), "max_year should be an integer."
