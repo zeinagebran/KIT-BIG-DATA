@@ -1,7 +1,7 @@
 class Config:
     def __init__(self):
-        # Path to the zip file containing project resources
-        self.zip_file_path: str = r"archive.zip"
+        # Path to my zip file containing project resources we used for this project
+        self.zip_file_path: str = r"C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES PROJET\archive.zip"
 
         # Directory for storing logs
         self.logging_dir: str = "logs"

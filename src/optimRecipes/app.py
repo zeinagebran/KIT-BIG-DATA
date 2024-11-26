@@ -112,17 +112,3 @@ class WebApp:
 
         # Footer
         st.markdown("---\nUse the sidebar to navigate through the analysis.")
-
-
-## Entry-point with pyrallis wrapper
-#if __name__ == '__main__':
-#    import sys
-#    from optimRecipes.config import Config
-#
-#    # pyrallis automatically wraps main() with the configuration
-#    @pyrallis.wrap()
-#    def main(cfg: Config):
-#        app = WebApp(cfg)
-#        app.run()
-#
-#    main()

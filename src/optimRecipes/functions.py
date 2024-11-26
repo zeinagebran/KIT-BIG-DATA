@@ -68,7 +68,8 @@ class DataExtractor:
             _self.interactions_df['date'] = pd.to_datetime(
                 _self.interactions_df['date'], errors='coerce', infer_datetime_format=True
             )
-            print(f"Number of unparsed dates: { _self.interactions_df['date'].isna().sum()}")
+            print(f"Number of unparsed dates: {
+                  _self.interactions_df['date'].isna().sum()}")
             print("Data loaded successfully!")
         except Exception as e:
             print(f"Error loading data: {e}")
@@ -284,6 +285,7 @@ class SeasonalityAnalysis:
 
         plt.tight_layout()
         return fig
+
 # TopRecipesAnalysis class to analyze and visualize the most popular recipes
 
 
@@ -307,13 +309,13 @@ class TopRecipesAnalysis:
         self.recipes_df = recipes_df
         self.interactions_df = interactions_df
 
-    def display_popular_recipes_and_visualizations(self, return_top_recipes = False, mcw_flag = False):
+    def display_popular_recipes_and_visualizations(self, return_top_recipes=False, mcw_flag=False):
         """
         Displays the most popular recipes based on various criteria and provides options to visualize them.
         Includes options to filter recipes by year range and display details for a selected recipe.
         """
 
-        #If using the module for most_common_words, we set n = 50
+        # If using the module for most_common_words, we set n = 50
         if mcw_flag == True:
             n = 50
         else:
@@ -358,10 +360,6 @@ class TopRecipesAnalysis:
 
             # if st.button("Display selected recipes details"):
             self._display_selected_recipe_details(merged_df, grouped_df)
-
-            # self._plot_top_recipes(grouped_df)
-            # self._display_selected_recipe_details(merged_df, grouped_df)
-            # self._plot_wordcloud(grouped_df, merged_df)
 
     def _format_to_datetime(self, df, column_name):
         """
@@ -447,7 +445,7 @@ class TopRecipesAnalysis:
         Returns:
             pd.DataFrame: The DataFrame containing the top N recipes by rating count.
         """
-        # Filter positive ratings (assuming positive ratings are > 0 or some threshold)
+        # Filter positive ratings (assuming positive ratings are > 0)
         positive_df = df[df[rating_column] > 0]
 
         # Count positive ratings for each recipe
@@ -513,7 +511,7 @@ class TopRecipesAnalysis:
         """
         st.title("📆 Top Recipes from 2000 to 2010 by Ratings")
         sns.set(style="whitegrid")
-        # verif pour eviter les erreurs
+        # verif to remove errors
         df['date'] = pd.to_datetime(df['date'], errors='coerce')
         filtered_df = df[(df['date'].dt.year >= 2000) &
                          (df['date'].dt.year <= 2010)]
@@ -533,7 +531,7 @@ class TopRecipesAnalysis:
         """
         st.title("📆 Top Recipes from 2010 to 2018 by Ratings")
         sns.set(style="whitegrid")
-        # verif pour eviter les erreurs
+        # verif to remove errors
         df['date'] = pd.to_datetime(df['date'], errors='coerce')
         filtered_df = df[(df['date'].dt.year >= 2010) &
                          (df['date'].dt.year <= 2018)]
@@ -556,11 +554,10 @@ class TopRecipesAnalysis:
                                  grouped_df['recipe_id'].unique(), key="recipe_select")
         selected_recipe = merged_df[merged_df['recipe_id'] == recipe_id]
 
-        # Temps de préparation et nombre d'étapes
         st.write(
             f"**⏱️ Preparation Time:** {selected_recipe['minutes'].iloc[0]} minutes")
         st.write(f"**🔢 Number of Steps:** {selected_recipe['n_steps'].iloc[0]}")
-        # Informations nutritionnelles
+
         nutrition_info = selected_recipe['nutrition'].iloc[0].strip("[]").split(",")
         st.write("### 🥗 Nutritional Information (per portion):")
         st.write(f" - **Calories:** {nutrition_info[0]}")
@@ -570,14 +567,12 @@ class TopRecipesAnalysis:
         st.write(f" - **Saturated Fat:** {nutrition_info[4]} PVD")
         st.write(f" - **Carbohydrates:** {nutrition_info[5]} PVD")
 
-        # Tags et Ingrédients
         st.write("### 🏷️ Tags:")
         st.write(", ".join(selected_recipe['tags'].iloc[0].strip("[]").split(",")))
         st.write("### 🥄 Ingredients:")
         st.write(
             ", ".join(selected_recipe['ingredients'].iloc[0].strip("[]").split(",")))
 
-        # Popularité et note moyenne
         total_ratings = selected_recipe['rating'].count()
         average_rating = selected_recipe['rating'].mean()
         st.write(f"**🌟 Total Ratings:** {total_ratings}")
@@ -598,12 +593,14 @@ class TopRecipesAnalysis:
         sns.lineplot(x='year', y='count', hue='rating',
                      data=grouped_by_date, palette='coolwarm', ax=ax)
 
-        ax.set_title(f"Evolution of Ratings for Recipe {recipe_id} by Year and Rating Class", fontsize=18)
+        ax.set_title(f"Evolution of Ratings for Recipe {
+                     recipe_id} by Year and Rating Class", fontsize=18)
         ax.set_xlabel('Year', fontsize=14)
         ax.set_ylabel('Number of Ratings', fontsize=14)
         ax.set_xticks(unique_years)
         ax.set_xticklabels(unique_years, rotation=45)
         st.pyplot(fig)
+
 
 class CommonWordsAnalysis:
     """
@@ -612,6 +609,7 @@ class CommonWordsAnalysis:
     Attributes:
         top_recipes (pd.DataFrame): top recipes computed by the TopRecipesAnalysis class.
     """
+
     def __init__(self, top_recipes):
         self.top_recipes = top_recipes
 
@@ -630,7 +628,8 @@ class CommonWordsAnalysis:
         Computes most common keywords used in recipe title.
         """
         self.top_recipes["name"] = self.top_recipes["name"].apply(self.process_name)
-        top_keywords_list = list(itertools.chain.from_iterable(self.top_recipes["name"].to_numpy()))
+        top_keywords_list = list(itertools.chain.from_iterable(
+            self.top_recipes["name"].to_numpy()))
         top_keywords_to_count_dict = {}
         for keyword in top_keywords_list:
             if keyword in top_keywords_to_count_dict.keys():
@@ -652,13 +651,15 @@ class CommonWordsAnalysis:
         Args:
             text (list): list containing most frequent keywords.
         """
-        wc = WordCloud(max_font_size=50, max_words=20, background_color="white", relative_scaling=1).generate(text)
+        wc = WordCloud(max_font_size=50, max_words=20,
+                       background_color="white", relative_scaling=1).generate(text)
         fig, _ = plt.subplots(1)
         ax = plt.imshow(wc, interpolation='bilinear')
         plt.axis("off")
         st.pyplot(fig)
         st.success("Word cloud generated successfully! 🌟")
         return wc
+
 
 def prepare_directories(cfg):
     """
@@ -667,4 +668,3 @@ def prepare_directories(cfg):
     directories = [cfg.logging_dir, cfg.run_cfg_dir]
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-

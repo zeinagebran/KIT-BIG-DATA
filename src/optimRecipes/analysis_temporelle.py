@@ -35,7 +35,7 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
     :param dict(str, list[str]) data: data loaded for each file
         (data[filename][row])
     :return (nb_by_year, nb_by_month): number of interaction by year/mouth in
-        a dict[str, dict[int, int]] : 
+        a dict[str, dict[int, int]] :
         nb_by_year: nb_by_year['filename'][year]: [int] = Count for the year
         nb_by_month: b_by_month['filename']['aaaa-mm']: [int] = Count for the mouth of a year
     """
@@ -48,7 +48,7 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
         nb_by_month[filename] = {}
         j = j_date_col[filename]
         for i, row in enumerate(data[filename]):
-            if i == 0:  # Pas sur les header
+            if i == 0:
                 continue
             col = row[j]
             tmp = col.split('-')
@@ -170,7 +170,6 @@ class temporality_analysis_module:
             """
         )
 
-        # TODO transforme to list or manipulate DataFrame
         data = {DATA_FILES[0]: self.interactions_df, DATA_FILES[1]: self.recipes_df}
         nb_by_year, nb_by_month = analysis_temporelle(data)
         fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
