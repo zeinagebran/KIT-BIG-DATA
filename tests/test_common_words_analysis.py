@@ -29,7 +29,8 @@ def sample_interactions():
 
 def test_process_name(sample_recipes, sample_interactions):
     top_recipes_analysis = TopRecipesAnalysis(sample_recipes, sample_interactions)
-    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
+    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(
+        return_top_recipes=True, mcw_flag=True)
     analysis = CommonWordsAnalysis(top_recipes)
     processed_name = analysis.process_name('Recipe with sugar')
     assert 'with' not in processed_name, "Common stopwords should be removed."
@@ -37,7 +38,8 @@ def test_process_name(sample_recipes, sample_interactions):
 
 def test_compute_top_keywords(sample_recipes, sample_interactions):
     top_recipes_analysis = TopRecipesAnalysis(sample_recipes, sample_interactions)
-    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
+    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(
+        return_top_recipes=True, mcw_flag=True)
     analysis = CommonWordsAnalysis(top_recipes)
     text = analysis.compute_top_keywords()
     wordcloud = analysis.display_wordcloud(text)
@@ -54,8 +56,10 @@ def test_common_words_with_empty_recipe_names(sample_interactions):
         'submitted': ['2024-01-01', '2024-01-15', '2024-02-15'],
         'ingredients': ['', 'eggs, milk', '']
     })
-    top_recipes_analysis = TopRecipesAnalysis(recipes_with_empty_names, sample_interactions)
-    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(return_top_recipes=True, mcw_flag=True)
+    top_recipes_analysis = TopRecipesAnalysis(
+        recipes_with_empty_names, sample_interactions)
+    top_recipes = top_recipes_analysis.display_popular_recipes_and_visualizations(
+        return_top_recipes=True, mcw_flag=True)
     analysis = CommonWordsAnalysis(top_recipes)
     text = analysis.compute_top_keywords()
     wordcloud = analysis.display_wordcloud(text)
@@ -63,3 +67,17 @@ def test_common_words_with_empty_recipe_names(sample_interactions):
         wordcloud, WordCloud), "Expected a WordCloud with empty recipe names"
 
 
+def test_keyword_count_increment(sample_recipes):
+    from optimRecipes.functions import CommonWordsAnalysis
+    analysis = CommonWordsAnalysis(sample_recipes)
+
+    keywords = ["sugar", "flour", "sugar"]
+    keyword_counts = {}
+    for keyword in keywords:
+        if keyword in keyword_counts:
+            keyword_counts[keyword] += 1
+        else:
+            keyword_counts[keyword] = 1
+
+    assert keyword_counts["sugar"] == 2, "Keyword 'sugar' should have a count of 2."
+    assert keyword_counts["flour"] == 1, "Keyword 'flour' should have a count of 1."

@@ -1,3 +1,4 @@
+import os
 import pytest
 from pathlib import Path
 # Assuming the Config class is part of optimRecipes.functions
@@ -78,3 +79,17 @@ def test_logging_dir_creation(default_config, tmpdir):
     Path(config.logging_dir).mkdir(parents=True, exist_ok=True)
 
     assert Path(config.logging_dir).exists(), "logging_dir should exist after creation."
+
+
+def test_prepare_directories():
+    from optimRecipes.functions import prepare_directories
+    from optimRecipes.config import Config
+
+    cfg = Config()
+    cfg.logging_dir = "test_logs"
+    cfg.run_cfg_dir = "test_outputs"
+
+    prepare_directories(cfg)
+
+    assert os.path.exists(cfg.logging_dir), "Logging directory should exist."
+    assert os.path.exists(cfg.run_cfg_dir), "Run configuration directory should exist."
