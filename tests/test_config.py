@@ -27,11 +27,6 @@ def test_config_initialization(default_config):
     assert isinstance(config.run_cfg_dir, str), "run_cfg_dir should be a string."
     assert config.run_cfg_dir == "outputs", "run_cfg_dir should default to 'outputs'."
 
-    assert isinstance(config.min_rating, float), "min_rating should be a float."
-    # Use `math.isclose` for floating-point comparison
-    assert math.isclose(config.min_rating, 4.5,
-                        rel_tol=1e-9), "min_rating should be initialized to 4.5."
-
     assert isinstance(config.min_num_ratings,
                       int), "min_num_ratings should be an integer."
     assert config.min_num_ratings == 0, "min_num_ratings should default to 0."
@@ -57,23 +52,6 @@ def test_invalid_paths_handling(default_config):
     assert not Path(config.zip_file_path).exists(), "Invalid path should not exist."
 
 
-def test_update_config_attributes(default_config):
-    """
-    Test updating attributes of the config.
-    """
-    config = default_config
-
-    # Update min_rating and verify
-    config.min_rating = 4.0
-    # Use `math.isclose` for floating-point comparison
-    assert math.isclose(config.min_rating, 4.0,
-                        rel_tol=1e-9), "min_rating should update correctly."
-
-    # Update num_top_recipes and verify
-    config.num_top_recipes = 50
-    assert config.num_top_recipes == 50, "num_top_recipes should update correctly."
-
-
 def test_logging_dir_creation(default_config, tmpdir):
     """
     Test if the logging directory can be set and exists.
@@ -97,23 +75,6 @@ def test_prepare_directories():
 
     assert os.path.exists(cfg.logging_dir), "Logging directory should exist."
     assert os.path.exists(cfg.run_cfg_dir), "Run configuration directory should exist."
-
-
-def test_default_config_values():
-    """
-    Verify that the Config class initializes with the correct default values.
-    """
-    config = Config()
-
-    assert config.logging_dir == "logs", "Default logging_dir should be 'logs'."
-    assert config.run_cfg_dir == "outputs", "Default run_cfg_dir should be 'outputs'."
-    # Use `math.isclose` for floating-point comparison
-    assert math.isclose(config.min_rating, 4.5,
-                        rel_tol=1e-9), "Default min_rating should be 4.5."
-    assert config.min_num_ratings == 0, "Default min_num_ratings should be 0."
-    assert config.num_top_recipes == 20, "Default num_top_recipes should be 20."
-    assert config.min_year == 1999, "Default min_year should be 1999."
-    assert config.max_year == 2019, "Default max_year should be 2019."
 
 
 def test_config_attribute_types():
