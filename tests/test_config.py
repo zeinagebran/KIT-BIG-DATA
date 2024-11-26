@@ -27,6 +27,9 @@ def test_config_initialization(default_config):
     assert isinstance(config.run_cfg_dir, str), "run_cfg_dir should be a string."
     assert config.run_cfg_dir == "outputs", "run_cfg_dir should default to 'outputs'."
 
+    assert isinstance(config.min_rating, float), "min_rating should be a float."
+    assert config.min_rating == 4.5, "min_rating should be initialized to 4.5."
+
     assert isinstance(config.min_num_ratings,
                       int), "min_num_ratings should be an integer."
     assert config.min_num_ratings == 0, "min_num_ratings should default to 0."
@@ -40,6 +43,24 @@ def test_config_initialization(default_config):
 
     assert isinstance(config.max_year, int), "max_year should be an integer."
     assert config.max_year == 2019, "max_year should default to 2019."
+
+
+def test_update_config_attributes(default_config):
+    """
+    Test updating attributes of the config.
+    """
+    config = default_config
+
+    # Update min_rating and verify
+    config.min_rating = 4.0
+    assert isinstance(config.min_rating, float), "min_rating should remain a float."
+    assert config.min_rating == 4.0, "min_rating should update correctly."
+
+    # Update num_top_recipes and verify
+    config.num_top_recipes = 50
+    assert isinstance(config.num_top_recipes,
+                      int), "num_top_recipes should remain an integer."
+    assert config.num_top_recipes == 50, "num_top_recipes should update correctly."
 
 
 def test_invalid_paths_handling(default_config):
