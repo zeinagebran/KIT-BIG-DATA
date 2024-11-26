@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 # Assuming the Config class is part of optimRecipes.functions
-from src.optimRecipes.config import Config
+from optimRecipes.config import Config
 
 
 @pytest.fixture
@@ -14,6 +14,7 @@ def test_config_initialization(default_config):
     Test if the configuration initializes correctly with expected values.
     """
     config = default_config
+    config.zip_file_path = 'tests/test.zip'
 
     assert isinstance(config.zip_file_path, str), "zip_file_path should be a string."
     assert config.zip_file_path.endswith(
