@@ -28,7 +28,7 @@ def test_config_initialization(default_config):
     assert config.run_cfg_dir == "outputs", "run_cfg_dir should default to 'outputs'."
 
     assert isinstance(config.min_rating, float), "min_rating should be a float."
-    assert config.min_rating == 4, "min_rating should be initialized to 4.5."
+    assert config.min_rating == 4, "min_rating should be initialized to 4."
 
     assert isinstance(config.min_num_ratings,
                       int), "min_num_ratings should be an integer."
@@ -103,7 +103,7 @@ def test_default_config_values():
 
     assert config.logging_dir == "logs", "Default logging_dir should be 'logs'."
     assert config.run_cfg_dir == "outputs", "Default run_cfg_dir should be 'outputs'."
-    assert config.min_rating == 4, "Default min_rating should be 4.5."
+    assert config.min_rating == 4, "Default min_rating should be 4."
     assert config.min_num_ratings == 0, "Default min_num_ratings should be 0."
     assert config.num_top_recipes == 20, "Default num_top_recipes should be 20."
     assert config.min_year == 1999, "Default min_year should be 1999."

@@ -10,7 +10,7 @@ class Config:
         self.run_cfg_dir: str = "outputs"
 
         # Minimum rating threshold for filtering recipes
-        self.min_rating: float = 4.5
+        self.min_rating: float = 4
 
         # Minimum number of ratings a recipe must have to be considered
         self.min_num_ratings: int = 0
