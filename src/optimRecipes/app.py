@@ -2,11 +2,9 @@ import streamlit as st
 from analysis_weekly import weekly_analysis_module
 from analysis_seasonality import seasonality_analysis_module
 from analysis_top_15 import top_50_analysis_module
-from most_common_words import most_common_words_module
+from analysis_most_common_words import most_common_words_module
 from logger import Logger
-from optimRecipes.config import Config
 from functions import DataExtractor
-import pyrallis
 
 # Set page configuration
 st.set_page_config(page_title="Enhancing User Interaction",
@@ -14,25 +12,25 @@ st.set_page_config(page_title="Enhancing User Interaction",
 
 
 class WebApp:
-    def __init__(self, cfg: Config):
+    def __init__(self, log_module, cfg):
         # Load data and initialize logger
         self.cfg = cfg
+        self.log_module = log_module
         self.zip_file_path = cfg.zip_file_path
         self.interactions_df, self.recipes_df = self.load_data()
-        self.logger = Logger(cfg=cfg)
 
         # Initialize modules
         self.seasonality_analysis_module = seasonality_analysis_module(
-            self.interactions_df, cfg)
+            self.interactions_df, log_module, cfg)
         self.top_50_analysis_module = top_50_analysis_module(
-            self.recipes_df, self.interactions_df, cfg)
+            self.recipes_df, self.interactions_df, log_module, cfg)
         self.weekly_analysis_module = weekly_analysis_module(
-            self.interactions_df, cfg)
+            self.interactions_df, log_module, cfg)
         self.most_common_words_module = most_common_words_module(
-            self.recipes_df, self.interactions_df, cfg)
+            self.recipes_df, self.interactions_df, log_module, cfg)
 
     def load_data(self):
-        Logger.log_info("Extracting data")
+        self.log_module.log_info("Extracting data")
         # Load the interactions data
         data_extractor = DataExtractor(self.zip_file_path)
         interactions_df, recipes_df = data_extractor.extract_and_load_data()
@@ -116,15 +114,15 @@ class WebApp:
         st.markdown("---\nUse the sidebar to navigate through the analysis.")
 
 
-# Entry-point with pyrallis wrapper
-if __name__ == '__main__':
-    import sys
-    from optimRecipes.config import Config
-
-    # pyrallis automatically wraps main() with the configuration
-    @pyrallis.wrap()
-    def main(cfg: Config):
-        app = WebApp(cfg)
-        app.run()
-
-    main()
+## Entry-point with pyrallis wrapper
+#if __name__ == '__main__':
+#    import sys
+#    from optimRecipes.config import Config
+#
+#    # pyrallis automatically wraps main() with the configuration
+#    @pyrallis.wrap()
+#    def main(cfg: Config):
+#        app = WebApp(cfg)
+#        app.run()
+#
+#    main()

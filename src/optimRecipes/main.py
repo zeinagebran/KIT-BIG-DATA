@@ -1,18 +1,16 @@
-from optimRecipes.config import Config
+from config import Config
 from app import WebApp
 from functions import prepare_directories
-import pyrallis
-import sys
-from pathlib import Path
-
+from logger import Logger
 import nltk
 nltk.download('stopwords')
 
 
-@pyrallis.wrap()
-def main(cfg: Config):
+def main():
+    cfg = Config()
     prepare_directories(cfg=cfg)
-    app = WebApp(cfg=cfg)
+    log_module = Logger(cfg=cfg)
+    app = WebApp(log_module=log_module, cfg=cfg)
     app.run()
 
 
