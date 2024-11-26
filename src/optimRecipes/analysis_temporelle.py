@@ -48,8 +48,9 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
         nb_by_month[filename] = {}
         j = j_date_col[filename]
         for i, row in enumerate(data[filename]):
-            if i == 0:
+            if i == 0:  # Pas de traitement sur les headers
                 continue
+
             col = row[j]
             tmp = col.split('-')
             d = datetime.date(int(tmp[0]), int(tmp[1]), int(tmp[2]))
@@ -58,6 +59,7 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
             else:  # Initialisation
                 nb_by_year[filename][d.year] = 1
             month = f'{d.year}-{d.month:02}'
+
             if month in nb_by_month[filename].keys():
                 nb_by_month[filename][month] += 1
             else:  # Initialisation
@@ -66,6 +68,7 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
         for x in range(1999, 2019):
             if x not in nb_by_year[filename].keys():
                 nb_by_year[filename][x] = 0
+
             for y in range(1, 13):
                 mois = f'{y:02}'
                 tmp_s = f'{x}-{mois}'
@@ -170,6 +173,7 @@ class temporality_analysis_module:
             """
         )
 
+        # TODO transforme to list or manipulate DataFrame
         data = {DATA_FILES[0]: self.interactions_df, DATA_FILES[1]: self.recipes_df}
         nb_by_year, nb_by_month = analysis_temporelle(data)
         fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
