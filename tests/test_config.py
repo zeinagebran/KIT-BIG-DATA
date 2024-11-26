@@ -63,7 +63,7 @@ def test_update_config_attributes(default_config):
 
     # Update min_rating and verify
     config.min_rating = 4.0
-    assert config.min_rating == 4.0, "min_rating should update correctly."
+    assert config.min_rating == 4, "min_rating should update correctly."
 
     # Update num_top_recipes and verify
     config.num_top_recipes = 50
