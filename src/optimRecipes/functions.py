@@ -654,7 +654,6 @@ class CommonWordsAnalysis:
         wc = WordCloud(max_font_size=50, max_words=20,
                        background_color="white", relative_scaling=1).generate(text)
         fig, _ = plt.subplots(1)
-        ax = plt.imshow(wc, interpolation='bilinear')
         plt.axis("off")
         st.pyplot(fig)
         st.success("Word cloud generated successfully! 🌟")

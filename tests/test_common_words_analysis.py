@@ -69,7 +69,6 @@ def test_common_words_with_empty_recipe_names(sample_interactions):
 
 def test_keyword_count_increment(sample_recipes):
     from optimRecipes.functions import CommonWordsAnalysis
-    analysis = CommonWordsAnalysis(sample_recipes)
 
     keywords = ["sugar", "flour", "sugar"]
     keyword_counts = {}
