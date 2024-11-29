@@ -19,7 +19,7 @@ recipes based on user feedback (ratings and comments).
 
 https://zeinagebran.github.io/KIT-BIG-DATA/index.html
 
-### Developers :
+## Developers :
 
  - [Zeina G](https://github.com/zeinagebran)
  - [Habibata S](https://github.com/habibatasamake)
