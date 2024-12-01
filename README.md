@@ -1,5 +1,9 @@
 # optimRecipes: User Interaction Analysis for Recipe Platform
 
+## Code Quality and Testing:
+
+The Quality Gate badge reflects that the project meets the predefined criteria for these metrics, including a high percentage of code coverage from unit tests.
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
 
 _optimRecipes_ use data from Food.com Recipes and Interactions
