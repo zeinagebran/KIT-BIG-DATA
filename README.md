@@ -17,7 +17,7 @@ recipes based on user feedback (ratings and comments).
 
 ## Documentation :
 
-https://zeinagebran.github.io/KIT-BIG-DATA/index.html
+https://kit-big-data.readthedocs.io/en/latest/
 
 ## Developers :
 
