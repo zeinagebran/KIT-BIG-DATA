@@ -26,7 +26,7 @@ Use the `DataExtractor` class to load data from CSV files:
 
 .. code-block:: python
 
-    data_extractor = DataExtractor(zip_file_path="path/to/your/data.zip")
+    data_extractor = DataExtractor(zip_file_path="C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\data.zip")
     interactions_df, recipes_df = data_extractor.extract_and_load_data()
 
 **3. Weekly Interaction Analysis**

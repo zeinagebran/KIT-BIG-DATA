@@ -1,6 +1,7 @@
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src/optimRecipes'))  # Répertoire racine de ton projet
+# Répertoire racine de ton projet
+sys.path.insert(0, os.path.abspath('../src/optimRecipes'))
 
 
 # Configuration file for the Sphinx documentation builder.
@@ -34,10 +35,16 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
-html_baseurl =  'https://zeinagebran.github.io/KIT-BIG-DATA'
+
+html_baseurl = 'https://zeinagebran.github.io/KIT-BIG-DATA/'
+html_context = {
+    "display_github": True,
+    "github_user": "zeinagebran",
+    "github_repo": "KIT-BIG-DATA",
+    "github_version": "master",  # or the branch you are deploying from
+    "conf_py_path": "/docs/",
+}

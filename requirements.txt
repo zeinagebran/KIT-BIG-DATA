@@ -5,6 +5,8 @@ pandas
 numpy
 nltk
 wordcloud
+sphinx
+sphinx_rtd_theme
 
 # modules partie Web
 streamlit
