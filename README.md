@@ -1,19 +1,40 @@
-# optimRecipes : User Interaction Analysis for Recipe Platform
+# optimRecipes: User Interaction Analysis for Recipe Platform
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
 
 _optimRecipes_ use data from Food.com Recipes and Interactions
 ([lien kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions))
 
-## Overview :
+## Project Overview:
 
-This project, **optimRecipes**, aims to analyze user interactions on a recipe
-platform to understand patterns in user engagement and optimize the platform's
-content and user experience.
+**optimRecipes** is a Python-based data analysis project designed to enhance user engagement on a recipe platform. By analyzing user interactions and recipe feedback, this project uncovers trends and patterns to optimize content strategy, improve the user experience, and tailor recommendations.
 
-The analysis is focused on identifying key trends such as which days, months,
-and seasons have the highest user activity, as well as exploring popular
-recipes based on user feedback (ratings and comments).
+## Features:
+
+**User Interaction Analysis:**
+
+Identify peak activity periods (days, months, and seasons) for recipe interactions.
+Understand user engagement patterns.
+
+**Recipe Popularity Insights:**
+
+Rank recipes based on user feedback (ratings and comments).
+Analyze characteristics of top-performing recipes.
+
+**Content Optimization:**
+
+Provide actionable recommendations to enhance user satisfaction.
+
+**Interactive Visualizations:**
+
+Generate charts and dashboards to display trends, recipe rankings, and common ingredients.
+
+## Key Objectives:
+
+-Analyze temporal trends to determine high-activity periods.
+-Identify popular recipes and their defining features.
+-Use insights to optimize content and improve platform engagement.
+
 
 ## Documentation :
 
