@@ -32,7 +32,9 @@ Generate charts and dashboards to display trends, recipe rankings, and common in
 ## Key Objectives:
 
 -Analyze temporal trends to determine high-activity periods.
+
 -Identify popular recipes and their defining features.
+
 -Use insights to optimize content and improve platform engagement.
 
 
