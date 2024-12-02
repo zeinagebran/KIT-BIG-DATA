@@ -9,7 +9,7 @@ Welcome to the KIT-BIG-DATA project documentation. This documentation covers the
 
    installation
    usage
-   source/modules
+   modules
 
 KIT-BIG-DATA Modules
 ====================

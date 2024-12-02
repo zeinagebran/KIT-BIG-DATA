@@ -2,7 +2,7 @@ import os
 import sys
 import shutil
 # Répertoire racine de ton projet
-sys.path.insert(0, os.path.abspath('../src/optimRecipes'))
+sys.path.insert(0, os.path.abspath('../../src'))
 
 
 def copy_custom_index(app, exception):
