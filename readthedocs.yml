@@ -8,6 +8,3 @@ python:
     - requirements: requirements.txt
 sphinx:
   configuration: docs/source/conf.py
-hooks:
-  post-build:
-    - cp docs/index.html _build/index.html
