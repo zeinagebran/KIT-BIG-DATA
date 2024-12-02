@@ -3,7 +3,7 @@ import sys
 # Répertoire racine de ton projet
 sys.path.insert(0, os.path.abspath('../src/optimRecipes'))
 
-
+master_doc = 'index'
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
