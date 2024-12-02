@@ -4,12 +4,12 @@ KIT-BIG-DATA Documentation
 Welcome to the KIT-BIG-DATA project documentation. This documentation covers the modules, classes, and functions included in the project.
 
 .. toctree::
-   :maxdepth: 8
+   :maxdepth: 2
    :caption: Contents:
 
    installation
    usage
-   modules
+   source/modules
 
 KIT-BIG-DATA Modules
 ====================
