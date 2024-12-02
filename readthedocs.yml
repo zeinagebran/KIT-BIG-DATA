@@ -3,14 +3,8 @@ build:
   os: ubuntu-20.04
   tools:
     python: "3.9"
-
-sphinx:
-  configuration: docs/source/conf.py
-
 python:
   install:
     - requirements: requirements.txt
-
-hooks:
-  post-build:
-    - cp docs/index.html _build/html/index.html
+sphinx:
+  configuration: docs/source/conf.py
