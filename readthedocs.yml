@@ -12,34 +12,7 @@ python:
 sphinx:
   configuration: docs/source/conf.py
 
-commands: []
-
-# Add a post-build hook to copy the file
-build:
-  os: ubuntu-20.04
-  tools:
-    python: "3.9"
-
-python:
-  install:
-    - requirements: requirements.txt
-
-sphinx:
-  configuration: docs/source/conf.py
-
-# Add a post-build hook to copy the file
-build:
-  os: ubuntu-20.04
-  tools:
-    python: "3.9"
-
-python:
-  install:
-    - requirements: requirements.txt
-
-sphinx:
-  configuration: docs/source/conf.py
-
+# Use hooks for custom shell commands
 hooks:
   post-build:
     - cp docs/build/index.html docs/index.html
