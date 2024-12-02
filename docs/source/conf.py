@@ -1,9 +1,21 @@
 import os
 import sys
+import shutil
 # Répertoire racine de ton projet
 sys.path.insert(0, os.path.abspath('../src/optimRecipes'))
 
-master_doc = 'index'
+
+def copy_custom_index(app, exception):
+    if exception is None:  # Ensure the build was successful
+        source = os.path.abspath("docs/index.html")  # Path to your custom index.html
+        # Target path in build directory
+        destination = os.path.join(app.outdir, "index.html")
+        if os.path.exists(source):
+            shutil.copyfile(source, destination)
+
+
+def setup(app):
+    app.connect("build-finished", copy_custom_index)
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -11,6 +23,7 @@ master_doc = 'index'
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+
 
 project = 'KIT-BIG-DATA'
 copyright = '2024, Groupe projet big data'
