@@ -7,15 +7,16 @@ sys.path.insert(0, os.path.abspath('../src/optimRecipes'))
 
 def copy_custom_index(app, exception):
     if exception is None:  # Ensure the build was successful
-        source = os.path.abspath("docs/index.html")  # Path to your custom index.html
-        # Target path in build directory
-        destination = os.path.join(app.outdir, "index.html")
+        source = os.path.abspath("docs/index.html")  # Custom index.html
+        destination = os.path.join(app.outdir, "index.html")  # Output directory
         if os.path.exists(source):
             shutil.copyfile(source, destination)
+            print(f"Custom index.html copied from {source} to {destination}")
 
 
 def setup(app):
     app.connect("build-finished", copy_custom_index)
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
