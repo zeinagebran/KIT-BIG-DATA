@@ -14,6 +14,22 @@ def copy_custom_index(app, exception):
             print(f"Custom index.html copied from {source} to {destination}")
 
 
+def clean_build(app, exception):
+    build_dir = app.outdir
+    if os.path.exists(build_dir):
+        for file in os.listdir(build_dir):
+            os.remove(os.path.join(build_dir, file))
+    print(f"Cleaned build directory: {build_dir}")
+
+
+def setup(app):
+    app.connect("build-finished", clean_build)
+    app.connect("build-finished", copy_custom_index)
+
+
+html_extra_path = ['docs/index.html']
+
+
 def setup(app):
     app.connect("build-finished", copy_custom_index)
 
