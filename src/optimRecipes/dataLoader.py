@@ -69,19 +69,19 @@ class DataLoader:
     data: any = None
 
     @staticmethod
-    def loadcsv_tolist(file_path: str, dict: bool = False, delimiter: str = ',',
+    def loadcsv_tolist(file_path: str, dictio: bool = False, delimiter: str = ',',
                        encoding: str = CHARSET) -> list[str | dict[str, str]]:
         """Load csv file into a list (static method).
 
         :param str file_path: path to data file
-        :param bool dict: [default=False] load row in dict type (see csv.DictReader)
+        :param bool dictio: [default=False] load row in dict type (see csv.DictReader)
         :param str delimiter: [default=','] delimiter of CSV
         :return list[str | dict[str, str]]: data in list of row
         """
         data: list[str] = []
 
         with open(file_path, 'r', encoding=encoding) as file:
-            if dict is False:
+            if dictio is False:
                 spamreader = csv.reader(file, delimiter=delimiter)
             else:
                 spamreader = csv.DictReader(file, delimiter=delimiter)
