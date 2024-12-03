@@ -16,16 +16,20 @@ from functions import SeasonalityAnalysis
 ###############################################################################
 # CLASS :
 class seasonality_analysis_module:
-    """Manage streamlit page for most_common_words."""
+    """Class to wrap this module functions to interact with webapp.
+
+    This class is used by webapp streamlit for the analysis of seasonality of
+    user interactions.
+    """
 
     def __init__(self, interactions_df, log_module, cfg):
-        """Initialize seasonality_analysis_module."""
+        """Initialize the class with the data."""
         self.cfg = cfg
         self.interactions_df = interactions_df
         self.log_module = log_module
 
     def run(self):
-        """Run the module to display the analysis of seasonality."""
+        """Build analysis, and print result on a web streamlit page."""
         self.log_module.log_info("Starting seasonality_analysis_module")
 
         st.title("🌦️ Seasonality Analysis of User Interactions")

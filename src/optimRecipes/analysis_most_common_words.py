@@ -16,7 +16,11 @@ from functions import CommonWordsAnalysis, TopRecipesAnalysis
 ###############################################################################
 # CLASS :
 class most_common_words_module:
-    """Manage streamlit page for most_common_words."""
+    """Class to wrap this module functions to interact with webapp.
+
+    This class is used by webapp streamlit for the analysis of the most commun
+    words throught the recipes and reviews.
+    """
 
     def __init__(self, recipes_df, interactions_df, log_module, cfg):
         """
@@ -36,7 +40,7 @@ class most_common_words_module:
         self.top_recipes = None
 
     def run(self):
-        """Run the module to display the most common words in popular recipes by year."""
+        """Build analysis, and print result on a web streamlit page."""
         self.log_module.log_info("Starting most_common_words_module")
         # Page title and introduction
         st.title("📜 Most Common Words in Popular Recipes")
