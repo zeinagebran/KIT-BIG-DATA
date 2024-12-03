@@ -2,6 +2,7 @@
 matplotlib
 seaborn
 pandas
+pyyaml
 numpy
 nltk
 wordcloud

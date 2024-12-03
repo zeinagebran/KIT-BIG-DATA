@@ -1,12 +1,13 @@
-from config import Config
+import nltk
+
 from app import WebApp
+from config import Config
 from functions import prepare_directories
 from logger import Logger
-import nltk
-nltk.download('stopwords')
 
 
 def main():
+    nltk.download('stopwords')
     cfg = Config()
     prepare_directories(cfg=cfg)
     log_module = Logger(cfg=cfg)

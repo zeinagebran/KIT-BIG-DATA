@@ -1,18 +1,15 @@
+import itertools
 import math
 import os
+import zipfile
 
-import numpy as np
 import matplotlib.pyplot as plt
-import itertools
+import numpy as np
 import pandas as pd
 import seaborn as sns
-import zipfile
 import streamlit as st
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
-
-
-# DataExtractor class to handle data extraction and loading
 
 
 class DataExtractor:
@@ -50,11 +47,6 @@ class DataExtractor:
                 - interactions_df (pd.DataFrame): DataFrame containing interactions data.
                 - recipes_df (pd.DataFrame): DataFrame containing recipes data.
         """
-        # _self.interactions_df = pd.read_csv(
-        #    'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_interactions.csv')
-        # _self.recipes_df = pd.read_csv(
-        #    'C:\\Users\\User\\Desktop\\MASTERE SPECIALISE IA\\KIT BIG DATA BGDIA700\\RESOURCES PROJET\\RAW_recipes.csv')
-
         try:
             print(f"Loading data from: {_self.zip_file_path}")
             with zipfile.ZipFile(_self.zip_file_path, 'r') as zip_ref:
@@ -82,7 +74,6 @@ class DataExtractor:
 def get_data(zip_file_path):
     extractor = DataExtractor(zip_file_path)
     return extractor.extract_and_load_data()
-# WeeklyAnalysis class for weekly interaction analysis
 
 
 class WeeklyAnalysis:
@@ -285,8 +276,6 @@ class SeasonalityAnalysis:
 
         plt.tight_layout()
         return fig
-
-# TopRecipesAnalysis class to analyze and visualize the most popular recipes
 
 
 class TopRecipesAnalysis:

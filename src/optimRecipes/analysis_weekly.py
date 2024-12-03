@@ -1,7 +1,8 @@
-import streamlit as st
-import pandas as pd
 import matplotlib.pyplot as plt
-from functions import DataExtractor, WeeklyAnalysis
+import pandas as pd
+import streamlit as st
+
+from functions import WeeklyAnalysis
 
 
 class weekly_analysis_module:

@@ -1,6 +1,6 @@
 import streamlit as st
 
-from functions import CommonWordsAnalysis, TopRecipesAnalysis, DataExtractor
+from functions import CommonWordsAnalysis, TopRecipesAnalysis
 from logger import Logger
 
 

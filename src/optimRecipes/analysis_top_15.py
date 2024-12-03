@@ -1,5 +1,6 @@
 import streamlit as st
-from functions import get_data, TopRecipesAnalysis
+
+from functions import TopRecipesAnalysis
 
 
 class top_50_analysis_module:

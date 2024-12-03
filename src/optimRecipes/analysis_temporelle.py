@@ -14,9 +14,9 @@ __version__ = '0.2'
 import datetime
 
 # /* Extern modules */
-import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import pandas as pd
 import streamlit as st
 
 # /* Intern modules */
