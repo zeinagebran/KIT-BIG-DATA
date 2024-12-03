@@ -1,10 +1,12 @@
 # **🍴 optimRecipes: User Interaction Analysis for Recipe Platform 🍴**
 
-![Github build and verify](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)
-![Github test, coverage](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/sonarcloud.yml/badge.svg)
-![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
+[![Github build and verify](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml)
+[![Github test, coverage](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/sonarcloud.yml)
+[![GitHub documentation](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/pages/pages-build-deployment)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
 
-![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-yellow)](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
+[![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-yellow)](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
+[![Licence EUPL 1.2](https://img.shields.io/badge/licence-EUPL_1.2-blue)](https://eupl.eu/1.2)
 
 
 ## **Description:**
