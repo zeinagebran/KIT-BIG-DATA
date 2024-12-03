@@ -1,13 +1,26 @@
+"""optimRecipes/analysis_most_commun_words.py file.
+
+Sub-module Streamlit for page most_common_words.
+
+"""
+###############################################################################
+# IMPORTS :
+# /* Standard includes. */
+# /* Extern modules */
 import streamlit as st
 
+# /* Intern modules */
 from functions import CommonWordsAnalysis, TopRecipesAnalysis
-from logger import Logger
 
 
+###############################################################################
+# CLASS :
 class most_common_words_module:
+    """Manage streamlit page for most_common_words."""
+
     def __init__(self, recipes_df, interactions_df, log_module, cfg):
         """
-        Initializes the MostCommonWordsModule with the given DataFrames and configuration.
+        Initialize the MostCommonWordsModule with the given DataFrames and configuration.
 
         Args:
             recipes_df (pd.DataFrame): DataFrame containing recipe data.
@@ -20,11 +33,10 @@ class most_common_words_module:
         self.min_year = cfg.min_year
         self.max_year = cfg.max_year
         self.log_module = log_module
+        self.top_recipes = None
 
     def run(self):
-        """
-        Runs the module to display the most common words in popular recipes by year.
-        """
+        """Run the module to display the most common words in popular recipes by year."""
         self.log_module.log_info("Starting most_common_words_module")
         # Page title and introduction
         st.title("📜 Most Common Words in Popular Recipes")
