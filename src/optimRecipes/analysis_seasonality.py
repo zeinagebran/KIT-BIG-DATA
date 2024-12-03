@@ -1,15 +1,31 @@
+"""optimRecipes/analysis_seasonality.py file.
+
+Sub-module Streamlit for page seasonality_analysis.
+
+"""
+###############################################################################
+# IMPORTS :
+# /* Standard includes. */
+# /* Extern modules */
 import streamlit as st
 
+# /* Intern modules */
 from functions import SeasonalityAnalysis
 
 
+###############################################################################
+# CLASS :
 class seasonality_analysis_module:
+    """Manage streamlit page for most_common_words."""
+
     def __init__(self, interactions_df, log_module, cfg):
+        """Initialize seasonality_analysis_module."""
         self.cfg = cfg
         self.interactions_df = interactions_df
         self.log_module = log_module
 
     def run(self):
+        """Run the module to display the analysis of seasonality."""
         self.log_module.log_info("Starting seasonality_analysis_module")
 
         st.title("🌦️ Seasonality Analysis of User Interactions")
