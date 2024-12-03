@@ -1,7 +1,11 @@
 class Config:
     def __init__(self):
-        # Path to my zip file containing project resources we used for this project
-        self.zip_file_path: str = r"C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES PROJET\archive.zip"
+        # Standard path for project resources we used for this project (you should relative path)
+        # !!! NE PAS COMMIT LA VERSION LOCALE !!!
+        self.zip_file_path: str = r"data/archive.zip"
+
+        # Directory of extracted_data
+        self.extracted_data_path: str = 'extracted_data'
 
         # Directory for storing logs
         self.logging_dir: str = "logs"
@@ -23,3 +27,6 @@ class Config:
 
         # Filter recipes by a maximum year of creation
         self.max_year: int = 2019
+
+        # URL where data are
+        self.url: str = 'https://perso.telecom-paristech.fr/nallegre-24/projet_bgdia700/recipe.zip'

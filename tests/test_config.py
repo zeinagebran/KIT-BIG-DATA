@@ -112,3 +112,6 @@ def test_config_attribute_types():
                       int), "num_top_recipes should be an integer."
     assert isinstance(config.min_year, int), "min_year should be an integer."
     assert isinstance(config.max_year, int), "max_year should be an integer."
+    assert isinstance(config.url, str), "url should be a string."
+    assert isinstance(config.extracted_data_path,
+                      str), "extracted_data_path should be a string."
