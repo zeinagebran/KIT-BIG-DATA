@@ -1,18 +1,37 @@
+"""optimRecipes/app.py file.
+
+Sub-module Streamlit and entry point of webapp streamlit.
+
+"""
+###############################################################################
+# IMPORTS :
+# /* Standard includes. */
+# /* Extern modules */
 import streamlit as st
 
+# /* Intern modules */
 from analysis_most_common_words import most_common_words_module
 from analysis_seasonality import seasonality_analysis_module
 from analysis_top_15 import top_50_analysis_module
 from analysis_weekly import weekly_analysis_module
 from functions import DataExtractor
 
+# TODO : à déplacer dans la fonction qui lance l'application !
 # Set page configuration
 st.set_page_config(page_title="Enhancing User Interaction",
                    page_icon="📊", layout="centered")
 
 
+###############################################################################
+# CLASS :
 class WebApp:
+    """Class construct and manage streamlit webapp.
+
+    This class is used by webapp streamlit for core of webapp.
+    """
+
     def __init__(self, log_module, cfg):
+        """Initialize the class with the data."""
         # Load data and initialize logger
         self.cfg = cfg
         self.log_module = log_module
@@ -30,6 +49,7 @@ class WebApp:
             self.recipes_df, self.interactions_df, log_module, cfg)
 
     def load_data(self):
+        """Load data in memory."""
         self.log_module.log_info("Extracting data")
         # Load the interactions data
         data_extractor = DataExtractor(self.zip_file_path)
@@ -37,6 +57,7 @@ class WebApp:
         return interactions_df, recipes_df
 
     def setup_navigation(self):
+        """Create smenu sidebar for navigation."""
         # Sidebar for navigation with a dropdown selector for instant response
         st.sidebar.title("📍 Navigation")
         section = st.sidebar.selectbox(
@@ -53,6 +74,7 @@ class WebApp:
         return section
 
     def run(self):
+        """Build app, and run streamlit webapp."""
         # Run navigation setup
         section = self.setup_navigation()
 
