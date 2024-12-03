@@ -1,8 +1,18 @@
+"""optimRecipes/functions.py file.
+
+Core of optimRecipes module with fonctions and classes.
+
+"""
+###############################################################################
+# IMPORTS :
+# /* Standard includes. */
+
 import itertools
 import math
 import os
 import zipfile
 
+# /* Extern modules */
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -11,7 +21,27 @@ import streamlit as st
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 
+# /* Intern modules */
 
+
+###############################################################################
+# FUNCTIONS :
+# Ensure that DataExtractor is used when calling the extract_and_load_data method
+def get_data(zip_file_path):
+    """Extract data from zipfile."""
+    extractor = DataExtractor(zip_file_path)
+    return extractor.extract_and_load_data()
+
+
+def prepare_directories(cfg):
+    """Prepare directories for outputs and logs."""
+    directories = [cfg.logging_dir, cfg.run_cfg_dir]
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
+
+
+###############################################################################
+# CLASS :
 class DataExtractor:
     """
     A class to handle data extraction and loading for recipe and interaction datasets stored in a zip file.
@@ -24,7 +54,7 @@ class DataExtractor:
 
     def __init__(self, zip_file_path):
         """
-        Initializes the DataExtractor class with the path to the zip file.
+        Initialize the DataExtractor class with the path to the zip file.
 
         Args:
             zip_file_path (str): The file path to the zip file containing the datasets.
@@ -37,7 +67,7 @@ class DataExtractor:
     # Use _self to avoid Streamlit's hashing error
     def extract_and_load_data(_self):
         """
-        Extracts and loads recipes and interactions datasets from a zip file.
+        Extract and loads recipes and interactions datasets from a zip file.
 
         This method reads CSV files for interactions and recipes directly from the specified path
         and caches the results to optimize performance with Streamlit.
@@ -70,12 +100,6 @@ class DataExtractor:
         return _self.interactions_df, _self.recipes_df
 
 
-# Ensure that DataExtractor is used when calling the extract_and_load_data method
-def get_data(zip_file_path):
-    extractor = DataExtractor(zip_file_path)
-    return extractor.extract_and_load_data()
-
-
 class WeeklyAnalysis:
     """
     A class to analyze and visualize the average number of user interactions by day of the week.
@@ -85,6 +109,7 @@ class WeeklyAnalysis:
     """
 
     def __init__(self, interactions_df):
+        """Initialize the class."""
         # Store the dataframe and ensure the 'date' column is in datetime format
         self.interactions_df = interactions_df
         self.interactions_df['date'] = pd.to_datetime(
@@ -124,6 +149,7 @@ class WeeklyAnalysis:
         plt.xticks(rotation=45, fontsize=12)
         plt.yticks(fontsize=12)
         ax.grid(True, linestyle='--', linewidth=0.7)
+
         return fig
 
     def plot_interactions_for_year(self, year):
@@ -152,6 +178,7 @@ class WeeklyAnalysis:
         plt.xticks(rotation=45, fontsize=12)
         plt.yticks(fontsize=12)
         ax.grid(True, linestyle='--', linewidth=0.7)
+
         return fig
 
 
@@ -165,7 +192,7 @@ class SeasonalityAnalysis:
 
     def __init__(self, interactions_df):
         """
-        Initializes the SeasonalityAnalysis class with a DataFrame of interactions data.
+        Initialize the SeasonalityAnalysis class with a DataFrame of interactions data.
 
         Args:
             interactions_df (pd.DataFrame): DataFrame containing interactions data, including a 'date' column.
@@ -231,6 +258,7 @@ class SeasonalityAnalysis:
         axes[1].grid(True, linestyle='--', linewidth=0.7)
 
         plt.tight_layout()
+
         return fig
 
     def plot_seasonality_for_year(self, year):
@@ -275,6 +303,7 @@ class SeasonalityAnalysis:
         axes[1].grid(True, linestyle='--', linewidth=0.7)
 
         plt.tight_layout()
+
         return fig
 
 
@@ -289,7 +318,7 @@ class TopRecipesAnalysis:
 
     def __init__(self, recipes_df, interactions_df):
         """
-        Initializes the TopRecipesAnalysis class with recipes and interactions DataFrames.
+        Initialize the TopRecipesAnalysis class with recipes and interactions DataFrames.
 
         Args:
             recipes_df (pd.DataFrame): DataFrame containing recipe data.
@@ -299,11 +328,11 @@ class TopRecipesAnalysis:
         self.interactions_df = interactions_df
 
     def display_popular_recipes_and_visualizations(self, return_top_recipes=False, mcw_flag=False):
-        """
-        Displays the most popular recipes based on various criteria and provides options to visualize them.
+        """Display most popular recipes and visualize them.
+
+        It displays the most popular recipes based on various criteria and provides options to visualize them.
         Includes options to filter recipes by year range and display details for a selected recipe.
         """
-
         # If using the module for most_common_words, we set n = 50
         if mcw_flag == True:
             n = 50
@@ -352,7 +381,7 @@ class TopRecipesAnalysis:
 
     def _format_to_datetime(self, df, column_name):
         """
-        Converts a specified column in the DataFrame to datetime format.
+        Convert a specified column in the DataFrame to datetime format.
 
         Args:
             df (pd.DataFrame): The DataFrame containing the column to be converted.
@@ -366,7 +395,7 @@ class TopRecipesAnalysis:
 
     def _rename_column(self, df, old_name, new_name):
         """
-        Renames a column in the DataFrame.
+        Rename a column in the DataFrame.
 
         Args:
             df (pd.DataFrame): The DataFrame containing the column to rename.
@@ -381,7 +410,7 @@ class TopRecipesAnalysis:
 
     def _merge_with(self, df, other_df, on_attribute):
         """
-        Merges two DataFrames on a specified attribute.
+        Merge two DataFrames on a specified attribute.
 
         Args:
             df (pd.DataFrame): The first DataFrame.
@@ -395,7 +424,7 @@ class TopRecipesAnalysis:
 
     def _format_to_numeric(self, df, column_name):
         """
-        Converts a specified column in the DataFrame to a numeric format.
+        Convert a specified column in the DataFrame to a numeric format.
 
         Args:
             df (pd.DataFrame): The DataFrame containing the column to convert.
@@ -409,7 +438,7 @@ class TopRecipesAnalysis:
 
     def _filter_positive_ratings(self, df, rating_column, threshold=4):
         """
-        Filters the DataFrame for rows with ratings greater than or equal to the threshold.
+        Filter the DataFrame for rows with ratings greater than or equal to the threshold.
 
         Args:
             df (pd.DataFrame): The DataFrame to filter.
@@ -423,7 +452,7 @@ class TopRecipesAnalysis:
 
     def _get_top_n_recipes_by_ratings(self, df, recipe_id_column, rating_column, n=15):
         """
-        Retrieves the top N recipes based on the number of positive ratings.
+        Retrieve the top N recipes based on the number of positive ratings.
 
         Args:
             df (pd.DataFrame): The DataFrame containing recipe ratings.
@@ -453,7 +482,7 @@ class TopRecipesAnalysis:
 
     def display_recipes(self, df):
         """
-        Displays a bar plot of recipe ratings using seaborn.
+        Display a bar plot of recipe ratings using seaborn.
 
         Args:
             df (pd.DataFrame): The DataFrame containing recipes and rating counts.
@@ -482,7 +511,7 @@ class TopRecipesAnalysis:
 
     def _plot_top_recipes(self, grouped_df):
         """
-        Plots the top recipes based on ratings over the years.
+        Plot the top recipes based on ratings over the years.
 
         Args:
             grouped_df (pd.DataFrame): DataFrame with top recipes and ratings.
@@ -493,7 +522,7 @@ class TopRecipesAnalysis:
 
     def _plot_top_recipes_from_2000_to_2010(self, df):
         """
-        Plots top recipes based on ratings between the years 2000 and 2010.
+        Plot top recipes based on ratings between the years 2000 and 2010.
 
         Args:
             df (pd.DataFrame): The DataFrame containing recipe data.
@@ -513,7 +542,7 @@ class TopRecipesAnalysis:
 
     def _plot_top_recipes_from_2010_to_2018(self, df):
         """
-        Plots top recipes based on ratings between the years 2010 and 2018.
+        Plot top recipes based on ratings between the years 2010 and 2018.
 
         Args:
             df (pd.DataFrame): The DataFrame containing recipe data.
@@ -533,7 +562,7 @@ class TopRecipesAnalysis:
 
     def _display_selected_recipe_details(self, merged_df, grouped_df):
         """
-        Displays detailed information and visualizations for a selected recipe.
+        Display detailed information and visualizations for a selected recipe.
 
         Args:
             merged_df (pd.DataFrame): DataFrame containing merged recipe and interaction data.
@@ -600,22 +629,21 @@ class CommonWordsAnalysis:
     """
 
     def __init__(self, top_recipes):
+        """Initialize the class."""
         self.top_recipes = top_recipes
 
     def process_name(self, name: str):
-        """
-        Formats recipe titles into list of keywords.
+        """Format recipe titles into list of keywords.
 
         Args:
             name (str): name of recipe.
         """
         name_array = [word for word in name.split(' ') if word != '']
+
         return [word for word in name_array if word not in stopwords.words("english")]
 
     def compute_top_keywords(self):
-        """
-        Computes most common keywords used in recipe title.
-        """
+        """Compute most common keywords used in recipe title."""
         self.top_recipes["name"] = self.top_recipes["name"].apply(self.process_name)
         top_keywords_list = list(itertools.chain.from_iterable(
             self.top_recipes["name"].to_numpy()))
@@ -631,11 +659,11 @@ class CommonWordsAnalysis:
         text_array = [(t[0], math.ceil(cst * t[1])) if math.ceil(cst * t[1]) <= 5 else (t[0], 4) for t in
                       sorted_top_keywords_to_count_dict]
         text = " ".join([" ".join([t[0] for _ in range(t[1])]) for t in text_array])
+
         return text
 
     def display_wordcloud(self, text):
-        """
-        Displays wordcloud of most common keywords.
+        """Display wordcloud of most common keywords.
 
         Args:
             text (list): list containing most frequent keywords.
@@ -646,13 +674,5 @@ class CommonWordsAnalysis:
         plt.axis("off")
         st.pyplot(fig)
         st.success("Word cloud generated successfully! 🌟")
+
         return wc
-
-
-def prepare_directories(cfg):
-    """
-    Prepare directories for outputs and logs.
-    """
-    directories = [cfg.logging_dir, cfg.run_cfg_dir]
-    for directory in directories:
-        os.makedirs(directory, exist_ok=True)
