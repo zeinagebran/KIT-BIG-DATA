@@ -1,17 +1,34 @@
-import matplotlib.pyplot as plt
-import pandas as pd
+"""optimRecipes/analysis_seasonality.py file.
+
+Sub-module Streamlit for page seasonality_weekly.
+
+"""
+###############################################################################
+# IMPORTS :
+# /* Standard includes. */
+# /* Extern modules */
 import streamlit as st
 
+# /* Intern modules */
 from functions import WeeklyAnalysis
 
 
+###############################################################################
+# CLASS :
 class weekly_analysis_module:
+    """Class to wrap this module functions to interact with webapp.
+
+    This class is used by webapp streamlit for the analysis of weekly user interactions.
+    """
+
     def __init__(self, interactions_df, log_module, cfg):
+        """Initialize the class with the data."""
         self.cfg = cfg
         self.interactions_df = interactions_df
         self.log_module = log_module
 
     def run(self):
+        """Build analysis, and print result on a web streamlit page."""
         st.title("📅 Weekly User Interaction Insights")
 
         st.markdown("""
