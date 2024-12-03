@@ -6,7 +6,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
 
 [![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-yellow)](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
-[![Licence EUPL 1.2](https://img.shields.io/badge/licence-EUPL_1.2-blue)](https://eupl.eu/1.2)
+[![Licence EUPL 1.2](https://img.shields.io/badge/licence-EUPL_1.2-blue)](https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12)
 
 
 ## **Description:**
