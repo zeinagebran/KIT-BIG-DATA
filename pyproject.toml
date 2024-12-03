@@ -55,7 +55,7 @@ dynamic = ["version", "dependencies"]
 
 [tool.poetry]
 name = "projet kit big data"
-version = "0.6.0"
+version = "1.0.0"
 description = "Projet Big Data Recipes and Interactions."
 authors = [
     "Zeina Gebran <zeina.gebran@telecom-paris.fr>",
