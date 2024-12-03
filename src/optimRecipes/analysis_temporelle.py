@@ -1,4 +1,4 @@
-"""Analysis of interaction throught time (nb recipes / nb reviews).
+"""optimRecipes/analysis_temporelle.py file.
 
 Analysis number of recipes or reviews by year/mouth
 
@@ -9,21 +9,19 @@ __version__ = '0.2'
 
 ###############################################################################
 # IMPORTS :
-
 # /* Standard includes. */
 import datetime
 
 # /* Extern modules */
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 import pandas as pd
 import streamlit as st
+from matplotlib import ticker
 
 # /* Intern modules */
 
 ###############################################################################
 # CONSTANTES :
-EXIT_OK = 0
 DATA_FILES = ['RAW_interactions.csv', 'RAW_recipes.csv']
 
 
