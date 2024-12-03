@@ -14,7 +14,6 @@ import zipfile
 
 # /* Extern modules */
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
 import streamlit as st
@@ -334,10 +333,9 @@ class TopRecipesAnalysis:
         Includes options to filter recipes by year range and display details for a selected recipe.
         """
         # If using the module for most_common_words, we set n = 50
-        if mcw_flag == True:
+        n = 15
+        if mcw_flag is True:
             n = 50
-        else:
-            n = 15
 
         # Format 'submitted' column and rename 'id' to 'recipe_id'
         self.recipes_df = self._format_to_datetime(
