@@ -1,9 +1,26 @@
+"""optimRecipes/logger.py file.
+
+Sub-module for loging.
+
+"""
+###############################################################################
+# IMPORTS :
+# /* Standard includes. */
 import logging
 
+# /* Extern modules */
 import yaml
 
+###############################################################################
+# CONSTANTS :
+CHARSET = 'UTF-8'
 
+
+###############################################################################
+# CLASS :
 class Logger:
+    """Manage loging fr module and webapp."""
+
     def __init__(self, cfg):
         self.cfg = cfg
         config_dict = vars(self.cfg)
@@ -34,7 +51,7 @@ class Logger:
         # Convert the class attributes to a dictionary
         config_dict = self.cfg.__dict__
         # Save to a YAML file
-        with open(self.cfg.run_cfg_dir + "/config.yml", "w") as file:
+        with open(self.cfg.run_cfg_dir + "/config.yml", "w", encoding=CHARSET) as file:
             yaml.dump(config_dict, file, default_flow_style=False)
 
     def log_debug(self, msg: str):
