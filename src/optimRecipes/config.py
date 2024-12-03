@@ -1,5 +1,22 @@
+"""optimRecipes/config.py file.
+
+Sub-module Streamlit and entry point of webapp streamlit.
+
+"""
+###############################################################################
+# IMPORTS :
+# /* Standard includes. */
+# /* Extern modules */
+# /* Intern modules */
+
+
+###############################################################################
+# CLASS :
 class Config:
+    """Class for configuraiton parameter of module and webapp."""
+
     def __init__(self):
+        """Initialise default configuration or current configuration."""
         # Standard path for project resources we used for this project (you should relative path)
         # !!! NE PAS COMMIT LA VERSION LOCALE !!!
         self.zip_file_path: str = r"data/archive.zip"
