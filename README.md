@@ -34,9 +34,9 @@ Comprehensive project documentation is available :
 - Documentation on [GitHub.io](https://zeinagebran.github.io/KIT-BIG-DATA/)
 
 **Manual/semi-manual generation :**
-- (extern website)(https://perso.telecom-paristech.fr/nallegre-24/projet_bgdia700/html/)
+- Documentation on [Telecom-Paris website](https://perso.telecom-paristech.fr/nallegre-24/projet_bgdia700/html/)
 
-### ***📷 Dashboard Preview**ù
+### ***📷 Dashboard Preview**
 
 _Example of the interactive dashboard:_
 
