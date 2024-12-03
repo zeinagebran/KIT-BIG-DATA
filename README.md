@@ -1,12 +1,13 @@
 # **🍴 optimRecipes: User Interaction Analysis for Recipe Platform 🍴**
 
-[![Github build and test](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
+![Github build and verify](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)
+![Github test, coverage](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/sonarcloud.yml/badge.svg)
+![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
 
-[![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-yellow)](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
+![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-yellow)](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
 
 
-## **Overview :**
+## **Description:**
 
 ### ***Project overview***
 
@@ -36,21 +37,32 @@ Comprehensive project documentation is available :
 **Manual/semi-manual generation :**
 - Documentation on [Telecom-Paris website](https://perso.telecom-paristech.fr/nallegre-24/projet_bgdia700/html/)
 
-### ***📷 Dashboard Preview**
+### ***📷 Dashboard Preview***
 
 _Example of the interactive dashboard:_
 
 ![image](https://github.com/user-attachments/assets/e23f5ee2-fc48-4a32-aa31-22c9b0ad4a71)
 
 
-## **Technical informations :**
+## **Technical informations:**
 
 ### ***Code Quality and Testing***
 
-The **Quality Gate badge** reflects that the project meets predefined criteria for code quality, including:
+The **Quality Gate badge** (![Github build and test](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)
+![Quality Gate Status])) reflects that the project meets predefined criteria for code quality, including:
 - High unit test coverage.
 - Low technical debt.
 - Reliable, maintainable, and secure code.
+
+The **Github Action Python** (![Github build and verify](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)) reflects that the project could be build without problem and has basic code quality:
+- Build the project with the requirements.
+- Basic code quality (with flake8).
+- Run unit tests (ok if no error).
+
+The **Github Action sonarcloud** (![Github test, coverage](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/sonarcloud.yml/badge.svg)) reflects that the project has coverage and critical commit issues.
+- Run code coverage with unit tests.
+- Transfert results to Sonarcloud server for avanced and standard code quality and security verification.
+
 
 ### ***Installation***
 
@@ -94,7 +106,6 @@ coverage report
 make
 firefox build/html/index.html
 ```
-
 
 ### ***Developers***
 
