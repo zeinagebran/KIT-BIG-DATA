@@ -27,7 +27,7 @@ Make sure you have the correct version of Python installed.
     python -m pip install -r requirements.txt
     python -m nltk.downloader stopwords
 
-For development and use our unit test add this action :
+For development and use our unit tests add this action :
 
 .. code-block:: bash
 
