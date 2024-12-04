@@ -2,7 +2,7 @@
 
 [![Github build and verify](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml)
 [![Github test, coverage](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/sonarcloud.yml)
-[![GitHub documentation](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/pages/pages-build-deployment)
+[![Github documentation](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/pages/pages-build-deployment)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zeinagebran_KIT-BIG-DATA&metric=alert_status)](https://sonarcloud.io/summary/overall?id=zeinagebran_KIT-BIG-DATA)
 
 [![Kaggle](https://img.shields.io/badge/Dataset-Kaggle-yellow)](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
@@ -13,7 +13,8 @@
 
 ### ***Project overview***
 
-`optimRecipes` is a Python-based data analysis project designed to enhance user engagement on a recipe platform. By analyzing user interactions and recipe feedback, this project uncovers trends and patterns to:
+`optimRecipes` is a Python-based data analysis project designed to enhance user engagement on a recipe platform.
+By analyzing user interactions and recipe feedback, this project uncovers trends and patterns to:
 - Optimize content strategy.
 - Improve the user experience.
 
