@@ -154,7 +154,7 @@ class temporality_analysis_module:
     throught time (nb recipes / nb reviews) and construct the page and graphs.
     """
 
-    def __init__(self, recipes_df, interactions_df):
+    def __init__(self, recipes_df, interactions_df, log_module):
         """Initialise the class with data.
 
         :param pandas.DataFrame recipes_df: data for the recipes
@@ -162,6 +162,7 @@ class temporality_analysis_module:
         """
         self.recipes_df = recipes_df
         self.interactions_df = interactions_df
+        self.log_module = log_module
 
     def run(self):
         """Build analysis, and print result on a web streamlit page."""
