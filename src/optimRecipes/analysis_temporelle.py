@@ -27,7 +27,7 @@ DATA_FILES = ['RAW_interactions.csv', 'RAW_recipes.csv']
 
 ###############################################################################
 # FONCTIONS :
-def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int, int]], dict[str, dict[str, int]]]:
+def analysis_temporelle(data: dict[str, list[str] | pd.DataFrame]) -> tuple[dict[str, dict[int, int]], dict[str, dict[str, int]]]:
     """Analyse the data and calculate sum of interaction by year and mouth.
 
     :param dict(str, list[str]) data: data loaded for each file
@@ -45,13 +45,17 @@ def analysis_temporelle(data: dict[str, list[str]]) -> tuple[dict[str, dict[int,
         nb_by_year[filename] = {}
         nb_by_month[filename] = {}
         j = j_date_col[filename]
-        for i, row in enumerate(data[filename]):
-            if i == 0:  # Pas de traitement sur les headers
-                continue
+        tmp_data = data[filename][1:]
+        if type(data[filename]) is pd.DataFrame:
+            tmp_data = data[filename].values.tolist()
 
+        for i, row in enumerate(tmp_data):
             col = row[j]
-            tmp = col.split('-')
-            d = datetime.date(int(tmp[0]), int(tmp[1]), int(tmp[2]))
+            d = col
+            if type(d) is str:
+                tmp = col.split('-')
+                d = datetime.date(int(tmp[0]), int(tmp[1]), int(tmp[2]))
+
             if d.year in nb_by_year[filename].keys():
                 nb_by_year[filename][d.year] += 1
             else:  # Initialisation
@@ -171,8 +175,7 @@ class temporality_analysis_module:
             """
         )
 
-        # TODO transforme to list or manipulate DataFrame
-        data = {DATA_FILES[0]: self.interactions_df, DATA_FILES[1]: self.recipes_df}
-        nb_by_year, nb_by_month = analysis_temporelle(data)
+        data_df = {DATA_FILES[0]: self.interactions_df, DATA_FILES[1]: self.recipes_df}
+        nb_by_year, nb_by_month = analysis_temporelle(data_df)
         fig = plot_matplotlib_version(nb_by_year, nb_by_month, show=False)
         st.pyplot(fig)
