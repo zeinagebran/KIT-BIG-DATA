@@ -82,8 +82,8 @@ class DataExtractor:
                 zip_ref.extractall("extracted_data")
 
             _self.interactions_df = pd.read_csv(
-                "extracted_data/RAW_interactions.csv")
-            _self.recipes_df = pd.read_csv("extracted_data/RAW_recipes.csv")
+                "extracted_data/recipe/RAW_interactions.csv")
+            _self.recipes_df = pd.read_csv("extracted_data/recipe/RAW_recipes.csv")
 
             # Convert 'date' column in interactions to datetime
             _self.interactions_df['date'] = pd.to_datetime(
