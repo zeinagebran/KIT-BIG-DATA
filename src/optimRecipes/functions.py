@@ -670,6 +670,8 @@ class CommonWordsAnalysis:
                        background_color="white", relative_scaling=1).generate(text)
         fig, _ = plt.subplots(1)
         plt.axis("off")
+        plt.imshow(wc, interpolation="bilinear")
+        plt.close(fig)
         st.pyplot(fig)
         st.success("Word cloud generated successfully! 🌟")
 
