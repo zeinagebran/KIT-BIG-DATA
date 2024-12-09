@@ -25,8 +25,9 @@ from logger import Logger
 # FUNCTIONS :
 
 # Path to the data file
-zip_path = "data/archive.zip"
-extract_dir = "data/extracted"
+zip_path = os.path.join(os.getcwd(), "data", "archive.zip")
+extract_dir = os.path.join(os.getcwd(), "data", "extracted")
+
 
 # Ensure the data directory exists
 os.makedirs("data", exist_ok=True)
