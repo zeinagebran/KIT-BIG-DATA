@@ -26,7 +26,7 @@ By analyzing user interactions and recipe feedback, this project uncovers trends
 
 ### ***Dataset source***
 
-This project uses data from **Food.com Recipes and User Interactions**.  
+This project uses data from **Food.com Recipes and User Interactions**.
 [📁 Access the dataset on Kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
 
 ### ***Documentation***
