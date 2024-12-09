@@ -29,6 +29,10 @@ By analyzing user interactions and recipe feedback, this project uncovers trends
 This project uses data from **Food.com Recipes and User Interactions**.
 [📁 Access the dataset on Kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions)
 
+### ***Streamlit app link***
+
+https://kit-big-data-zeinagebran.streamlit.app/
+
 ### ***Documentation***
 
 - Documentation on [Telecom-Paris website](https://perso.telecom-paristech.fr/nallegre-24/projet_bgdia700/html/)
