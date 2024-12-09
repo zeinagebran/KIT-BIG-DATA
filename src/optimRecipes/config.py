@@ -19,7 +19,7 @@ class Config:
         """Initialise default configuration or current configuration."""
         # Standard path for project resources we used for this project (you should relative path)
         # !!! NE PAS COMMIT LA VERSION LOCALE !!!
-        self.zip_file_path: str = r"C:\Users\User\Desktop\MASTERE SPECIALISE IA\KIT BIG DATA BGDIA700\RESOURCES PROJET/archive.zip"
+        self.zip_file_path: str = r"data/archive.zip"
 
         # Directory of extracted_data
         self.extracted_data_path: str = 'extracted_data'
