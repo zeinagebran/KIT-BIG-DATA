@@ -15,6 +15,8 @@ import zipfile
 import streamlit as st
 import pandas as pd
 
+import glob
+
 # /* Intern modules */
 from app import WebApp
 from config import Config
@@ -22,54 +24,35 @@ from functions import prepare_directories
 from logger import Logger
 
 
-# Paths
 zip_path = "data/archive.zip"
 extract_dir = "extracted_data"
 
-# Ensure the data directory exists
-os.makedirs("data", exist_ok=True)
-
-# Download the ZIP file if it doesn't exist
-if not os.path.exists(zip_path):
-    st.warning("Downloading the ZIP file...")
-    file_url = "https://perso.telecom-paristech.fr/nallegre-24/projet_bgdia700/recipe.zip"
-    try:
-        response = requests.get(file_url, stream=True)
-        response.raise_for_status()
-        with open(zip_path, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-        st.success("ZIP file downloaded successfully!")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to download the ZIP file: {e}")
-        st.stop()
-
-# Extract the ZIP file if the directory doesn't exist
+# Extract ZIP file
 if not os.path.exists(extract_dir):
-    try:
-        with zipfile.ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall(extract_dir)
-        st.success("ZIP file extracted successfully!")
-    except zipfile.BadZipFile:
-        st.error("The ZIP file is corrupted.")
-        st.stop()
+    with zipfile.ZipFile(zip_path, "r") as zip_ref:
+        zip_ref.extractall(extract_dir)
+    st.success("ZIP file extracted successfully!")
 
 # Debug: List extracted files
 extracted_files = os.listdir(extract_dir)
 st.write(f"Extracted files: {extracted_files}")
 
-# Check if required files exist
-required_files = ["RAW_interactions.csv", "RAW_recipes.csv"]
-missing_files = [f for f in required_files if f not in extracted_files]
+# Dynamically search for the required files
+interactions_path = glob.glob(f"{extract_dir}/**/RAW_interactions.csv", recursive=True)
+recipes_path = glob.glob(f"{extract_dir}/**/RAW_recipes.csv", recursive=True)
 
-if missing_files:
-    st.error(f"The following required files are missing: {missing_files}")
+if not interactions_path or not recipes_path:
+    st.error("Required files not found in the extracted data.")
     st.stop()
 
-# Load data
-interactions_path = os.path.join(extract_dir, "RAW_interactions.csv")
-recipes_path = os.path.join(extract_dir, "RAW_recipes.csv")
+# Use the first match
+interactions_path = interactions_path[0]
+recipes_path = recipes_path[0]
 
+st.success(f"Found RAW_interactions.csv at: {interactions_path}")
+st.success(f"Found RAW_recipes.csv at: {recipes_path}")
+
+# Load data
 try:
     interactions_df = pd.read_csv(interactions_path)
     recipes_df = pd.read_csv(recipes_path)
