@@ -46,10 +46,19 @@ _Example of the interactive dashboard:_
 
 ## **Technical informations:**
 
+Team management use a Discord server for communication and sharing, and a post-it dashboard (Trello) ofr task traking.
+
 ### ***Code Quality and Testing***
 
+Code quality and testing are first performed locally. Once everything passes, a PUSH is made, triggering automatic checks using GitHub Actions.
+
+Locally, the Python modules `flake8` and `pyllama` are used to ensure code quality and safety. Next, `pytest` and `coverage` are run to verify that local changes do not degrade unit test results.
+
+Afterward, a PULL is performed. If there are no conflicts, a PUSH is made to the repository, which triggers GitHub Actions for automated checking, building, testing, and deployment.
+
+
 The **Quality Gate badge** (![Github build and test](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)
-![Quality Gate Status])) reflects that the project meets predefined criteria for code quality, including:
+![Quality Gate Status)) reflects that the project meets predefined criteria for code quality, including:
 - High unit test coverage.
 - Low technical debt.
 - Reliable, maintainable, and secure code.
