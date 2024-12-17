@@ -57,7 +57,7 @@ Locally, the Python modules `flake8` and `pyllama` are used to ensure code quali
 Afterward, a PULL is performed. If there are no conflicts, a PUSH is made to the repository, which triggers GitHub Actions for automated checking, building, testing, and deployment.
 
 
-The **Quality Gate badge** ([![Github build and verify](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml)) reflects that the project meets predefined criteria for code quality, including:
+The **Quality Gate badge** ( [![Github build and verify](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml/badge.svg)](https://github.com/zeinagebran/KIT-BIG-DATA/actions/workflows/python-app.yml) ) reflects that the project meets predefined criteria for code quality, including:
 - High unit test coverage.
 - Low technical debt.
 - Reliable, maintainable, and secure code.
